@@ -145,7 +145,7 @@
     <value>סגור</value>
   </data>
   <data name="TrayFlyoutPage_About.Text" xml:space="preserve">
-    <value>TranslucentTB אודות</value>
+    <value>GlassTB אודות</value>
   </data>
   <data name="TrayFlyoutPage_AccentColor.Text" xml:space="preserve">
     <value>צבע דגש</value>
@@ -256,7 +256,7 @@
     <value>כשחלון פעיל</value>
   </data>
   <data name="WelcomePage.Title" xml:space="preserve">
-    <value>ברוך הבא ל-TranslucentTB!</value>
+    <value>ברוך הבא ל-GlassTB!</value>
   </data>
   <data name="WelcomePage_Action_Configure.Description" xml:space="preserve">
     <value>תוכל תמיד לעשות זאת על ידי לחיצה על מתקדם &gt; ערוך הגדרות בתפריט הסמל במגש
@@ -287,7 +287,7 @@
     <value>פתח בעיה ב-GitHub</value>
   </data>
   <data name="WelcomePage_Message_Prefix.Text" xml:space="preserve">
-    <value>תודה שניסית את TranslucentTB! לאחר שתלחץ על המשך, תוכל להתאים אישית את מראה שורת המשימות לפי רצונך. אנו מקווים שתיהנה, ואל תהסס</value>
+    <value>תודה שניסית את GlassTB! לאחר שתלחץ על המשך, תוכל להתאים אישית את מראה שורת המשימות לפי רצונך. אנו מקווים שתיהנה, ואל תהסס</value>
   </data>
   <data name="WelcomePage_Message_Suffix.Text" xml:space="preserve">
     <value>אם נתקלת בבעיה או שתרצה שנוסיף תכונה חדשה!</value>

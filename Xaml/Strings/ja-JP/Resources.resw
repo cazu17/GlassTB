@@ -145,7 +145,7 @@
     <value>閉じる</value>
   </data>
   <data name="TrayFlyoutPage_About.Text" xml:space="preserve">
-    <value>TranslucentTB について</value>
+    <value>GlassTB について</value>
   </data>
   <data name="TrayFlyoutPage_AccentColor.Text" xml:space="preserve">
     <value>アクセントカラー</value>
@@ -256,7 +256,7 @@
     <value>ウィンドウ表示</value>
   </data>
   <data name="WelcomePage.Title" xml:space="preserve">
-    <value>TranslucentTB へようこそ!</value>
+    <value>GlassTB へようこそ!</value>
   </data>
   <data name="WelcomePage_Action_Configure.Description" xml:space="preserve">
     <value>トレイアイコンを右クリックし、「高度」 &gt; 「設定の編集」を選択することで、いつでも行えます。
@@ -287,7 +287,7 @@
     <value>GitHub 上で issue を作成し</value>
   </data>
   <data name="WelcomePage_Message_Prefix.Text" xml:space="preserve">
-    <value>TranslucentTB をご利用いただき感謝します! 「続行」すると、タスクバーをあなた好みの見た目に設定できます。ぜひお試しください。</value>
+    <value>GlassTB をご利用いただき感謝します! 「続行」すると、タスクバーをあなた好みの見た目に設定できます。ぜひお試しください。</value>
   </data>
   <data name="WelcomePage_Message_Suffix.Text" xml:space="preserve">
     <value>問題を報告したり、機能を要望することもできます!</value>

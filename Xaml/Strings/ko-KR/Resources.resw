@@ -145,7 +145,7 @@
     <value>닫기</value>
   </data>
   <data name="TrayFlyoutPage_About.Text" xml:space="preserve">
-    <value>TranslucentTB 정보 - 번역: 비너스걸</value>
+    <value>GlassTB 정보 - 번역: 비너스걸</value>
   </data>
   <data name="TrayFlyoutPage_AccentColor.Text" xml:space="preserve">
     <value>액센트 색상</value>
@@ -256,7 +256,7 @@
     <value>보이는 창</value>
   </data>
   <data name="WelcomePage.Title" xml:space="preserve">
-    <value>TranslucentTB에 오신 것을 환영합니다!</value>
+    <value>GlassTB에 오신 것을 환영합니다!</value>
   </data>
   <data name="WelcomePage_Action_Configure.Description" xml:space="preserve">
     <value>트레이 아이콘의 컨텍스트 메뉴에서 "고급" &gt; "설정 편집"을 클릭하면 항상 이 작업을 수행할 수 있습니다
@@ -287,7 +287,7 @@
     <value>GitHub 이슈 열기</value>
   </data>
   <data name="WelcomePage_Message_Prefix.Text" xml:space="preserve">
-    <value>TranslucentTB!를 사용해 주셔서 감사합니다! “계속”을 누르면 작업 표시줄의 모양을 원하는 대로 개인화할 수 있습니다. 즐겁게 사용하시기 바랍니다</value>
+    <value>GlassTB!를 사용해 주셔서 감사합니다! “계속”을 누르면 작업 표시줄의 모양을 원하는 대로 개인화할 수 있습니다. 즐겁게 사용하시기 바랍니다</value>
   </data>
   <data name="WelcomePage_Message_Suffix.Text" xml:space="preserve">
     <value>문제가 있거나 기능이 추가되는 것을 보고 싶다면!</value>

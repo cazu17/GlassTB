@@ -18,6 +18,7 @@
   </PropertyGroup>
   <Import Project="..\Common\CppProject.props" />
   <PropertyGroup>
+    <TargetName>GlassTB</TargetName>
     <BeforeLinkTargets>
       $(BeforeLinkTargets);
       _UnpackagedWin32GenerateAdditionalWinmdManifests;

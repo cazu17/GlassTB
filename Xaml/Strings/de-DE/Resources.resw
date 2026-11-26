@@ -145,7 +145,7 @@
     <value>Schließen</value>
   </data>
   <data name="TrayFlyoutPage_About.Text" xml:space="preserve">
-    <value>Über TranslucentTB</value>
+    <value>Über GlassTB</value>
   </data>
   <data name="TrayFlyoutPage_AccentColor.Text" xml:space="preserve">
     <value>Akzentfarbe</value>
@@ -256,7 +256,7 @@
     <value>Sichtbares Fenster</value>
   </data>
   <data name="WelcomePage.Title" xml:space="preserve">
-    <value>Willkommen zu TranslucentTB!</value>
+    <value>Willkommen zu GlassTB!</value>
   </data>
   <data name="WelcomePage_Action_Configure.Description" xml:space="preserve">
     <value>Sie das jederzeit tun, indem Sie im Kontextmenü des Taskleistensymbols auf "Erweitert" &gt; "Einstellungen bearbeiten" klicken
@@ -287,7 +287,7 @@
     <value>Einen Fehler auf GitHub melden</value>
   </data>
   <data name="WelcomePage_Message_Prefix.Text" xml:space="preserve">
-    <value>Danke, dass Sie TranslucentTB ausprobieren! Nachdem Sie auf „Weiter“ geklickt haben, können Sie das Aussehen der Taskleiste Ihren Wünschen anpassen. Wir hoffen, dass es Ihnen gefällt. Gerne können Sie</value>
+    <value>Danke, dass Sie GlassTB ausprobieren! Nachdem Sie auf „Weiter“ geklickt haben, können Sie das Aussehen der Taskleiste Ihren Wünschen anpassen. Wir hoffen, dass es Ihnen gefällt. Gerne können Sie</value>
   </data>
   <data name="WelcomePage_Message_Suffix.Text" xml:space="preserve">
     <value>wenn Sie ein Problem haben oder eine neue Funktion vorschlagen möchten!</value>

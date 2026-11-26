@@ -145,7 +145,7 @@
     <value>Cerrar</value>
   </data>
   <data name="TrayFlyoutPage_About.Text" xml:space="preserve">
-    <value>Acerca de TranslucentTB</value>
+    <value>Acerca de GlassTB</value>
   </data>
   <data name="TrayFlyoutPage_AccentColor.Text" xml:space="preserve">
     <value>Acentuar Color</value>
@@ -256,7 +256,7 @@
     <value>Ventana visible</value>
   </data>
   <data name="WelcomePage.Title" xml:space="preserve">
-    <value>¡Bienvenido a TranslucentTB!</value>
+    <value>¡Bienvenido a GlassTB!</value>
   </data>
   <data name="WelcomePage_Action_Configure.Description" xml:space="preserve">
     <value>Siempre puede hacer esto haciendo clic en "Avanzado" &gt; "Editar configuración" en el menú contextual del icono de la bandeja
@@ -287,7 +287,7 @@ Los cambios se recargan automáticamente cuando guarda el archivo</value>
     <value>crear una propuesta en GitHub</value>
   </data>
   <data name="WelcomePage_Message_Prefix.Text" xml:space="preserve">
-    <value>¡Gracias por probar TranslucentTB! Después de presionar "Continuar", puede personalizar el aspecto de la barra de tareas según sus deseos. Esperamos que lo disfruten y no duden en</value>
+    <value>¡Gracias por probar GlassTB! Después de presionar "Continuar", puede personalizar el aspecto de la barra de tareas según sus deseos. Esperamos que lo disfruten y no duden en</value>
   </data>
   <data name="WelcomePage_Message_Suffix.Text" xml:space="preserve">
     <value>si tiene algún problema o desea ver una característica agregada!</value>

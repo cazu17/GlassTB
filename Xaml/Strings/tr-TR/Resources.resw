@@ -145,7 +145,7 @@
     <value>Kapat</value>
   </data>
   <data name="TrayFlyoutPage_About.Text" xml:space="preserve">
-    <value>TranslucentTB Hakkında</value>
+    <value>GlassTB Hakkında</value>
   </data>
   <data name="TrayFlyoutPage_AccentColor.Text" xml:space="preserve">
     <value>Vurgu Rengi</value>
@@ -256,7 +256,7 @@
     <value>Görünür pencere</value>
   </data>
   <data name="WelcomePage.Title" xml:space="preserve">
-    <value>TranslucentTB'ye hoş geldiniz!</value>
+    <value>GlassTB'ye hoş geldiniz!</value>
   </data>
   <data name="WelcomePage_Action_Configure.Description" xml:space="preserve">
     <value>Bunu tepsi ikonu menüsünde "Gelişmiş" &gt; "Ayarları düzenle" seçerek istediğiniz zaman
@@ -287,7 +287,7 @@ yapabilirsiniz. Değişiklikler dosya kaydedildiğinde otomatik olarak uygulanı
     <value>bir GitHub sorun bildirimi </value>
   </data>
   <data name="WelcomePage_Message_Prefix.Text" xml:space="preserve">
-    <value>TranslucentTB'yi denediğiniz için teşekkürler! Devam et'e bastıktan sonra görev çubuğunun nasıl görüneceğini istediğiniz gibi kişiselleştirebilirsiniz. Umarız beğenirsiniz, ve bir sorununuz varsa veya bir özelliğin eklenmesini istiyorsanız</value>
+    <value>GlassTB'yi denediğiniz için teşekkürler! Devam et'e bastıktan sonra görev çubuğunun nasıl görüneceğini istediğiniz gibi kişiselleştirebilirsiniz. Umarız beğenirsiniz, ve bir sorununuz varsa veya bir özelliğin eklenmesini istiyorsanız</value>
   </data>
   <data name="WelcomePage_Message_Suffix.Text" xml:space="preserve">
     <value>oluşturabilirsiniz!</value>

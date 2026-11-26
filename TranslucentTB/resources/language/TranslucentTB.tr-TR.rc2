@@ -33,13 +33,13 @@ VS_VERSION_INFO VERSIONINFO
 		{
 			VALUE L"FileDescription", APP_NAME
 			VALUE L"FileVersion", APP_VERSION
-			VALUE L"InternalName", APP_NAME L".exe"
-			VALUE L"OriginalFilename", APP_NAME L".exe"
+			VALUE L"InternalName", APP_EXE_NAME
+			VALUE L"OriginalFilename", APP_EXE_NAME
 			VALUE L"ProductName", APP_NAME
 			VALUE L"ProductVersion", APP_VERSION
 			VALUE L"Comments", L"Windows görev çubuğunu yarı saydam/şeffaf hale getiren hafif bir yardımcı program."
 			VALUE L"CompanyName", APP_NAME L" Açık Kaynak Geliştiricileri"
-			VALUE L"LegalCopyright", L"Telif Hakkı © " APP_COPYRIGHT_YEAR L" " APP_NAME L" Açık Kaynak Geliştiricileri"
+			VALUE L"LegalCopyright", L"Telif Hakkı © " APP_COPYRIGHT_YEAR L" " L"TranslucentTB" L" Açık Kaynak Geliştiricileri"
 		}
 	}
 	BLOCK L"VarFileInfo"

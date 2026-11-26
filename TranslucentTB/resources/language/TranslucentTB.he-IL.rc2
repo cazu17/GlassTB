@@ -33,13 +33,13 @@ VS_VERSION_INFO VERSIONINFO
 		{
 			VALUE L"FileDescription", APP_NAME
 			VALUE L"FileVersion", APP_VERSION
-			VALUE L"InternalName", APP_NAME L".exe"
-			VALUE L"OriginalFilename", APP_NAME L".exe"
+			VALUE L"InternalName", APP_EXE_NAME
+			VALUE L"OriginalFilename", APP_EXE_NAME
 			VALUE L"ProductName", APP_NAME
 			VALUE L"ProductVersion", APP_VERSION
 			VALUE L"Comments", L"כלי קל משקל שהופך את שורת המשימות של Windows לשקופה או חצי שקופה."
 			VALUE L"CompanyName", L"מפתחי הקוד הפתוח של " APP_NAME
-			VALUE L"LegalCopyright", L"זכויות יוצרים © " APP_COPYRIGHT_YEAR L" מפתחי הקוד הפתוח של " APP_NAME
+			VALUE L"LegalCopyright", L"זכויות יוצרים © " APP_COPYRIGHT_YEAR L" מפתחי הקוד הפתוח של " L"TranslucentTB"
 		}
 	}
 	BLOCK L"VarFileInfo"
