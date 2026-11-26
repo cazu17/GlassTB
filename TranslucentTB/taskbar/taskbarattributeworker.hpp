@@ -16,6 +16,8 @@
 #include <winrt/Windows.Internal.Shell.Experience.h> // this is evil >:3
 #include <winrt/WindowsUdk.UI.Shell.h> // this is less evil
 
+#include "../compat/capabilities.hpp"
+#include "../compat/systeminfo.hpp"
 #include "config/taskbarappearance.hpp"
 #include "../dynamicloader.hpp"
 #include "../ExplorerHooks/api.hpp"
@@ -31,13 +33,6 @@
 #include "../ProgramLog/error/win32.hpp"
 #include "../loadabledll.hpp"
 #include "../managers/configmanager.hpp"
-
-enum class TaskbarType {
-	Unknown,
-	Classic, // Windows 10
-	Mixed,   // Windows 11 22000 and early 22621
-	XAML     // Windows 11 22621+
-};
 
 class TaskbarAttributeWorker final : public MessageWindow {
 private:
@@ -155,8 +150,8 @@ private:
 	winrt::com_ptr<ITaskbarAppearanceService> m_TaskbarService;
 
 	// Other
-	bool m_IsWindows11;
-	bool m_IsBlurAccentStateSupported;
+	const compat::SystemInfo m_SystemInfo;
+	compat::Capabilities m_Capabilities;
 
 	// Type aliases
 	using taskbar_iterator = decltype(m_Taskbars)::iterator;
@@ -297,7 +292,7 @@ public:
 
 	bool IsBlurAccentStateSupported() noexcept
 	{
-		return m_IsBlurAccentStateSupported;
+		return m_Capabilities.blurAccentState;
 	}
 
 	~TaskbarAttributeWorker() noexcept(false);
