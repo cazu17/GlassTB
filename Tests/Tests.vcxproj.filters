@@ -4,11 +4,23 @@
     <Filter Include="Util Tests">
       <UniqueIdentifier>{fbed2b1b-deaf-4229-b819-e9e4fdf72b8b}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Compatibility Tests">
+      <UniqueIdentifier>{2e9d2de6-714a-4133-849e-e8cbfe29cc85}</UniqueIdentifier>
+    </Filter>
     <Filter Include="Config Tests">
       <UniqueIdentifier>{3268f330-639d-4e82-8928-d43f800a0cb4}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="compat\compatibility.cpp">
+      <Filter>Compatibility Tests</Filter>
+    </ClCompile>
+    <ClCompile Include="..\TranslucentTB\compat\capabilities.cpp">
+      <Filter>Compatibility Tests</Filter>
+    </ClCompile>
+    <ClCompile Include="..\TranslucentTB\compat\backend.cpp">
+      <Filter>Compatibility Tests</Filter>
+    </ClCompile>
     <ClCompile Include="util\numbers.cpp">
       <Filter>Util Tests</Filter>
     </ClCompile>

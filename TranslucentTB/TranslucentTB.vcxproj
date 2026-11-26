@@ -79,6 +79,9 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="compat\systeminfo.cpp" />
+    <ClCompile Include="compat\capabilities.cpp" />
+    <ClCompile Include="compat\backend.cpp" />
     <ClCompile Include="application.cpp" />
     <ClCompile Include="loadabledll.cpp" />
     <ClCompile Include="localization.cpp" />
@@ -101,6 +104,9 @@
     <ClCompile Include="windows\windowclass.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="compat\systeminfo.hpp" />
+    <ClInclude Include="compat\capabilities.hpp" />
+    <ClInclude Include="compat\backend.hpp" />
     <ClInclude Include="application.hpp" />
     <ClInclude Include="dynamicloader.hpp" />
     <ClInclude Include="loadabledll.hpp" />

@@ -27,6 +27,9 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="compat\compatibility.cpp" />
+    <ClCompile Include="..\TranslucentTB\compat\capabilities.cpp" />
+    <ClCompile Include="..\TranslucentTB\compat\backend.cpp" />
     <ClCompile Include="config\rapidjsonhelper.cpp" />
     <ClCompile Include="util\color.cpp" />
     <ClCompile Include="util\numbers.cpp" />
