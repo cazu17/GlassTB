@@ -8,6 +8,7 @@
 #include <algorithm>
 #include <cmath>
 #include <winrt/Windows.ApplicationModel.DataTransfer.h>
+#include <winrt/Windows.UI.Xaml.Automation.h>
 #include "appinfo.hpp"
 #include "util/color.hpp"
 
