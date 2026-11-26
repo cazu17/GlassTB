@@ -25,6 +25,8 @@ namespace winrt::TranslucentTB::Xaml::Pages::implementation
 
 		DECL_EVENT(TaskbarSettingsChangedDelegate, TaskbarSettingsChanged, m_TaskbarSettingsChangedDelegate);
 		DECL_EVENT(ColorRequestedDelegate, ColorRequested, m_ColorRequestedDelegate);
+		DECL_EVENT(EditSettingsRequestedDelegate, OpenSettingsRequested, m_OpenSettingsRequested);
+		void OpenSettingsClicked(const IInspectable &, const wux::RoutedEventArgs &);
 
 		DECL_EVENT(OpenLogFileRequestedDelegate, OpenLogFileRequested, m_OpenLogFileRequestedDelegate);
 		DECL_EVENT(LogLevelChangedDelegate, LogLevelChanged, m_LogLevelChangedDelegate);

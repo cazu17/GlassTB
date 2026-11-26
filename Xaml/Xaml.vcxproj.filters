@@ -77,6 +77,7 @@
     <Page Include="Pages\FramelessPage.xaml" />
     <Page Include="Controls\ChromeButton.xaml" />
     <Page Include="Controls\ActionList.xaml" />
+    <Page Include="Pages\SettingsPage.xaml" />
     <Page Include="Pages\ColorPickerPage.xaml" />
     <Page Include="Pages\TrayFlyoutPage.xaml" />
     <Page Include="Themes\Generic.xaml" />

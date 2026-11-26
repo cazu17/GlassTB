@@ -292,4 +292,271 @@
   <data name="WelcomePage_Message_Suffix.Text" xml:space="preserve">
     <value>если возникла проблема или хотите увидеть новую функцию!</value>
   </data>
+  <data name="SettingsPage_Open.Text" xml:space="preserve">
+    <value>Open GlassTB</value>
+  </data>
+  <data name="SettingsPage_Open.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>Open GlassTB</value>
+  </data>
+  <data name="SettingsPage_Navigation.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>Settings sections</value>
+  </data>
+  <data name="SettingsPage_HomeItem.Content" xml:space="preserve">
+    <value>Home</value>
+  </data>
+  <data name="SettingsPage_HomeItem.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>Home</value>
+  </data>
+  <data name="SettingsPage_AppearanceItem.Content" xml:space="preserve">
+    <value>Appearance</value>
+  </data>
+  <data name="SettingsPage_AppearanceItem.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>Appearance</value>
+  </data>
+  <data name="SettingsPage_HomeHeading.Text" xml:space="preserve">
+    <value>Home</value>
+  </data>
+  <data name="SettingsPage_AppearanceHeading.Text" xml:space="preserve">
+    <value>Appearance</value>
+  </data>
+  <data name="SettingsPage_State.Header" xml:space="preserve">
+    <value>Taskbar state</value>
+  </data>
+  <data name="SettingsPage_State.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>Taskbar state</value>
+  </data>
+  <data name="SettingsPage_Desktop.Content" xml:space="preserve">
+    <value>Desktop</value>
+  </data>
+  <data name="SettingsPage_Desktop.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>Desktop</value>
+  </data>
+  <data name="SettingsPage_Visible.Content" xml:space="preserve">
+    <value>Visible window</value>
+  </data>
+  <data name="SettingsPage_Visible.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>Visible window</value>
+  </data>
+  <data name="SettingsPage_Maximized.Content" xml:space="preserve">
+    <value>Maximized window</value>
+  </data>
+  <data name="SettingsPage_Maximized.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>Maximized window</value>
+  </data>
+  <data name="SettingsPage_Start.Content" xml:space="preserve">
+    <value>Start open</value>
+  </data>
+  <data name="SettingsPage_Start.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>Start open</value>
+  </data>
+  <data name="SettingsPage_Search.Content" xml:space="preserve">
+    <value>Search open</value>
+  </data>
+  <data name="SettingsPage_Search.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>Search open</value>
+  </data>
+  <data name="SettingsPage_TaskView.Content" xml:space="preserve">
+    <value>Task View open</value>
+  </data>
+  <data name="SettingsPage_TaskView.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>Task View open</value>
+  </data>
+  <data name="SettingsPage_Battery.Content" xml:space="preserve">
+    <value>Battery saver</value>
+  </data>
+  <data name="SettingsPage_Battery.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>Battery saver</value>
+  </data>
+  <data name="SettingsPage_Normal.Content" xml:space="preserve">
+    <value>Normal</value>
+  </data>
+  <data name="SettingsPage_Normal.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>Normal</value>
+  </data>
+  <data name="SettingsPage_Opaque.Content" xml:space="preserve">
+    <value>Opaque</value>
+  </data>
+  <data name="SettingsPage_Opaque.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>Opaque</value>
+  </data>
+  <data name="SettingsPage_Clear.Content" xml:space="preserve">
+    <value>Clear</value>
+  </data>
+  <data name="SettingsPage_Clear.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>Clear</value>
+  </data>
+  <data name="SettingsPage_Blur.Content" xml:space="preserve">
+    <value>Blur</value>
+  </data>
+  <data name="SettingsPage_Blur.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>Blur</value>
+  </data>
+  <data name="SettingsPage_Acrylic.Content" xml:space="preserve">
+    <value>Acrylic</value>
+  </data>
+  <data name="SettingsPage_Acrylic.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>Acrylic</value>
+  </data>
+  <data name="SettingsPage_Enabled.Content" xml:space="preserve">
+    <value>Enable this state</value>
+  </data>
+  <data name="SettingsPage_Enabled.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>Enable this state</value>
+  </data>
+  <data name="SettingsPage_Peek.Content" xml:space="preserve">
+    <value>Show Peek button</value>
+  </data>
+  <data name="SettingsPage_Peek.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>Show Peek button</value>
+  </data>
+  <data name="SettingsPage_Line.Content" xml:space="preserve">
+    <value>Show taskbar line</value>
+  </data>
+  <data name="SettingsPage_Line.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>Show taskbar line</value>
+  </data>
+  <data name="SettingsPage_CopyButton.Content" xml:space="preserve">
+    <value>Copy diagnostics</value>
+  </data>
+  <data name="SettingsPage_CopyButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>Copy diagnostics</value>
+  </data>
+  <data name="SettingsPage_Apply.Content" xml:space="preserve">
+    <value>Apply</value>
+  </data>
+  <data name="SettingsPage_Apply.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>Apply</value>
+  </data>
+  <data name="SettingsPage_Cancel.Content" xml:space="preserve">
+    <value>Cancel</value>
+  </data>
+  <data name="SettingsPage_Cancel.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>Cancel</value>
+  </data>
+  <data name="SettingsPage_Reset.Content" xml:space="preserve">
+    <value>Restore defaults</value>
+  </data>
+  <data name="SettingsPage_Reset.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>Restore defaults</value>
+  </data>
+  <data name="SettingsPage_Material.Header" xml:space="preserve">
+    <value>Material</value>
+  </data>
+  <data name="SettingsPage_Material.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>Material</value>
+  </data>
+  <data name="SettingsPage_ColorLabel.Text" xml:space="preserve">
+    <value>Color and opacity</value>
+  </data>
+  <data name="SettingsPage_Picker.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>Color and opacity</value>
+  </data>
+  <data name="SettingsPage_Radius.Header" xml:space="preserve">
+    <value>Blur radius</value>
+  </data>
+  <data name="SettingsPage_Radius.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>Blur radius</value>
+  </data>
+  <data name="SettingsPage_BatteryHint.Text" xml:space="preserve">
+    <value>Battery saver requires a system battery.</value>
+  </data>
+  <data name="SettingsPage_BlurHint.Text" xml:space="preserve">
+    <value>The detected taskbar does not support the Blur material.</value>
+  </data>
+  <data name="SettingsPage_ColorHint.Text" xml:space="preserve">
+    <value>Choose a material other than Normal to edit the color.</value>
+  </data>
+  <data name="SettingsPage_RadiusHint.Text" xml:space="preserve">
+    <value>The radius can be changed when the Blur material uses the XAML taskbar service.</value>
+  </data>
+  <data name="SettingsPage_PeekHint.Text" xml:space="preserve">
+    <value>Peek requires a classic taskbar with a Peek button.</value>
+  </data>
+  <data name="SettingsPage_LineHint.Text" xml:space="preserve">
+    <value>This option requires a taskbar with a controllable border.</value>
+  </data>
+  <data name="SettingsPage_PreviewHint.Text" xml:space="preserve">
+    <value>Edits to the selected, enabled state preview on the taskbar until you apply or cancel.</value>
+  </data>
+  <data name="SettingsPage_SavingHint.Text" xml:space="preserve">
+    <value>Saving is disabled in the tray menu. Enable it there to apply changes.</value>
+  </data>
+  <data name="SettingsPage_ResetDialog.Title" xml:space="preserve">
+    <value>Restore default appearances?</value>
+  </data>
+  <data name="SettingsPage_ResetDialog.Content" xml:space="preserve">
+    <value>This resets all seven appearance states in the draft. Window rules are kept. Select Apply to save.</value>
+  </data>
+  <data name="SettingsPage_ResetDialog.PrimaryButtonText" xml:space="preserve">
+    <value>Restore defaults</value>
+  </data>
+  <data name="SettingsPage_ResetDialog.CloseButtonText" xml:space="preserve">
+    <value>Cancel</value>
+  </data>
+  <data name="SettingsPage_Engine" xml:space="preserve">
+    <value>Engine</value>
+  </data>
+  <data name="SettingsPage_EngineActive" xml:space="preserve">
+    <value>Active</value>
+  </data>
+  <data name="SettingsPage_EngineWaiting" xml:space="preserve">
+    <value>No taskbar detected</value>
+  </data>
+  <data name="SettingsPage_Backend" xml:space="preserve">
+    <value>Backend</value>
+  </data>
+  <data name="SettingsPage_Windows" xml:space="preserve">
+    <value>Windows version</value>
+  </data>
+  <data name="SettingsPage_NativeArchitecture" xml:space="preserve">
+    <value>Native architecture</value>
+  </data>
+  <data name="SettingsPage_ProcessArchitecture" xml:space="preserve">
+    <value>Process architecture</value>
+  </data>
+  <data name="SettingsPage_TaskbarType" xml:space="preserve">
+    <value>Taskbar type</value>
+  </data>
+  <data name="SettingsPage_AccentBlur" xml:space="preserve">
+    <value>AccentPolicy blur</value>
+  </data>
+  <data name="SettingsPage_XamlService" xml:space="preserve">
+    <value>XAML taskbar service</value>
+  </data>
+  <data name="SettingsPage_MonitorCount" xml:space="preserve">
+    <value>Displays with a detected taskbar</value>
+  </data>
+  <data name="SettingsPage_Yes" xml:space="preserve">
+    <value>Yes</value>
+  </data>
+  <data name="SettingsPage_No" xml:space="preserve">
+    <value>No</value>
+  </data>
+  <data name="SettingsPage_Unknown" xml:space="preserve">
+    <value>Unknown</value>
+  </data>
+  <data name="SettingsPage_Copied" xml:space="preserve">
+    <value>Diagnostics copied.</value>
+  </data>
+  <data name="SettingsPage_CopyFailed" xml:space="preserve">
+    <value>Could not copy diagnostics.</value>
+  </data>
+  <data name="SettingsPage_Rules" xml:space="preserve">
+    <value>Window rules:</value>
+  </data>
+  <data name="SettingsPage_RulesReadOnly" xml:space="preserve">
+    <value>Rule editing will be available in Automation.</value>
+  </data>
+  <data name="SettingsPage_Applied" xml:space="preserve">
+    <value>Appearance saved.</value>
+  </data>
+  <data name="SettingsPage_SaveFailed" xml:space="preserve">
+    <value>Could not save. Your edits are still in the draft.</value>
+  </data>
+  <data name="SettingsPage_Cancelled" xml:space="preserve">
+    <value>Changes discarded.</value>
+  </data>
+  <data name="SettingsPage_RestoredDraft" xml:space="preserve">
+    <value>Defaults loaded. Select Apply to save.</value>
+  </data>
 </root>

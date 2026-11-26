@@ -16,6 +16,8 @@
     </ToolTipService.ToolTip>
     <Page.ContextFlyout>
         <MenuFlyout x:Name="ContextMenu" ShouldConstrainToRootBounds="False">
+            <MenuFlyoutItem x:Uid="SettingsPage_Open" Click="OpenSettingsClicked" />
+            <MenuFlyoutSeparator />
             <MenuFlyoutSubItem x:Uid="TrayFlyoutPage_Desktop" Style="{StaticResource MergeIconsMenuFlyoutSubItem}">
                 <MenuFlyoutSubItem.Tag>
                     <primitives:TaskbarState>Desktop</primitives:TaskbarState>
