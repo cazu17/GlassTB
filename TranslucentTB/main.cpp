@@ -7,6 +7,7 @@
 #include "winrt.hpp"
 #include <winrt/Windows.ApplicationModel.Activation.h>
 
+#include "appinfo.hpp"
 #include "application.hpp"
 #include "constants.hpp"
 #include "mainappwindow.hpp"
@@ -14,6 +15,7 @@
 #include "../ProgramLog/error/winrt.hpp"
 #include "../ProgramLog/log.hpp"
 #include "uwp/uwp.hpp"
+#include "windows/window.hpp"
 
 void HardenProcess()
 {
@@ -136,7 +138,17 @@ _Use_decl_annotations_ int WINAPI wWinMain(HINSTANCE hInstance, HINSTANCE, wchar
 	}
 	HresultErrorCatch(spdlog::level::critical, L"Initialization of Windows Runtime failed.");
 
-	// Run the main program loop. When this method exits, TranslucentTB itself is about to exit.
+	// Match the legacy tray class and the titles of all upstream build variants.
+	if (Window::Find(L"TrayWindow", L"TranslucentTB") ||
+		Window::Find(L"TrayWindow", L"TranslucentTB (Canary)") ||
+		Window::Find(L"TrayWindow", L"TranslucentTB (Dev)"))
+	{
+		MessageBoxW(nullptr,
+			L"GlassTB y TranslucentTB modifican la barra de tareas de Windows. Cierra una de las dos aplicaciones para evitar conflictos.",
+			APP_NAME, MB_OK | MB_ICONWARNING | MB_SETFOREGROUND);
+	}
+
+	// Run the main program loop. When this method exits, GlassTB itself is about to exit.
 	const auto ret = Application(hInstance, std::move(storageFolder)).Run();
 
 	// why are we brutally terminating you might ask?
