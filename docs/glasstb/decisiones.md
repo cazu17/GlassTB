@@ -13,3 +13,9 @@
 **COM.** Renovar los CLSID de `TaskbarAppearanceService` y `TAPSite`, el LIBID de ExplorerTAP, los IID de `ITaskbarAppearanceService` e `IVersionedApi` y el CLSID del proxy/stub. `RegisterActiveObject` y `GetActiveObject` usan el CLSID del servicio, y `CoRegisterPSClsid` asocia los IID con el proxy. Cada aplicación identifica así su propio servicio y su propio proxy incluso cuando ambos TAP usan el mismo proceso Explorer. Los contratos y la versión de la API interna se conservan.
 
 **Consecuencias.** El aviso busca la clase de bandeja histórica `TrayWindow` con los títulos de TranslucentTB estable, Canary y Dev. La separación de identificadores permite instalar ambos productos, pero el control de la apariencia de la barra sigue siendo compartido. Para instalar un MSIX de GlassTB, la firma debe corresponder al publisher del fork. El flujo de GitHub Actions produce una compilación sin firma.
+
+## ADR-003. Orden de compilación del paquete MSIX
+
+**Decisión.** Declarar en la solución que `AppPackage` depende del proyecto del ejecutable, igual que en su referencia de empaquetado.
+
+**Motivo.** En GitHub Actions, el build paralelo de la rama base y el del PR reportaron `MSB4006` en `CppWinRTComputeGetResolvedWinMD`. Ordenar el proyecto del ejecutable antes de Desktop Bridge evita que el empaquetador consulte sus salidas mientras la solución todavía las está generando. Se conserva el workflow y su matriz de arquitecturas.

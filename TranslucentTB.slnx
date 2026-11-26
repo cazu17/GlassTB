@@ -4,6 +4,7 @@
     <Platform Name="x64" />
   </Configurations>
   <Project Path="AppPackage/AppPackage.wapproj" Type="c7167f0d-bc9f-4e6e-afe1-012c56b48db5" Id="0e91e5c8-0ee0-49c9-a0da-d25ab61a90c4">
+    <BuildDependency Project="TranslucentTB/TranslucentTB.vcxproj" />
     <Deploy />
   </Project>
   <Project Path="Common/Common.vcxitems" Id="8a1baf89-44d0-4bbf-a64d-35e6ebebed06" />
