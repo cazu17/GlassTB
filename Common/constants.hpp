@@ -8,19 +8,19 @@
 #pragma region App
 
 // Mutex name for app uniqueness
-static constexpr Util::null_terminated_wstring_view MUTEX_GUID = L"344635E9-9AE4-4E60-B128-D53E25AB70A7";
+static constexpr Util::null_terminated_wstring_view MUTEX_GUID = L"04278CBF-81E7-4BB5-8FBA-4E6C4B39DC7F";
 
 // Event used to signal when the TAP is ready
-static constexpr Util::null_terminated_wstring_view TAP_READY_EVENT = L"TTBTAP_Ready";
+static constexpr Util::null_terminated_wstring_view TAP_READY_EVENT = L"GTBTAP_Ready";
 
 // Current version of the API used for IPC with the TAP
 static constexpr std::uint32_t TAP_API_VERSION = 4;
 
 // Tray icon GUID
-static constexpr GUID TRAY_GUID = { 0xA7E6B7AF, 0xDF89, 0x41BD, { 0x8D, 0x78, 0x60, 0xE5, 0x8F, 0x83, 0x3E, 0x0 } };
+static constexpr GUID TRAY_GUID = { 0xb4d437b4, 0x7dbe, 0x47d4, { 0x8c, 0xd0, 0xf3, 0xa9, 0xcc, 0x10, 0xa9, 0x80 } };
 
 // GUID of payload injected in Explorer
-static constexpr GUID EXPLORER_PAYLOAD = { 0xF5E0B1A9, 0x9D5D, 0x4EB3, { 0x8F, 0x6D, 0x1F, 0x4D, 0x43, 0xD7, 0xCD, 0x0E } };
+static constexpr GUID EXPLORER_PAYLOAD = { 0xfe663e7a, 0xd525, 0x4539, { 0xad, 0x94, 0xa4, 0xf9, 0xb4, 0x50, 0x89, 0xb7 } };
 
 #pragma endregion
 
@@ -30,31 +30,31 @@ static constexpr GUID EXPLORER_PAYLOAD = { 0xF5E0B1A9, 0x9D5D, 0x4EB3, { 0x8F, 0
 static constexpr Util::null_terminated_wstring_view WM_TASKBARCREATED = L"TaskbarCreated";
 
 // Sent by the hook to the worker when the taskbar is trying to change its composition attribute
-static constexpr Util::null_terminated_wstring_view WM_TTBHOOKREQUESTREFRESH = L"TTBHook_RequestAttributeRefresh";
+static constexpr Util::null_terminated_wstring_view WM_GTBHOOKREQUESTREFRESH = L"GTBHook_RequestAttributeRefresh";
 
 // Sent by the hook to the worker when Task View closes/opens
-static constexpr Util::null_terminated_wstring_view WM_TTBHOOKTASKVIEWVISIBILITYCHANGE = L"TTBHook_TaskViewVisibilityChange";
+static constexpr Util::null_terminated_wstring_view WM_GTBHOOKTASKVIEWVISIBILITYCHANGE = L"GTBHook_TaskViewVisibilityChange";
 
 // Sent by the worker to the hook to get the current Task View status
-static constexpr Util::null_terminated_wstring_view WM_TTBHOOKISTASKVIEWOPENED = L"TTBHook_IsTaskViewOpened";
+static constexpr Util::null_terminated_wstring_view WM_GTBHOOKISTASKVIEWOPENED = L"GTBHook_IsTaskViewOpened";
 
 // Sent by LauncherVisibilitySink when the start menu opens/closes
-static constexpr Util::null_terminated_wstring_view WM_TTBSTARTVISIBILITYCHANGE = L"TTB_StartVisibilityChange";
+static constexpr Util::null_terminated_wstring_view WM_GTBSTARTVISIBILITYCHANGE = L"GTB_StartVisibilityChange";
 
 // Sent by TaskbarAttributeWorker to itself to switch back to main thread
-static constexpr Util::null_terminated_wstring_view WM_TTBSEARCHVISIBILITYCHANGE = L"TTB_SearchVisibilityChange";
+static constexpr Util::null_terminated_wstring_view WM_GTBSEARCHVISIBILITYCHANGE = L"GTB_SearchVisibilityChange";
 
 // Sent by TaskbarAttributeWorker to itself to switch back to main thread
-static constexpr Util::null_terminated_wstring_view WM_TTBFINDINSTARTVISIBILITYCHANGE = L"TTB_FindInStartVisibilityChange";
+static constexpr Util::null_terminated_wstring_view WM_GTBFINDINSTARTVISIBILITYCHANGE = L"GTB_FindInStartVisibilityChange";
 
 // Sent to the worker to force the taskbar to toggle to normal and back to the expected appearance
-static constexpr Util::null_terminated_wstring_view WM_TTBFORCEREFRESHTASKBAR = L"TTB_ForceRefreshTaskbar";
+static constexpr Util::null_terminated_wstring_view WM_GTBFORCEREFRESHTASKBAR = L"GTB_ForceRefreshTaskbar";
 
-// Sent by another instance of TranslucentTB to signal that it was started while this instance is running.
-static constexpr Util::null_terminated_wstring_view WM_TTBNEWINSTANCESTARTED = L"TTB_NewInstanceStarted";
+// Sent by another instance of GlassTB to signal that it was started while this instance is running.
+static constexpr Util::null_terminated_wstring_view WM_GTBNEWINSTANCESTARTED = L"GTB_NewInstanceStarted";
 
 // Sent to the worker to apply taskbar color preview.
-static constexpr Util::null_terminated_wstring_view WM_TTBAPPLYCOLORPREVIEW = L"TTB_ApplyColorPreview";
+static constexpr Util::null_terminated_wstring_view WM_GTBAPPLYCOLORPREVIEW = L"GTB_ApplyColorPreview";
 
 // Hotkey IDs
 static constexpr int RESET_STATE_GLOBAL_HOTKEY_ID = 2;
@@ -64,13 +64,13 @@ static constexpr int RESET_STATE_GLOBAL_HOTKEY_ID = 2;
 #pragma region Window classes
 
 // Window class used by our tray icon
-static constexpr Util::null_terminated_wstring_view TRAY_WINDOW = L"TrayWindow";
+static constexpr Util::null_terminated_wstring_view TRAY_WINDOW = L"GTB_TrayWindow";
 
 // Window class and title used by our attribute worker
-static constexpr Util::null_terminated_wstring_view TTB_WORKERWINDOW = L"TTB_WorkerWindow";
+static constexpr Util::null_terminated_wstring_view GTB_WORKERWINDOW = L"GTB_WorkerWindow";
 
 // Window class and title used by the Task View monitor
-static constexpr Util::null_terminated_wstring_view TTBHOOK_TASKVIEWMONITOR = L"TTBHook_TaskViewMonitor";
+static constexpr Util::null_terminated_wstring_view GTBHOOK_TASKVIEWMONITOR = L"GTBHook_TaskViewMonitor";
 
 // Window class for taskbar on primary monitor
 static constexpr Util::null_terminated_wstring_view TASKBAR = L"Shell_TrayWnd";

@@ -2,10 +2,10 @@ import "ITaskbarAppearanceService.idl";
 import "IVersionedApi.idl";
 import "ocidl.idl";
 
-[uuid(e22e715d-1c63-4da4-a445-78695330311e)]
+[uuid(e1cf52d8-6dd0-4d36-ad96-565cc2dd1315)]
 library ExplorerTAP
 {
-	[uuid(50e9ab23-97b4-4dba-8f44-5cd342f30b78)]
+	[uuid(af106af2-2e3f-4963-a75c-1e3377be2749)]
 	coclass TaskbarAppearanceService
 	{
 		[default]
@@ -13,7 +13,7 @@ library ExplorerTAP
 		interface IVersionedApi;
 	}
 
-	[uuid(31213658-fd16-4328-b5e2-ed2903adbd2d)]
+	[uuid(d9be7678-9af3-43a6-a9bc-e09955033d20)]
 	coclass TAPSite
 	{
 		interface IObjectWithSite;

@@ -1232,7 +1232,7 @@ TaskbarType TaskbarAttributeWorker::GetTaskbarType(Window taskbar)
 }
 
 TaskbarAttributeWorker::TaskbarAttributeWorker(ConfigManager &cfgManager, HINSTANCE hInstance, DynamicLoader &loader, const std::optional<std::filesystem::path> &storageFolder) :
-	MessageWindow(TTB_WORKERWINDOW, TTB_WORKERWINDOW, hInstance, WS_POPUP, WS_EX_NOREDIRECTIONBITMAP),
+	MessageWindow(GTB_WORKERWINDOW, GTB_WORKERWINDOW, hInstance, WS_POPUP, WS_EX_NOREDIRECTIONBITMAP),
 	SetWindowCompositionAttribute(loader.SetWindowCompositionAttribute()),
 	ShouldSystemUseDarkMode(loader.ShouldSystemUseDarkMode()),
 	m_PowerSaver(false),
@@ -1260,14 +1260,14 @@ TaskbarAttributeWorker::TaskbarAttributeWorker(ConfigManager &cfgManager, HINSTA
 	m_FindInStartViewCoordinator(nullptr),
 	m_TaskViewViewCoordinator(nullptr),
 	m_TaskbarCreatedMessage(Window::RegisterMessage(WM_TASKBARCREATED)),
-	m_RefreshRequestedMessage(Window::RegisterMessage(WM_TTBHOOKREQUESTREFRESH)),
-	m_TaskViewVisibilityChangeMessage(Window::RegisterMessage(WM_TTBHOOKTASKVIEWVISIBILITYCHANGE)),
-	m_IsTaskViewOpenedMessage(Window::RegisterMessage(WM_TTBHOOKISTASKVIEWOPENED)),
-	m_StartVisibilityChangeMessage(Window::RegisterMessage(WM_TTBSTARTVISIBILITYCHANGE)),
-	m_SearchVisibilityChangeMessage(Window::RegisterMessage(WM_TTBSEARCHVISIBILITYCHANGE)),
-	m_FindInStartVisibilityChangeMessage(Window::RegisterMessage(WM_TTBFINDINSTARTVISIBILITYCHANGE)),
-	m_ForceRefreshTaskbar(Window::RegisterMessage(WM_TTBFORCEREFRESHTASKBAR)),
-	m_ApplyColorPreview(Window::RegisterMessage(WM_TTBAPPLYCOLORPREVIEW)),
+	m_RefreshRequestedMessage(Window::RegisterMessage(WM_GTBHOOKREQUESTREFRESH)),
+	m_TaskViewVisibilityChangeMessage(Window::RegisterMessage(WM_GTBHOOKTASKVIEWVISIBILITYCHANGE)),
+	m_IsTaskViewOpenedMessage(Window::RegisterMessage(WM_GTBHOOKISTASKVIEWOPENED)),
+	m_StartVisibilityChangeMessage(Window::RegisterMessage(WM_GTBSTARTVISIBILITYCHANGE)),
+	m_SearchVisibilityChangeMessage(Window::RegisterMessage(WM_GTBSEARCHVISIBILITYCHANGE)),
+	m_FindInStartVisibilityChangeMessage(Window::RegisterMessage(WM_GTBFINDINSTARTVISIBILITYCHANGE)),
+	m_ForceRefreshTaskbar(Window::RegisterMessage(WM_GTBFORCEREFRESHTASKBAR)),
+	m_ApplyColorPreview(Window::RegisterMessage(WM_GTBAPPLYCOLORPREVIEW)),
 	m_LastExplorerPid(0),
 	m_HookDll(storageFolder, cfgManager.GetConfig().CopyDlls.value_or(true), L"ExplorerHooks.dll"),
 	m_InjectExplorerHook(m_HookDll.GetProc<PFN_INJECT_EXPLORER_HOOK>("InjectExplorerHook")),
@@ -1567,7 +1567,7 @@ void TaskbarAttributeWorker::ResetState(bool manual)
 		{
 			m_TaskViewActive = m_TaskViewViewCoordinator.Visibility() == winrt::WindowsUdk::UI::Shell::ViewVisibility::Visible;
 		}
-		else if (const auto hookWnd = Window::Find(TTBHOOK_TASKVIEWMONITOR, TTBHOOK_TASKVIEWMONITOR); hookWnd && m_IsTaskViewOpenedMessage)
+		else if (const auto hookWnd = Window::Find(GTBHOOK_TASKVIEWMONITOR, GTBHOOK_TASKVIEWMONITOR); hookWnd && m_IsTaskViewOpenedMessage)
 		{
 			m_TaskViewActive = hookWnd.send_message(*m_IsTaskViewOpenedMessage);
 		}

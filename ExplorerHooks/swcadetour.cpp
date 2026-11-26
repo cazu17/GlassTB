@@ -21,7 +21,7 @@ BOOL WINAPI SWCADetour::FunctionDetour(HWND hWnd, const WINDOWCOMPOSITIONATTRIBD
 {
 	if (data && data->Attrib == WCA_ACCENT_POLICY)
 	{
-		if (const auto worker = FindWindow(TTB_WORKERWINDOW.c_str(), TTB_WORKERWINDOW.c_str()))
+		if (const auto worker = FindWindow(GTB_WORKERWINDOW.c_str(), GTB_WORKERWINDOW.c_str()))
 		{
 			// avoid freezing Explorer if our main process is frozen
 			DWORD_PTR result = 0;
@@ -51,7 +51,7 @@ void SWCADetour::Install() noexcept
 
 	if (!s_RequestAttribute)
 	{
-		s_RequestAttribute = RegisterWindowMessage(WM_TTBHOOKREQUESTREFRESH.c_str());
+		s_RequestAttribute = RegisterWindowMessage(WM_GTBHOOKREQUESTREFRESH.c_str());
 		FAIL_FAST_LAST_ERROR_IF(!s_RequestAttribute);
 	}
 
