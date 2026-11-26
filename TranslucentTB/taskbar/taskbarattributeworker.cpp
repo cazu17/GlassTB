@@ -1,9 +1,11 @@
 #include "taskbarattributeworker.hpp"
+#include <format>
 #include <functional>
 #include <member_thunk/member_thunk.hpp>
 #include <set>
 #include <tlhelp32.h>
 
+#include "../compat/backend.hpp"
 #include "constants.hpp"
 #include "../localization.hpp"
 #include "../uwp/uwp.hpp"
@@ -427,7 +429,7 @@ TaskbarAppearance TaskbarAttributeWorker::GetConfig(taskbar_iterator taskbar) co
 
 	// on windows 11, search is considered open when start is, so we need to check for start first.
 	bool startOpened;
-	if (m_IsWindows11 && (m_CurrentSearchMonitor != nullptr || m_CurrentFindInStartMonitor != nullptr))
+	if (m_SystemInfo.isWindows11 && (m_CurrentSearchMonitor != nullptr || m_CurrentFindInStartMonitor != nullptr))
 	{
 		// checking the search monitor is more reliable on windows 11 (if available)
 		// so check the start monitor to see if it's open and then use the search monitor
@@ -868,7 +870,7 @@ void TaskbarAttributeWorker::CreateSearchManager()
 
 	if (m_SearchVisibilityChangeMessage)
 	{
-		if (m_IsWindows11)
+		if (m_SystemInfo.isWindows11)
 		{
 			try
 			{
@@ -963,7 +965,7 @@ void TaskbarAttributeWorker::CreateTaskViewManager()
 
 	m_TaskViewViewCoordinator = nullptr;
 
-	if (m_TaskViewVisibilityChangeMessage && m_IsWindows11)
+	if (m_TaskViewVisibilityChangeMessage && m_SystemInfo.isWindows11)
 	{
 		try
 		{
@@ -1273,8 +1275,8 @@ TaskbarAttributeWorker::TaskbarAttributeWorker(ConfigManager &cfgManager, HINSTA
 	m_InjectExplorerHook(m_HookDll.GetProc<PFN_INJECT_EXPLORER_HOOK>("InjectExplorerHook")),
 	m_TAPDll(storageFolder, cfgManager.GetConfig().CopyDlls.value_or(true), L"ExplorerTAP.dll"),
 	m_InjectExplorerTAP(m_TAPDll.GetProc<PFN_INJECT_EXPLORER_TAP>("InjectExplorerTAP")),
-	m_IsWindows11(win32::IsAtLeastBuild(22000)),
-	m_IsBlurAccentStateSupported(!m_IsWindows11)
+	m_SystemInfo(compat::GetSystemInfo()),
+	m_Capabilities(compat::ComputeCapabilities(m_SystemInfo, m_TaskbarType))
 {
 	const auto stateThunk = CreateThunk(&TaskbarAttributeWorker::OnWindowStateChange);
 	m_ResizeMoveHook = CreateHook(EVENT_OBJECT_LOCATIONCHANGE, stateThunk);
@@ -1296,15 +1298,6 @@ TaskbarAttributeWorker::TaskbarAttributeWorker(ConfigManager &cfgManager, HINSTA
 	}
 
 	CreateAppVisibility();
-
-	if (win32::IsExactBuild(22000))
-	{
-		// Windows 11 RTM. sometimes very laggy at release, fixed in KB5006746 (22000.282)
-		if (const auto [version, hr] = win32::GetWindowsBuild(); SUCCEEDED(hr))
-		{
-			m_IsBlurAccentStateSupported = version.Revision >= 282;
-		}
-	}
 
 	// we don't want to consider the first state reset as an Explorer restart.
 	ResetState(true);
@@ -1479,11 +1472,28 @@ void TaskbarAttributeWorker::ResetState(bool manual)
 					}
 				}
 
+				const bool explorerChanged = pid != m_LastExplorerPid;
 				m_LastExplorerPid = pid;
 
+				const auto previousType = m_TaskbarType;
 				m_TaskbarType = GetTaskbarType(main_taskbar);
+				m_Capabilities = compat::ComputeCapabilities(m_SystemInfo, m_TaskbarType);
+				const auto backend = compat::SelectBackend(m_TaskbarType, m_Capabilities);
 
-				if (m_TaskbarType == TaskbarType::XAML)
+				if (explorerChanged || m_TaskbarType != previousType)
+				{
+					const auto &version = m_SystemInfo.version;
+					const auto versionText = version ? std::format(L"{}.{}.{}.{}",
+						version->major, version->minor, version->build, version->revision) : L"Unknown";
+					MessagePrint(spdlog::level::info, std::format(
+						L"Taskbar compatibility: Windows={}, Windows11={}, native={}, process={}, taskbar={}, "
+						L"blurAccentState={}, xamlTaskbarService={}, classicAccentPolicy={}, backend={}",
+						versionText, m_SystemInfo.isWindows11, m_SystemInfo.nativeArchitecture, m_SystemInfo.processArchitecture,
+						compat::ToString(m_TaskbarType), m_Capabilities.blurAccentState, m_Capabilities.xamlTaskbarService,
+						m_Capabilities.classicAccentPolicy, compat::ToString(backend)));
+				}
+
+				if (backend == compat::Backend::XamlTap)
 				{
 					const HRESULT hr = m_InjectExplorerTAP(main_taskbar, IID_PPV_ARGS(m_TaskbarService.put()));
 					if (hr == HRESULT_FROM_WIN32(ERROR_PRODUCT_VERSION))
@@ -1509,9 +1519,9 @@ void TaskbarAttributeWorker::ResetState(bool manual)
 						HresultVerify(m_TaskbarService->KillExplorerWhenPackageUninstalls(fullName->c_str()), spdlog::level::warn, L"Couldn't configure TAP to kill Explorer once " APP_NAME L" is uninstalled.");
 					}
 				}
-				else if (m_TaskbarType != TaskbarType::Unknown)
+				else if (backend != compat::Backend::None)
 				{
-					if (!m_IsBlurAccentStateSupported)
+					if (!m_Capabilities.blurAccentState)
 					{
 						m_ConfigManager.UpgradeBlur();
 					}
