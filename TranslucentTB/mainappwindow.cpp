@@ -96,6 +96,10 @@ void MainAppWindow::RegisterMenuHandlers()
 	m_TaskbarSettingsChangedRevoker = menu.TaskbarSettingsChanged(winrt::auto_revoke, { this, &MainAppWindow::TaskbarSettingsChanged });
 	m_ColorRequestedRevoker = menu.ColorRequested(winrt::auto_revoke, { this, &MainAppWindow::ColorRequested });
 	m_OpenSettingsRequestedRevoker = menu.OpenSettingsRequested(winrt::auto_revoke, { this, &MainAppWindow::OpenSettings });
+	m_ProfileSelectedRevoker = menu.ProfileSelected(winrt::auto_revoke, [this](const winrt::hstring &name)
+	{
+		HandleProfileAction(L"activate", std::wstring(name));
+	});
 
 	m_OpenLogFileRequestedRevoker = menu.OpenLogFileRequested(winrt::auto_revoke, { this, &MainAppWindow::OpenLogFileRequested });
 	m_LogLevelChangedRevoker = menu.LogLevelChanged(winrt::auto_revoke, { this, &MainAppWindow::LogLevelChanged });
@@ -115,6 +119,9 @@ void MainAppWindow::RegisterMenuHandlers()
 
 void MainAppWindow::TaskbarSettingsChanged(const txmp::TaskbarState &state, const txmp::TaskbarAppearance &appearance)
 {
+	// A manual change means the configuration no longer matches the last applied profile.
+	m_App.GetConfigManager().GetConfig().ActiveProfile.clear();
+
 	auto &config = GetConfigForState(state);
 
 	// restore color because the context menu doesn't transmit that info
@@ -364,6 +371,7 @@ void MainAppWindow::ConfigurationChanged()
 	UpdateTrayVisibility(!config.HideTray.value_or(false));
 	SetXamlContextMenuOverride(config.UseXamlContextMenu);
 	PublishSettings();
+	PublishTrayProfiles();
 }
 
 void MainAppWindow::RemoveHideTrayIconOverride()

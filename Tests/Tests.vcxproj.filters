@@ -32,6 +32,12 @@
     <ClCompile Include="util\color.cpp">
       <Filter>Util Tests</Filter>
     </ClCompile>
+    <ClCompile Include="config\backups.cpp">
+      <Filter>Config Tests</Filter>
+    </ClCompile>
+    <ClCompile Include="config\profile.cpp">
+      <Filter>Config Tests</Filter>
+    </ClCompile>
     <ClCompile Include="config\rapidjsonhelper.cpp">
       <Filter>Config Tests</Filter>
     </ClCompile>

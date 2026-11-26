@@ -157,6 +157,29 @@ namespace winrt::TranslucentTB::Xaml::Pages::implementation
 		m_OpenSettingsRequested();
 	}
 
+	void TrayFlyoutPage::SetProfiles(const wfc::IVectorView<hstring> &names, const hstring &active, bool canApply)
+	{
+		const auto items = ProfilesMenu().Items();
+		items.Clear();
+		for (const auto &name : names)
+		{
+			muxc::RadioMenuFlyoutItem item;
+			item.Text(name);
+			item.Tag(box_value(name));
+			item.GroupName(L"GlassTBProfiles");
+			item.IsChecked(name == active);
+			item.IsEnabled(canApply);
+			item.Click({ this, &TrayFlyoutPage::ProfileClicked });
+			items.Append(item);
+		}
+		ProfilesMenu().IsEnabled(names.Size() != 0);
+	}
+
+	void TrayFlyoutPage::ProfileClicked(const IInspectable &sender, const wux::RoutedEventArgs &)
+	{
+		m_ProfileSelected(unbox_value<hstring>(sender.as<wux::FrameworkElement>().Tag()));
+	}
+
 	void TrayFlyoutPage::ColorClicked(const IInspectable &sender, const wux::RoutedEventArgs &)
 	{
 		if (const auto item = sender.try_as<wuxc::MenuFlyoutItemBase>())

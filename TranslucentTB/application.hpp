@@ -17,6 +17,7 @@
 #include "managers/configmanager.hpp"
 #include "mainappwindow.hpp"
 #include "managers/startupmanager.hpp"
+#include "managers/profilemanager.hpp"
 #include "taskbar/taskbarattributeworker.hpp"
 #include "uwp/dynamicdependency.hpp"
 #include "uwp/xamlthreadpool.hpp"
@@ -26,6 +27,7 @@ class Application final {
 	static winrt::TranslucentTB::Xaml::App CreateXamlApp();
 
 	ConfigManager m_Config;
+	ProfileManager m_Profiles;
 
 	DynamicLoader m_Loader;
 
@@ -55,6 +57,7 @@ public:
 	static void OpenDiscordServer();
 
 	constexpr ConfigManager &GetConfigManager() noexcept { return m_Config; }
+	constexpr ProfileManager &GetProfileManager() noexcept { return m_Profiles; }
 	constexpr StartupManager &GetStartupManager() noexcept { return m_Startup; }
 	constexpr TaskbarAttributeWorker &GetWorker() noexcept { return m_Worker; }
 

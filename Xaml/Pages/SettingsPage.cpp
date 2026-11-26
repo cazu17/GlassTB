@@ -47,7 +47,7 @@ namespace winrt::TranslucentTB::Xaml::Pages::implementation
 
 	bool SettingsPage::Close()
 	{
-		if (m_ResetDialogOpen)
+		if (m_ResetDialogOpen || m_DeleteDialogOpen)
 		{
 			return false;
 		}
@@ -130,9 +130,12 @@ namespace winrt::TranslucentTB::Xaml::Pages::implementation
 
 	void SettingsPage::NavigationChanged(const muxc::NavigationView &, const muxc::NavigationViewSelectionChangedEventArgs &args)
 	{
-		const bool appearance = args.SelectedItem() == AppearanceItem();
-		HomeSection().Visibility(VisibleWhen(!appearance));
+		const auto selected = args.SelectedItem();
+		const bool appearance = selected == AppearanceItem();
+		const bool profiles = selected == ProfilesItem();
+		HomeSection().Visibility(VisibleWhen(!appearance && !profiles));
 		AppearanceSection().Visibility(VisibleWhen(appearance));
+		ProfilesSection().Visibility(VisibleWhen(profiles));
 		UpdatePreview();
 	}
 
@@ -345,6 +348,154 @@ namespace winrt::TranslucentTB::Xaml::Pages::implementation
 			LoadControls();
 			UpdatePreview();
 			EditStatus().Text(Text(L"RestoredDraft"));
+		}
+	}
+
+	void SettingsPage::SetProfiles(const wfc::IVectorView<ProfileInfo> &profiles, const hstring &active, bool canSave)
+	{
+		const auto previous = SelectedProfile();
+		m_Profiles.assign(begin(profiles), end(profiles));
+		m_ActiveProfile = active;
+		m_CanSaveProfiles = canSave;
+
+		m_Updating = true;
+		const auto items = ProfileList().Items();
+		items.Clear();
+		int selectedIndex = -1;
+		for (std::size_t i = 0; i < m_Profiles.size(); ++i)
+		{
+			const auto &profile = m_Profiles[i];
+			std::wstring label { profile.Name };
+			if (profile.BuiltIn)
+			{
+				label += L" \u00B7 ";
+				label += Text(L"ProfileBuiltIn");
+			}
+			if (profile.Name == m_ActiveProfile)
+			{
+				label += L" \u00B7 ";
+				label += Text(L"ProfileActive");
+			}
+			items.Append(box_value(hstring { label }));
+
+			if (previous && previous->Name == profile.Name)
+			{
+				selectedIndex = static_cast<int>(i);
+			}
+		}
+		ProfileList().SelectedIndex(selectedIndex);
+		m_Updating = false;
+
+		ActiveProfileText().Text(m_ActiveProfile.empty() ? Text(L"ProfileNoneActive") : winrt::format(L"{}: {}", Text(L"ProfileActiveLabel"), m_ActiveProfile));
+		SavingHintProfiles();
+		RefreshProfileButtons();
+	}
+
+	void SettingsPage::SavingHintProfiles()
+	{
+		if (!m_CanSaveProfiles)
+		{
+			ProfileStatus().Text(Text(L"ProfilesSavingDisabled"));
+		}
+	}
+
+	std::optional<ProfileInfo> SettingsPage::SelectedProfile()
+	{
+		const int index = ProfileList().SelectedIndex();
+		if (index >= 0 && static_cast<std::size_t>(index) < m_Profiles.size())
+		{
+			return m_Profiles[static_cast<std::size_t>(index)];
+		}
+		return std::nullopt;
+	}
+
+	void SettingsPage::RefreshProfileButtons()
+	{
+		const auto selected = SelectedProfile();
+		const bool idle = !m_ProfileBusy && m_CanSaveProfiles;
+		ActivateProfileButton().IsEnabled(idle && selected.has_value());
+		DuplicateProfileButton().IsEnabled(idle && selected.has_value());
+		ExportProfileButton().IsEnabled(!m_ProfileBusy && selected.has_value());
+		DeleteProfileButton().IsEnabled(idle && selected.has_value() && !selected->BuiltIn);
+		ImportProfileButton().IsEnabled(idle);
+
+		const std::wstring_view name = NewProfileName().Text();
+		SaveProfileButton().IsEnabled(idle && !name.empty() && name.front() != L' ' && name.back() != L' ');
+	}
+
+	void SettingsPage::RequestProfileAction(std::wstring_view action, const hstring &name)
+	{
+		m_ProfileBusy = true;
+		ProfileStatus().Text(Text(L"ProfileWorking"));
+		RefreshProfileButtons();
+		m_ProfileActionRequested(hstring { action }, name);
+	}
+
+	void SettingsPage::FinishProfileAction(bool success, const hstring &messageKey, const hstring &detail)
+	{
+		m_ProfileBusy = false;
+		std::wstring message { Text(std::wstring(L"Profile") + std::wstring(messageKey)) };
+		if (!detail.empty())
+		{
+			message += L" ";
+			message += detail;
+		}
+		ProfileStatus().Text(message);
+		if (success && messageKey == L"Saved")
+		{
+			NewProfileName().Text(L"");
+		}
+		RefreshProfileButtons();
+	}
+
+	void SettingsPage::ProfileSelectionChanged(const IInspectable &, const wuxc::SelectionChangedEventArgs &)
+	{
+		if (!m_Updating)
+		{
+			RefreshProfileButtons();
+		}
+	}
+
+	void SettingsPage::NewProfileNameChanged(const IInspectable &, const wuxc::TextChangedEventArgs &)
+	{
+		RefreshProfileButtons();
+	}
+
+	void SettingsPage::ProfileButtonClicked(const IInspectable &sender, const wux::RoutedEventArgs &)
+	{
+		const auto action = unbox_value<hstring>(sender.as<wux::FrameworkElement>().Tag());
+		if (action == L"save")
+		{
+			RequestProfileAction(action, NewProfileName().Text());
+		}
+		else if (action == L"import")
+		{
+			RequestProfileAction(action, { });
+		}
+		else if (const auto selected = SelectedProfile())
+		{
+			RequestProfileAction(action, selected->Name);
+		}
+	}
+
+	fire_and_forget SettingsPage::DeleteProfileClicked(const IInspectable &, const wux::RoutedEventArgs &)
+	{
+		const auto self = get_strong();
+		const auto selected = SelectedProfile();
+		if (!selected || selected->BuiltIn)
+		{
+			co_return;
+		}
+
+		m_DeleteDialogOpen = true;
+		DeleteProfileDialog().XamlRoot(XamlRoot());
+		DeleteProfileDialog().Content(box_value(winrt::format(L"{} {}", Text(L"DeleteProfileQuestion"), selected->Name)));
+		const auto result = co_await DeleteProfileDialog().ShowAsync();
+		m_DeleteDialogOpen = false;
+
+		if (result == wuxc::ContentDialogResult::Primary)
+		{
+			RequestProfileAction(L"delete", selected->Name);
 		}
 	}
 }
