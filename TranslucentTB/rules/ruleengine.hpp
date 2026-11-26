@@ -2,6 +2,7 @@
 #include "arch.h"
 #include <filesystem>
 #include <functional>
+#include <map>
 #include <optional>
 #include <string>
 #include <vector>
@@ -34,6 +35,7 @@ public:
 		bool adaptiveActive = false;
 		Util::Color adaptiveColor;
 		std::wstring adaptiveSource;
+		std::uint64_t evaluations = 0;
 	};
 
 	RuleEngine(HINSTANCE hInstance, ConfigManager &config, ProfileManager &profiles, TaskbarAttributeWorker &worker);
@@ -83,6 +85,7 @@ private:
 	std::wstring m_WallpaperSource;
 	bool m_WallpaperLoaded = false;
 	bool m_AdaptiveWasEnabled = false;
+	std::uint64_t m_Evaluations = 0;
 	Util::Color m_AdaptiveTint;
 	void LoadWallpaperColors();
 	bool AdaptiveActive() const;

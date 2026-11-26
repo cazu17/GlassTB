@@ -52,6 +52,7 @@ Ninguna funcionalidad se ha probado todavía en Windows real: CI solo compila (x
 | Color adaptativo | No verificado | No verificado | No verificado |
 | Modo seguro y detección de bucles | No verificado | No verificado | No verificado |
 | Migración desde TranslucentTB | No verificado | No verificado | No verificado |
-| Configuración independiente por pantalla | No compatible (pendiente) | No compatible (pendiente) | No compatible (pendiente) |
+| Perfil independiente por pantalla | No verificado | No verificado | No verificado |
 | Degradados, neón, Liquid Glass, barra flotante/segmentada | No compatible (no implementado: requiere modificar el árbol XAML de Explorer; ver `riesgos.md`) | No compatible | No compatible |
-| Atajos globales configurables | No compatible (pendiente; existe el atajo heredado de reinicio de estado) | — | — |
+| Atajos globales configurables | No verificado | No verificado | No verificado |
+| Métricas de rendimiento (sección Rendimiento) | No verificado | No verificado | No verificado |

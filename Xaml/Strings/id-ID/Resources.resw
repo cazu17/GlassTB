@@ -1039,4 +1039,73 @@ Perubahan dimuat ulang secara otomatis ketika Anda menyimpan berkas</value>
   <data name="SettingsPage_HotkeysSaved" xml:space="preserve">
     <value>Shortcuts saved.</value>
   </data>
+  <data name="SettingsPage_PerformanceItem.Content" xml:space="preserve">
+    <value>Performance</value>
+  </data>
+  <data name="SettingsPage_PerformanceItem.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>Performance</value>
+  </data>
+  <data name="SettingsPage_PerformanceHeading.Text" xml:space="preserve">
+    <value>Performance</value>
+  </data>
+  <data name="SettingsPage_PerformanceIntro.Text" xml:space="preserve">
+    <value>Real measurements of the GlassTB process, taken every 2 seconds only while this section is open. The engine and this window share the process, so memory includes the open UI; with the window closed usage is lower.</value>
+  </data>
+  <data name="SettingsPage_MetricCpu" xml:space="preserve">
+    <value>CPU (average, all cores)</value>
+  </data>
+  <data name="SettingsPage_MetricPrivate" xml:space="preserve">
+    <value>Private memory</value>
+  </data>
+  <data name="SettingsPage_MetricWorkingSet" xml:space="preserve">
+    <value>Working set</value>
+  </data>
+  <data name="SettingsPage_MetricHandles" xml:space="preserve">
+    <value>Handles</value>
+  </data>
+  <data name="SettingsPage_MetricThreads" xml:space="preserve">
+    <value>Threads</value>
+  </data>
+  <data name="SettingsPage_MetricGui" xml:space="preserve">
+    <value>GDI / USER objects</value>
+  </data>
+  <data name="SettingsPage_MetricRefreshes" xml:space="preserve">
+    <value>Taskbar updates since start</value>
+  </data>
+  <data name="SettingsPage_MetricEvaluations" xml:space="preserve">
+    <value>Rule evaluations since start</value>
+  </data>
+  <data name="SettingsPage_MetricEffects" xml:space="preserve">
+    <value>Effects</value>
+  </data>
+  <data name="SettingsPage_MetricActive" xml:space="preserve">
+    <value>active</value>
+  </data>
+  <data name="SettingsPage_MetricPaused" xml:space="preserve">
+    <value>paused</value>
+  </data>
+  <data name="SettingsPage_MetricSafeMode" xml:space="preserve">
+    <value>safe mode</value>
+  </data>
+  <data name="SettingsPage_DisplaysItem.Content" xml:space="preserve">
+    <value>Displays</value>
+  </data>
+  <data name="SettingsPage_DisplaysItem.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>Displays</value>
+  </data>
+  <data name="SettingsPage_DisplaysHeading.Text" xml:space="preserve">
+    <value>Displays</value>
+  </data>
+  <data name="SettingsPage_DisplaysIntro.Text" xml:space="preserve">
+    <value>Assign a different profile to the taskbar on each display. "Global" uses the general appearance. Adaptive color and rules apply on top. Windows assigns the \\.\DISPLAYn names and they may change if displays are reconnected in a different order.</value>
+  </data>
+  <data name="SettingsPage_DisplayGlobal" xml:space="preserve">
+    <value>Global (general appearance)</value>
+  </data>
+  <data name="SettingsPage_DisplaysNone" xml:space="preserve">
+    <value>No displays detected.</value>
+  </data>
+  <data name="SettingsPage_DisplaysCannotSave" xml:space="preserve">
+    <value>Saving is disabled or the configuration comes from a newer version.</value>
+  </data>
 </root>

@@ -6,7 +6,7 @@
 - Identidad GlassTB (nombre, ejecutable, paquete, GUID e identificadores IPC propios) y aviso de coexistencia con TranslucentTB.
 - Motor de compatibilidad (`compat/`): versión, arquitectura, tipo de barra, capacidades y backend, con diagnóstico en el log.
 - Ventana de configuración: Inicio (diagnóstico), Apariencia (editor con vista previa, aplicar/cancelar/restablecer),
-  Perfiles, Color adaptativo y Automatización.
+  Perfiles, Pantallas (perfil por monitor), Color adaptativo, Automatización, Atajos y Rendimiento (métricas reales del proceso).
 - Datos en `%LOCALAPPDATA%\GlassTB` con `schema_version`, migración desde `settings.json`/TranslucentTB, copias rotativas y registros.
 - Perfiles: 9 predefinidos, guardar/duplicar/eliminar/importar/exportar, selector en la bandeja.
 - Automatización por eventos (`rules.json`) con Y/O/NO, prioridades, resolución determinista y debounce; editor visual básico.

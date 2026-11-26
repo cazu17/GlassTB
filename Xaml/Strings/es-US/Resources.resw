@@ -1039,4 +1039,73 @@ Los cambios se recargan automáticamente cuando guarda el archivo</value>
   <data name="SettingsPage_HotkeysSaved" xml:space="preserve">
     <value>Atajos guardados.</value>
   </data>
+  <data name="SettingsPage_PerformanceItem.Content" xml:space="preserve">
+    <value>Rendimiento</value>
+  </data>
+  <data name="SettingsPage_PerformanceItem.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>Rendimiento</value>
+  </data>
+  <data name="SettingsPage_PerformanceHeading.Text" xml:space="preserve">
+    <value>Rendimiento</value>
+  </data>
+  <data name="SettingsPage_PerformanceIntro.Text" xml:space="preserve">
+    <value>Medidas reales del proceso de GlassTB, tomadas cada 2 segundos solo mientras esta sección está abierta. El motor y esta ventana comparten proceso, por lo que la memoria incluye la interfaz abierta; con la ventana cerrada el consumo es menor.</value>
+  </data>
+  <data name="SettingsPage_MetricCpu" xml:space="preserve">
+    <value>CPU (promedio, todos los núcleos)</value>
+  </data>
+  <data name="SettingsPage_MetricPrivate" xml:space="preserve">
+    <value>Memoria privada</value>
+  </data>
+  <data name="SettingsPage_MetricWorkingSet" xml:space="preserve">
+    <value>Conjunto de trabajo</value>
+  </data>
+  <data name="SettingsPage_MetricHandles" xml:space="preserve">
+    <value>Handles</value>
+  </data>
+  <data name="SettingsPage_MetricThreads" xml:space="preserve">
+    <value>Hilos</value>
+  </data>
+  <data name="SettingsPage_MetricGui" xml:space="preserve">
+    <value>Objetos GDI / USER</value>
+  </data>
+  <data name="SettingsPage_MetricRefreshes" xml:space="preserve">
+    <value>Actualizaciones de la barra desde el inicio</value>
+  </data>
+  <data name="SettingsPage_MetricEvaluations" xml:space="preserve">
+    <value>Evaluaciones de reglas desde el inicio</value>
+  </data>
+  <data name="SettingsPage_MetricEffects" xml:space="preserve">
+    <value>Efectos</value>
+  </data>
+  <data name="SettingsPage_MetricActive" xml:space="preserve">
+    <value>activos</value>
+  </data>
+  <data name="SettingsPage_MetricPaused" xml:space="preserve">
+    <value>en pausa</value>
+  </data>
+  <data name="SettingsPage_MetricSafeMode" xml:space="preserve">
+    <value>modo seguro</value>
+  </data>
+  <data name="SettingsPage_DisplaysItem.Content" xml:space="preserve">
+    <value>Pantallas</value>
+  </data>
+  <data name="SettingsPage_DisplaysItem.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>Pantallas</value>
+  </data>
+  <data name="SettingsPage_DisplaysHeading.Text" xml:space="preserve">
+    <value>Pantallas</value>
+  </data>
+  <data name="SettingsPage_DisplaysIntro.Text" xml:space="preserve">
+    <value>Asigna un perfil distinto a la barra de cada pantalla. "Global" usa la apariencia general. El color adaptativo y las reglas se aplican encima. Los nombres \\.\DISPLAYn los asigna Windows y pueden cambiar si se reconectan las pantallas en otro orden.</value>
+  </data>
+  <data name="SettingsPage_DisplayGlobal" xml:space="preserve">
+    <value>Global (apariencia general)</value>
+  </data>
+  <data name="SettingsPage_DisplaysNone" xml:space="preserve">
+    <value>No se detectaron pantallas.</value>
+  </data>
+  <data name="SettingsPage_DisplaysCannotSave" xml:space="preserve">
+    <value>El guardado está desactivado o la configuración es de una versión más nueva.</value>
+  </data>
 </root>

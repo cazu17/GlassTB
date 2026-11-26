@@ -17,6 +17,7 @@
 #include "redefgetcurrenttime.h"
 
 #include "config/config.hpp"
+#include "diagnostics/processmetrics.hpp"
 #include "dynamicloader.hpp"
 #include "managers/startupmanager.hpp"
 #include "util/thread_independent_mutex.hpp"
@@ -98,6 +99,9 @@ private:
 	void PublishAdaptiveColor();
 	void HandleHotkeys(const std::vector<std::wstring> &values);
 	void PublishHotkeys(std::wstring key, std::wstring detail);
+	ProcessMetrics m_Metrics;
+	void PublishMetrics();
+	void PublishDisplays();
 
 	void OpenLogFileRequested();
 	void LogLevelChanged(const txmp::LogLevel &level);

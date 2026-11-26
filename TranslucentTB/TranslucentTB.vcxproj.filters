@@ -72,6 +72,9 @@
     <ClCompile Include="recovery\startupguard.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="diagnostics\processmetrics.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
     <ClCompile Include="managers\startupmanager.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -159,6 +162,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="recovery\startupguard.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="diagnostics\processmetrics.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="managers\startupmanager.hpp">

@@ -421,8 +421,21 @@ TaskbarAppearance TaskbarAttributeWorker::GetConfig(taskbar_iterator taskbar) co
 		return *m_AppearancePreview;
 	}
 
-	// An automation rule replaces the configuration in memory while it is active.
-	const auto& config = m_RuleOverride ? *m_RuleOverride : m_ConfigManager.GetConfig();
+	// Per-display profiles, then automation rules / adaptive color, replace the configuration in memory.
+	const Config *selected = m_RuleOverride ? &*m_RuleOverride : &m_ConfigManager.GetConfig();
+	if (!m_MonitorOverrides.empty())
+	{
+		MONITORINFOEXW info = { };
+		info.cbSize = sizeof(info);
+		if (GetMonitorInfoW(taskbar->first, &info))
+		{
+			if (const auto it = m_MonitorOverrides.find(std::wstring_view { info.szDevice }); it != m_MonitorOverrides.end())
+			{
+				selected = &it->second;
+			}
+		}
+	}
+	const auto& config = *selected;
 
 	if (config.BatterySaverAppearance.Enabled && (m_PowerSaver || m_EnergySaver))
 	{
@@ -648,6 +661,7 @@ void TaskbarAttributeWorker::RefreshAttribute(taskbar_iterator taskbar)
 	// do not pass any member of taskbar map by reference.
 	// See comment in InsertWindow.
 	const auto taskbarInfo = taskbar->second.Taskbar;
+	++m_RefreshCount;
 
 	const auto &cfg = GetConfig(taskbar);
 	SetAttribute(taskbar, cfg);
@@ -1446,9 +1460,10 @@ void TaskbarAttributeWorker::SetEffectsSuspended(bool suspended)
 	ConfigurationChanged();
 }
 
-void TaskbarAttributeWorker::SetRuleOverride(std::optional<Config> config)
+void TaskbarAttributeWorker::SetRuleOverride(std::optional<Config> config, std::map<std::wstring, Config, std::less<>> perMonitor)
 {
 	m_RuleOverride = std::move(config);
+	m_MonitorOverrides = std::move(perMonitor);
 	ConfigurationChanged();
 }
 

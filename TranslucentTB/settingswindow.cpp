@@ -152,6 +152,43 @@ void MainAppWindow::OpenSettings()
 				});
 			});
 
+			content.MetricsRequested([this]
+			{
+				m_App.DispatchToMainThread([this]
+				{
+					if (m_SettingsWindow)
+					{
+						PublishMetrics();
+					}
+				});
+			});
+
+			content.MonitorProfileChanged([this](const winrt::hstring &device, const winrt::hstring &profile)
+			{
+				m_App.DispatchToMainThread([this, device = std::wstring(device), profile = std::wstring(profile)]
+				{
+					if (m_SettingsWindow)
+					{
+						auto &manager = m_App.GetConfigManager();
+						auto &map = manager.GetConfig().MonitorProfiles;
+						const auto previous = map;
+						if (profile.empty())
+						{
+							map.erase(device);
+						}
+						else
+						{
+							map.insert_or_assign(device, profile);
+						}
+						if (!manager.SaveConfig())
+						{
+							map = previous;
+						}
+						PublishDisplays();
+					}
+				});
+			});
+
 			content.ApplyRequested([this](const winrt::Windows::Foundation::Collections::IVectorView<settings_edit_t> &edits)
 			{
 				std::vector<settings_edit_t> snapshot;
@@ -182,6 +219,7 @@ void MainAppWindow::OpenSettings()
 				PublishAutomation();
 				PublishAdaptiveColor();
 				PublishHotkeys({}, {});
+				PublishDisplays();
 			});
 		});
 }
@@ -455,6 +493,7 @@ void MainAppWindow::HandleProfileAction(const std::wstring &action, const std::w
 	PublishSettings();
 	PublishTrayProfiles();
 	PublishProfiles(ProfileActionResult { success, std::move(key), std::move(detail) });
+	PublishDisplays();
 }
 
 void MainAppWindow::PublishTrayProfiles()
@@ -841,6 +880,67 @@ void MainAppWindow::PublishHotkeys(std::wstring key, std::wstring detail)
 		if (const auto settingsPage = weak.get())
 		{
 			settingsPage.SetHotkeys(winrt::single_threaded_vector(std::move(values)).GetView(), key, detail);
+		}
+	});
+}
+
+void MainAppWindow::PublishMetrics()
+{
+	if (!m_SettingsDispatcher)
+	{
+		return;
+	}
+
+	const auto sample = m_Metrics.Take();
+	auto &worker = m_App.GetWorker();
+	m_SettingsDispatcher.TryEnqueue([weak = m_SettingsPage, sample, refreshes = worker.RefreshCount(),
+		evaluations = m_App.GetRuleEngine().GetStatus().evaluations, paused = worker.EffectsSuspended(), safe = worker.SafeMode()]
+	{
+		if (const auto settingsPage = weak.get())
+		{
+			settingsPage.SetMetrics(sample.cpuPercent, sample.privateBytes, sample.workingSet, sample.handles, sample.threads,
+				sample.gdiObjects, sample.userObjects, refreshes, evaluations, paused, safe);
+		}
+	});
+}
+
+void MainAppWindow::PublishDisplays()
+{
+	if (!m_SettingsDispatcher)
+	{
+		return;
+	}
+
+	struct Context {
+		const Config *config;
+		std::vector<winrt::TranslucentTB::Xaml::Pages::DisplayInfo> displays;
+	} context { &m_App.GetConfigManager().GetConfig(), { } };
+
+	EnumDisplayMonitors(nullptr, nullptr, [](HMONITOR monitor, HDC, LPRECT, LPARAM data) -> BOOL
+	{
+		auto &ctx = *reinterpret_cast<Context *>(data);
+		MONITORINFOEXW info = { };
+		info.cbSize = sizeof(info);
+		if (GetMonitorInfoW(monitor, &info))
+		{
+			const std::wstring device = info.szDevice;
+			const auto &rc = info.rcMonitor;
+			const auto it = ctx.config->MonitorProfiles.find(device);
+			ctx.displays.push_back({
+				winrt::hstring(device),
+				winrt::hstring(std::format(L"{}  ·  {}×{}{}", device, rc.right - rc.left, rc.bottom - rc.top, (info.dwFlags & MONITORINFOF_PRIMARY) ? L"  ·  ★" : L"")),
+				it != ctx.config->MonitorProfiles.end() ? winrt::hstring(it->second) : winrt::hstring { }
+			});
+		}
+		return TRUE;
+	}, reinterpret_cast<LPARAM>(&context));
+
+	m_SettingsDispatcher.TryEnqueue([weak = m_SettingsPage, displays = std::move(context.displays),
+		canSave = !context.config->DisableSaving && !m_App.GetConfigManager().IsReadOnlyNewerSchema()]() mutable
+	{
+		if (const auto settingsPage = weak.get())
+		{
+			settingsPage.SetDisplays(winrt::single_threaded_vector(std::move(displays)).GetView(), canSave);
 		}
 	});
 }

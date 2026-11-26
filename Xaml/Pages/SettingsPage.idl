@@ -45,6 +45,15 @@ namespace TranslucentTB.Xaml.Pages
 
 	delegate void AutomationActionRequestedDelegate(String action, Int32 index, Int32 value);
 	delegate void CreateRuleRequestedDelegate(NewRuleSpec spec);
+	struct DisplayInfo
+	{
+		String Device;
+		String Description;
+		String Profile;
+	};
+
+	delegate void MonitorProfileChangedDelegate(String device, String profile);
+	delegate void MetricsRequestedDelegate();
 	delegate void HotkeysChangedDelegate(Windows.Foundation.Collections.IVectorView<String> bindings);
 	delegate void AdaptiveColorChangedDelegate(Boolean enabled, Boolean useSecondary, Int32 intensity, Int32 saturation, Int32 contrast, Boolean excludeCurrent);
 	delegate void SettingsPreviewChangedDelegate(TranslucentTB.Xaml.Models.Primitives.TaskbarAppearance appearance);
@@ -75,6 +84,10 @@ namespace TranslucentTB.Xaml.Pages
 		event CreateRuleRequestedDelegate CreateRuleRequested;
 		event AdaptiveColorChangedDelegate AdaptiveColorChanged;
 		event HotkeysChangedDelegate HotkeysChanged;
+		event MetricsRequestedDelegate MetricsRequested;
+		event MonitorProfileChangedDelegate MonitorProfileChanged;
+		void SetDisplays(Windows.Foundation.Collections.IVectorView<DisplayInfo> displays, Boolean canSave);
+		void SetMetrics(Double cpuPercent, UInt64 privateBytes, UInt64 workingSet, UInt32 handles, UInt32 threads, UInt32 gdiObjects, UInt32 userObjects, UInt64 taskbarRefreshes, UInt64 ruleEvaluations, Boolean effectsPaused, Boolean safeMode);
 		void SetHotkeys(Windows.Foundation.Collections.IVectorView<String> bindings, String messageKey, String detail);
 	}
 }

@@ -37,6 +37,10 @@ namespace winrt::TranslucentTB::Xaml::Pages::implementation
 		DECL_EVENT(CreateRuleRequestedDelegate, CreateRuleRequested, m_CreateRuleRequested);
 		DECL_EVENT(AdaptiveColorChangedDelegate, AdaptiveColorChanged, m_AdaptiveColorChanged);
 		DECL_EVENT(HotkeysChangedDelegate, HotkeysChanged, m_HotkeysChanged);
+		DECL_EVENT(MetricsRequestedDelegate, MetricsRequested, m_MetricsRequested);
+		DECL_EVENT(MonitorProfileChangedDelegate, MonitorProfileChanged, m_MonitorProfileChanged);
+		void SetDisplays(const wfc::IVectorView<DisplayInfo> &displays, bool canSave);
+		void SetMetrics(double cpuPercent, std::uint64_t privateBytes, std::uint64_t workingSet, std::uint32_t handles, std::uint32_t threads, std::uint32_t gdiObjects, std::uint32_t userObjects, std::uint64_t taskbarRefreshes, std::uint64_t ruleEvaluations, bool effectsPaused, bool safeMode);
 		void SetHotkeys(const wfc::IVectorView<hstring> &bindings, const hstring &messageKey, const hstring &detail);
 		void SaveHotkeysClicked(const IInspectable &sender, const wux::RoutedEventArgs &args);
 
@@ -97,6 +101,7 @@ namespace winrt::TranslucentTB::Xaml::Pages::implementation
 		bool m_RulesEditable = false;
 		bool m_AutomationBusy = false;
 		wux::DispatcherTimer m_AdaptiveTimer{ nullptr };
+		wux::DispatcherTimer m_MetricsTimer{ nullptr };
 		void SendAdaptive(bool excludeCurrent);
 
 		static hstring SelectedTag(const wuxc::ComboBox &box);

@@ -14,9 +14,11 @@
                 <muxc:NavigationViewItem x:Name="HomeItem" x:Uid="SettingsPage_HomeItem" Icon="Home" />
                 <muxc:NavigationViewItem x:Name="AppearanceItem" x:Uid="SettingsPage_AppearanceItem" Icon="View" />
                 <muxc:NavigationViewItem x:Name="ProfilesItem" x:Uid="SettingsPage_ProfilesItem" Icon="Contact" />
+                <muxc:NavigationViewItem x:Name="DisplaysItem" x:Uid="SettingsPage_DisplaysItem" Icon="Switch" />
                 <muxc:NavigationViewItem x:Name="AdaptiveItem" x:Uid="SettingsPage_AdaptiveItem" Icon="Pictures" />
                 <muxc:NavigationViewItem x:Name="AutomationItem" x:Uid="SettingsPage_AutomationItem" Icon="Repair" />
                 <muxc:NavigationViewItem x:Name="HotkeysItem" x:Uid="SettingsPage_HotkeysItem" Icon="Keyboard" />
+                <muxc:NavigationViewItem x:Name="PerformanceItem" x:Uid="SettingsPage_PerformanceItem" Icon="Clock" />
             </muxc:NavigationView.MenuItems>
             <Grid>
                 <ScrollViewer x:Name="HomeSection" Padding="28,24" VerticalScrollBarVisibility="Auto">
@@ -125,6 +127,21 @@
                         <Slider x:Name="AdaptiveContrast" x:Uid="SettingsPage_AdaptiveContrast" Minimum="0" Maximum="100" StepFrequency="5" MaxWidth="320" HorizontalAlignment="Left" MinWidth="280" ValueChanged="AdaptiveSliderChanged" />
                         <Button x:Name="AdaptiveExclude" x:Uid="SettingsPage_AdaptiveExclude" Click="AdaptiveExcludeClicked" />
                         <TextBlock x:Uid="SettingsPage_AdaptiveNotes" TextWrapping="Wrap" />
+                    </StackPanel>
+                </ScrollViewer>
+                <ScrollViewer x:Name="DisplaysSection" Visibility="Collapsed" Padding="28,24" VerticalScrollBarVisibility="Auto">
+                    <StackPanel Spacing="12">
+                        <TextBlock x:Uid="SettingsPage_DisplaysHeading" Style="{ThemeResource TitleTextBlockStyle}" AutomationProperties.HeadingLevel="Level1" />
+                        <TextBlock x:Uid="SettingsPage_DisplaysIntro" TextWrapping="Wrap" />
+                        <StackPanel x:Name="DisplaysPanel" Spacing="16" />
+                        <TextBlock x:Name="DisplaysStatus" TextWrapping="Wrap" AutomationProperties.LiveSetting="Polite" />
+                    </StackPanel>
+                </ScrollViewer>
+                <ScrollViewer x:Name="PerformanceSection" Visibility="Collapsed" Padding="28,24" VerticalScrollBarVisibility="Auto">
+                    <StackPanel Spacing="12">
+                        <TextBlock x:Uid="SettingsPage_PerformanceHeading" Style="{ThemeResource TitleTextBlockStyle}" AutomationProperties.HeadingLevel="Level1" />
+                        <TextBlock x:Uid="SettingsPage_PerformanceIntro" TextWrapping="Wrap" />
+                        <TextBlock x:Name="MetricsText" TextWrapping="Wrap" IsTextSelectionEnabled="True" FontFamily="Consolas" />
                     </StackPanel>
                 </ScrollViewer>
                 <ScrollViewer x:Name="HotkeysSection" Visibility="Collapsed" Padding="28,24" VerticalScrollBarVisibility="Auto">

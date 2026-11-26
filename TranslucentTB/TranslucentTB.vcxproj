@@ -89,6 +89,7 @@
     <ClCompile Include="managers\profilemanager.cpp" />
     <ClCompile Include="rules\ruleengine.cpp" />
     <ClCompile Include="recovery\startupguard.cpp" />
+    <ClCompile Include="diagnostics\processmetrics.cpp" />
     <ClCompile Include="folderwatcher.cpp" />
     <ClCompile Include="mainappwindow.cpp" />
     <ClCompile Include="settingswindow.cpp" />
@@ -119,6 +120,7 @@
     <ClInclude Include="managers\profilemanager.hpp" />
     <ClInclude Include="rules\ruleengine.hpp" />
     <ClInclude Include="recovery\startupguard.hpp" />
+    <ClInclude Include="diagnostics\processmetrics.hpp" />
     <ClInclude Include="folderwatcher.hpp" />
     <ClInclude Include="mainappwindow.hpp" />
     <ClInclude Include="managers\startupmanager.hpp" />

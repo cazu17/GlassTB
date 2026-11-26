@@ -256,8 +256,9 @@ void RuleEngine::OpenRulesFile()
 
 void RuleEngine::BaseConfigurationChanged()
 {
-	const bool adaptive = m_Config.GetConfig().AdaptiveColor.Enabled;
-	if (m_HasOverride || adaptive || adaptive != m_AdaptiveWasEnabled)
+	const auto &config = m_Config.GetConfig();
+	const bool adaptive = config.AdaptiveColor.Enabled;
+	if (m_HasOverride || adaptive || adaptive != m_AdaptiveWasEnabled || !config.MonitorProfiles.empty())
 	{
 		Apply(m_ActiveIndex, true);
 	}
@@ -395,6 +396,7 @@ rules::SystemSnapshot RuleEngine::Snapshot() const
 
 void RuleEngine::Evaluate(bool force)
 {
+	++m_Evaluations;
 	const auto index = m_Paused || m_Rules.empty() ? std::nullopt : rules::Resolve(m_Rules, Snapshot());
 	// Deduplication: only touch the taskbar when the winning rule changes.
 	if (force || index != m_ActiveIndex)
@@ -408,12 +410,22 @@ void RuleEngine::Apply(std::optional<std::size_t> index, bool force)
 	const bool changed = index != m_ActiveIndex;
 	m_ActiveIndex = index;
 
-	// Layer 1: adaptive color replaces the tint color of every state (materials are kept).
 	const auto &base = m_Config.GetConfig();
-	const bool adaptive = AdaptiveActive();
 	m_AdaptiveWasEnabled = base.AdaptiveColor.Enabled;
-	std::optional<Config> adapted;
-	if (adaptive)
+
+	const auto findProfile = [this](std::wstring_view name) -> std::optional<Profile>
+	{
+		if (auto entry = m_Profiles.Find(name))
+		{
+			return std::move(entry->profile);
+		}
+		MessagePrint(spdlog::level::warn, std::format(L"Unknown profile {}", name));
+		return std::nullopt;
+	};
+
+	// Adaptive color: computed once per wallpaper/theme change.
+	std::optional<Util::Color> tint;
+	if (AdaptiveActive())
 	{
 		if (!m_WallpaperLoaded)
 		{
@@ -423,51 +435,67 @@ void RuleEngine::Apply(std::optional<std::size_t> index, bool force)
 		{
 			const auto &settings = base.AdaptiveColor;
 			const palette::Tuning tuning { settings.Saturation / 100.0f, settings.Contrast / 100.0f, settings.Intensity };
-			const bool dark = IsDarkTheme();
-			const auto tint = palette::ForTheme(settings.UseSecondary ? m_Wallpaper->secondary : m_Wallpaper->dominant, dark, tuning);
-			adapted = base;
-			for (TaskbarAppearance *a : { static_cast<TaskbarAppearance *>(&adapted->DesktopAppearance), static_cast<TaskbarAppearance *>(&adapted->VisibleWindowAppearance),
-				static_cast<TaskbarAppearance *>(&adapted->MaximisedWindowAppearance), static_cast<TaskbarAppearance *>(&adapted->StartOpenedAppearance),
-				static_cast<TaskbarAppearance *>(&adapted->SearchOpenedAppearance), static_cast<TaskbarAppearance *>(&adapted->TaskViewOpenedAppearance),
-				static_cast<TaskbarAppearance *>(&adapted->BatterySaverAppearance) })
-			{
-				a->Color = tint;
-			}
-			m_AdaptiveTint = tint;
+			tint = palette::ForTheme(settings.UseSecondary ? m_Wallpaper->secondary : m_Wallpaper->dominant, IsDarkTheme(), tuning);
+			m_AdaptiveTint = *tint;
 		}
 	}
 
-	if (index)
+	// Layers, from bottom to top: saved config (or the display's profile) -> adaptive color -> winning rule.
+	const auto layer = [&](Config config) -> Config
 	{
-		const auto &rule = m_Rules[*index];
-		// Layer 2: the winning rule is applied on top of the (possibly adapted) configuration.
-		auto effective = rules::BuildEffectiveConfig(adapted ? *adapted : base, rule, [this](std::wstring_view name) -> std::optional<Profile>
+		if (tint)
 		{
-			if (auto entry = m_Profiles.Find(name))
+			for (TaskbarAppearance *a : { static_cast<TaskbarAppearance *>(&config.DesktopAppearance), static_cast<TaskbarAppearance *>(&config.VisibleWindowAppearance),
+				static_cast<TaskbarAppearance *>(&config.MaximisedWindowAppearance), static_cast<TaskbarAppearance *>(&config.StartOpenedAppearance),
+				static_cast<TaskbarAppearance *>(&config.SearchOpenedAppearance), static_cast<TaskbarAppearance *>(&config.TaskViewOpenedAppearance),
+				static_cast<TaskbarAppearance *>(&config.BatterySaverAppearance) })
 			{
-				return std::move(entry->profile);
+				a->Color = *tint;
 			}
-			MessagePrint(spdlog::level::warn, std::format(L"Rule action refers to unknown profile {}", name));
-			return std::nullopt;
-		});
-		m_Worker.SetRuleOverride(std::move(effective));
-		m_HasOverride = true;
-		if (changed)
+		}
+		if (index)
 		{
-			MessagePrint(spdlog::level::info, std::format(L"Automation rule active: {}", rule.name));
+			config = rules::BuildEffectiveConfig(config, m_Rules[*index], findProfile);
+		}
+		return config;
+	};
+
+	std::map<std::wstring, Config, std::less<>> perMonitor;
+	if (!m_Paused)
+	{
+		for (const auto &[device, profileName] : base.MonitorProfiles)
+		{
+			if (const auto profile = findProfile(profileName))
+			{
+				Config display = base;
+				const auto keepName = display.ActiveProfile;
+				profile->ApplyTo(display);
+				display.ActiveProfile = keepName;
+				perMonitor.emplace(device, layer(std::move(display)));
+			}
 		}
 	}
-	else if (adapted)
+
+	if (index || tint || !perMonitor.empty())
 	{
-		m_Worker.SetRuleOverride(std::move(adapted));
+		std::optional<Config> global;
+		if (index || tint)
+		{
+			global = layer(base);
+		}
+		m_Worker.SetRuleOverride(std::move(global), std::move(perMonitor));
 		m_HasOverride = true;
+		if (changed && index)
+		{
+			MessagePrint(spdlog::level::info, std::format(L"Automation rule active: {}", m_Rules[*index].name));
+		}
 	}
 	else if (m_HasOverride || force)
 	{
 		if (m_HasOverride)
 		{
 			m_Worker.SetRuleOverride(std::nullopt);
-			MessagePrint(spdlog::level::info, L"No automation rule or adaptive color active");
+			MessagePrint(spdlog::level::info, L"No automation rule, adaptive color or display profile active");
 		}
 		m_HasOverride = false;
 	}
@@ -488,6 +516,7 @@ RuleEngine::Status RuleEngine::GetStatus() const
 	status.adaptiveActive = AdaptiveActive() && m_Wallpaper.has_value();
 	status.adaptiveColor = m_AdaptiveTint;
 	status.adaptiveSource = m_WallpaperSource;
+	status.evaluations = m_Evaluations;
 	if (m_ActiveIndex && *m_ActiveIndex < m_Rules.size())
 	{
 		status.activeRule = m_Rules[*m_ActiveIndex].name;

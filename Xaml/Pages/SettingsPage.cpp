@@ -56,6 +56,14 @@ namespace winrt::TranslucentTB::Xaml::Pages::implementation
 		}
 
 		m_Closing = true;
+		if (m_MetricsTimer)
+		{
+			m_MetricsTimer.Stop();
+		}
+		if (m_AdaptiveTimer)
+		{
+			m_AdaptiveTimer.Stop();
+		}
 		return base_type::Close();
 	}
 
@@ -139,7 +147,34 @@ namespace winrt::TranslucentTB::Xaml::Pages::implementation
 		const bool automation = selected == AutomationItem();
 		const bool adaptive = selected == AdaptiveItem();
 		const bool hotkeys = selected == HotkeysItem();
-		HomeSection().Visibility(VisibleWhen(!appearance && !profiles && !automation && !adaptive && !hotkeys));
+		const bool performance = selected == PerformanceItem();
+		const bool displays = selected == DisplaysItem();
+		HomeSection().Visibility(VisibleWhen(!appearance && !profiles && !automation && !adaptive && !hotkeys && !performance && !displays));
+		DisplaysSection().Visibility(VisibleWhen(displays));
+		PerformanceSection().Visibility(VisibleWhen(performance));
+
+		// Metrics are only sampled while the section is visible (every 2 s).
+		if (performance)
+		{
+			if (!m_MetricsTimer)
+			{
+				m_MetricsTimer = wux::DispatcherTimer();
+				m_MetricsTimer.Interval(std::chrono::seconds(2));
+				m_MetricsTimer.Tick([weak = get_weak()](const IInspectable &, const IInspectable &)
+				{
+					if (const auto self = weak.get())
+					{
+						self->m_MetricsRequested();
+					}
+				});
+			}
+			m_MetricsRequested();
+			m_MetricsTimer.Start();
+		}
+		else if (m_MetricsTimer)
+		{
+			m_MetricsTimer.Stop();
+		}
 		HotkeysSection().Visibility(VisibleWhen(hotkeys));
 		AdaptiveSection().Visibility(VisibleWhen(adaptive));
 		AppearanceSection().Visibility(VisibleWhen(appearance));
@@ -825,5 +860,71 @@ namespace winrt::TranslucentTB::Xaml::Pages::implementation
 	{
 		std::vector<hstring> bindings { HotkeyOpenSettings().Text(), HotkeyToggleEffects().Text(), HotkeyNextProfile().Text(), HotkeyToggleAutomation().Text() };
 		m_HotkeysChanged(single_threaded_vector(std::move(bindings)).GetView());
+	}
+
+	void SettingsPage::SetMetrics(double cpuPercent, std::uint64_t privateBytes, std::uint64_t workingSet, std::uint32_t handles, std::uint32_t threads, std::uint32_t gdiObjects, std::uint32_t userObjects, std::uint64_t taskbarRefreshes, std::uint64_t ruleEvaluations, bool effectsPaused, bool safeMode)
+	{
+		const auto mb = [](std::uint64_t bytes) { return static_cast<double>(bytes) / (1024.0 * 1024.0); };
+		MetricsText().Text(winrt::format(
+			L"{}: {:.2f} %\n{}: {:.1f} MB\n{}: {:.1f} MB\n{}: {}\n{}: {}\n{}: {} / {}\n{}: {}\n{}: {}\n{}: {}",
+			Text(L"MetricCpu"), cpuPercent,
+			Text(L"MetricPrivate"), mb(privateBytes),
+			Text(L"MetricWorkingSet"), mb(workingSet),
+			Text(L"MetricHandles"), handles,
+			Text(L"MetricThreads"), threads,
+			Text(L"MetricGui"), gdiObjects, userObjects,
+			Text(L"MetricRefreshes"), taskbarRefreshes,
+			Text(L"MetricEvaluations"), ruleEvaluations,
+			Text(L"MetricEffects"), Text(safeMode ? L"MetricSafeMode" : effectsPaused ? L"MetricPaused" : L"MetricActive")));
+	}
+
+	void SettingsPage::SetDisplays(const wfc::IVectorView<DisplayInfo> &displays, bool canSave)
+	{
+		m_Updating = true;
+		const auto children = DisplaysPanel().Children();
+		children.Clear();
+		for (const auto &display : displays)
+		{
+			wuxc::StackPanel row;
+			row.Spacing(4);
+
+			wuxc::TextBlock label;
+			label.Text(display.Description);
+			label.TextWrapping(wux::TextWrapping::Wrap);
+			row.Children().Append(label);
+
+			wuxc::ComboBox box;
+			box.MinWidth(280);
+			box.Tag(box_value(display.Device));
+			box.IsEnabled(canSave);
+			wux::Automation::AutomationProperties::SetName(box, display.Description);
+			box.Items().Append(box_value(Text(L"DisplayGlobal")));
+			int selected = 0;
+			for (std::size_t i = 0; i < m_Profiles.size(); ++i)
+			{
+				box.Items().Append(box_value(m_Profiles[i].Name));
+				if (m_Profiles[i].Name == display.Profile)
+				{
+					selected = static_cast<int>(i) + 1;
+				}
+			}
+			box.SelectedIndex(selected);
+			box.SelectionChanged([weak = get_weak()](const IInspectable &sender, const wuxc::SelectionChangedEventArgs &)
+			{
+				const auto self = weak.get();
+				if (!self || self->m_Updating)
+				{
+					return;
+				}
+				const auto combo = sender.as<wuxc::ComboBox>();
+				const int index = combo.SelectedIndex();
+				const hstring profile = index > 0 && static_cast<std::size_t>(index - 1) < self->m_Profiles.size() ? self->m_Profiles[static_cast<std::size_t>(index - 1)].Name : hstring { };
+				self->m_MonitorProfileChanged(unbox_value<hstring>(combo.Tag()), profile);
+			});
+			row.Children().Append(box);
+			children.Append(row);
+		}
+		DisplaysStatus().Text(displays.Size() == 0 ? Text(L"DisplaysNone") : canSave ? hstring { } : Text(L"DisplaysCannotSave"));
+		m_Updating = false;
 	}
 }
