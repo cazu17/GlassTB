@@ -14,8 +14,16 @@
 
 **Consecuencias.** El aviso busca la clase de bandeja histórica `TrayWindow` con los títulos de TranslucentTB estable, Canary y Dev. La separación de identificadores permite instalar ambos productos, pero el control de la apariencia de la barra sigue siendo compartido. Para instalar un MSIX de GlassTB, la firma debe corresponder al publisher del fork. El flujo de GitHub Actions produce una compilación sin firma.
 
-## ADR-003. Orden de compilación del paquete MSIX
+## ADR-003 (Fase 2A). Orden de compilación del paquete MSIX
 
 **Decisión.** Declarar en la solución que `AppPackage` depende del proyecto del ejecutable, igual que en su referencia de empaquetado.
 
 **Motivo.** En GitHub Actions, el build paralelo de la rama base y el del PR reportaron `MSB4006` en `CppWinRTComputeGetResolvedWinMD`. Ordenar el proyecto del ejecutable antes de Desktop Bridge evita que el empaquetador consulte sus salidas mientras la solución todavía las está generando. Se conserva el workflow y su matriz de arquitecturas.
+
+## ADR-003 (Fase 2B). Sistema, capacidades y selección de backend
+
+**Decisión.** Consultar la versión y arquitectura del sistema en `TranslucentTB/compat/`. Calcular las capacidades y el backend con funciones puras a partir de esa información y del tipo de barra. Conservar `GetTaskbarType(Window)` en el worker.
+
+**Motivo.** El detector ya usa la ventana de la barra y la enumeración del proceso Explorer. Mantenerlo en el worker conserva el momento de la detección durante el arranque y el rearme. La selección extraída se puede probar sin Explorer. Los predicados de versión existentes siguen determinando Windows 11 y el caso exacto de 22000, aun si falla la lectura de la revisión. El tipo detectado sigue siendo el único criterio que habilita XAML Diagnostics.
+
+**Consecuencia.** El worker conserva el manejo de reintentos, el tratamiento especial de ventanas en barras mixtas y el comportamiento de la UI. Al cambiar el PID de Explorer o el tipo detectado emite un diagnóstico con la política de verbosidad existente.
