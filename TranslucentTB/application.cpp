@@ -72,6 +72,7 @@ void Application::CreateWelcomePage()
 
 Application::Application(HINSTANCE hInst, std::optional<std::filesystem::path> storageFolder, bool fileExists) :
 	m_Config(storageFolder, fileExists, ConfigurationChanged, this),
+	m_Profiles(m_Config.GetDataFolder() / L"profiles"),
 	m_Worker(m_Config, hInst, m_Loader, storageFolder),
 	m_UwpCRTDep(
 		hInst,

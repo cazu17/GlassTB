@@ -22,7 +22,9 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)undoc\explorer.hpp" />
     <ClInclude Include="$(MSBuildThisFileDirectory)undoc\winternl.hpp" />
     <ClInclude Include="$(MSBuildThisFileDirectory)util\color.hpp" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)config\backups.hpp" />
     <ClInclude Include="$(MSBuildThisFileDirectory)config\config.hpp" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)config\profile.hpp" />
     <ClInclude Include="$(MSBuildThisFileDirectory)config\optionaltaskbarappearance.hpp" />
     <ClInclude Include="$(MSBuildThisFileDirectory)config\rapidjsonhelper.hpp" />
     <ClInclude Include="$(MSBuildThisFileDirectory)config\taskbarappearance.hpp" />

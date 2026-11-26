@@ -63,6 +63,9 @@
     <ClCompile Include="managers\configmanager.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="managers\profilemanager.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
     <ClCompile Include="managers\startupmanager.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -141,6 +144,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="managers\configmanager.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="managers\profilemanager.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="managers\startupmanager.hpp">

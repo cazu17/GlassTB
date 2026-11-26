@@ -1,5 +1,6 @@
 #pragma once
 #include <array>
+#include <cstdint>
 #include <format>
 #include <regex>
 #include <spdlog/common.h>
@@ -36,6 +37,17 @@ public:
 		spdlog::level::warn;
 #endif
 
+	// Version of the settings file format written by this build. Files without the
+	// key were written by TranslucentTB or an early GlassTB build (version 0).
+	static constexpr std::uint32_t SCHEMA_VERSION = 1;
+
+	// Schema version found in the loaded file (0 when absent). Not serialized as-is:
+	// saving always writes SCHEMA_VERSION.
+	std::uint32_t LoadedSchemaVersion = SCHEMA_VERSION;
+
+	// Name of the profile last applied (informational, empty when edited by hand).
+	std::wstring ActiveProfile;
+
 	// Appearances
 	TaskbarAppearance DesktopAppearance = { ACCENT_ENABLE_TRANSPARENTGRADIENT, { 0, 0, 0, 0 }, false, false, 9.0f };
 	RuledTaskbarAppearance VisibleWindowAppearance = { {}, {}, {}, false, ACCENT_ENABLE_TRANSPARENTGRADIENT, { 0, 0, 0, 0 }, true, false, 9.0f };
@@ -58,6 +70,12 @@ public:
 	template<class Writer>
 	inline void Serialize(Writer &writer) const
 	{
+		rjh::WriteKey(writer, SCHEMA_VERSION_KEY);
+		writer.Uint(SCHEMA_VERSION);
+		if (!ActiveProfile.empty())
+		{
+			rjh::Serialize(writer, std::wstring_view { ActiveProfile }, ACTIVE_PROFILE_KEY);
+		}
 		rjh::Serialize(writer, DesktopAppearance, DESKTOP_KEY);
 		rjh::Serialize(writer, VisibleWindowAppearance, VISIBLE_KEY);
 		rjh::Serialize(writer, MaximisedWindowAppearance, MAXIMISED_KEY);
@@ -82,12 +100,26 @@ public:
 	{
 		rjh::EnsureType(rj::Type::kObjectType, obj.GetType(), L"root node");
 
+		LoadedSchemaVersion = 0;
 		for (auto it = obj.MemberBegin(); it != obj.MemberEnd(); ++it)
 		{
 			rjh::EnsureType(rj::Type::kStringType, it->name.GetType(), L"member name");
 
 			const auto key = rjh::ValueToStringView(it->name);
-			if (key == DESKTOP_KEY)
+			if (key == SCHEMA_VERSION_KEY)
+			{
+				if (!it->value.IsUint())
+				{
+					throw rjh::DeserializationError { L"schema_version must be a non-negative integer" };
+				}
+				LoadedSchemaVersion = it->value.GetUint();
+			}
+			else if (key == ACTIVE_PROFILE_KEY)
+			{
+				rjh::EnsureType(rj::Type::kStringType, it->value.GetType(), key);
+				ActiveProfile = rjh::ValueToStringView(it->value);
+			}
+			else if (key == DESKTOP_KEY)
 			{
 				rjh::Deserialize(it->value, DesktopAppearance, key, unknownKeyCallback);
 			}
@@ -177,6 +209,8 @@ private:
 		L"off"
 	};
 
+	static constexpr std::wstring_view SCHEMA_VERSION_KEY = L"schema_version";
+	static constexpr std::wstring_view ACTIVE_PROFILE_KEY = L"active_profile";
 	static constexpr std::wstring_view DESKTOP_KEY = L"desktop_appearance";
 	static constexpr std::wstring_view VISIBLE_KEY = L"visible_window_appearance";
 	static constexpr std::wstring_view MAXIMISED_KEY = L"maximized_window_appearance";
