@@ -399,7 +399,7 @@ namespace winrt::TranslucentTB::Xaml::Pages::implementation
 		}
 	}
 
-	std::optional<ProfileInfo> SettingsPage::SelectedProfile() const
+	std::optional<ProfileInfo> SettingsPage::SelectedProfile()
 	{
 		const int index = ProfileList().SelectedIndex();
 		if (index >= 0 && static_cast<std::size_t>(index) < m_Profiles.size())

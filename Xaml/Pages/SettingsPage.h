@@ -73,7 +73,7 @@ namespace winrt::TranslucentTB::Xaml::Pages::implementation
 		bool m_CanSaveProfiles = false;
 		bool m_DeleteDialogOpen = false;
 
-		std::optional<ProfileInfo> SelectedProfile() const;
+		std::optional<ProfileInfo> SelectedProfile();
 		void RefreshProfileButtons();
 		void SavingHintProfiles();
 		void RequestProfileAction(std::wstring_view action, const hstring &name);
