@@ -131,6 +131,9 @@
       <DependentUpon>Models\Primitives\TaskbarAppearance.idl</DependentUpon>
       <SubType>Code</SubType>
     </ClCompile>
+    <ClCompile Include="Pages\SettingsPage.cpp">
+      <DependentUpon>Pages\SettingsPage.xaml</DependentUpon>
+    </ClCompile>
     <ClCompile Include="Pages\ColorPickerPage.cpp">
       <DependentUpon>Pages\ColorPickerPage.xaml</DependentUpon>
       <SubType>Code</SubType>
@@ -190,6 +193,9 @@
     </Page>
     <Page Include="Controls\FocusBorderColorSpectrum.xaml">
       <DeploymentContent>true</DeploymentContent>
+    </Page>
+    <Page Include="Pages\SettingsPage.xaml">
+      <SubType>Designer</SubType>
     </Page>
     <Page Include="Pages\ColorPickerPage.xaml">
       <SubType>Designer</SubType>
@@ -283,6 +289,9 @@
     <ClInclude Include="Models\Primitives\TaskbarAppearance.h">
       <DependentUpon>Models\Primitives\TaskbarAppearance.idl</DependentUpon>
       <SubType>Code</SubType>
+    </ClInclude>
+    <ClInclude Include="Pages\SettingsPage.h">
+      <DependentUpon>Pages\SettingsPage.xaml</DependentUpon>
     </ClInclude>
     <ClInclude Include="Pages\ColorPickerPage.h">
       <DependentUpon>Pages\ColorPickerPage.xaml</DependentUpon>
@@ -405,6 +414,9 @@
     </Midl>
     <Midl Include="Models\Primitives\TaskbarState.idl">
       <SubType>Designer</SubType>
+    </Midl>
+    <Midl Include="Pages\SettingsPage.idl">
+      <DependentUpon>Pages\SettingsPage.xaml</DependentUpon>
     </Midl>
     <Midl Include="Pages\ColorPickerPage.idl">
       <DependentUpon>Pages\ColorPickerPage.xaml</DependentUpon>

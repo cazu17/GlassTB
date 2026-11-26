@@ -1,0 +1,38 @@
+import "Models/Primitives/TaskbarAppearance.idl";
+import "Models/Primitives/TaskbarState.idl";
+import "Pages/FramelessPage.idl";
+
+namespace TranslucentTB.Xaml.Pages
+{
+	struct SettingsEdit
+	{
+		TranslucentTB.Xaml.Models.Primitives.TaskbarState State;
+		UInt32 Fields;
+		Int32 Accent;
+		UInt32 Color;
+		Boolean ShowPeek;
+		Boolean ShowLine;
+		Single BlurRadius;
+		Boolean Enabled;
+	};
+
+	delegate void SettingsPreviewChangedDelegate(TranslucentTB.Xaml.Models.Primitives.TaskbarAppearance appearance);
+	delegate void SettingsApplyRequestedDelegate(Windows.Foundation.Collections.IVectorView<SettingsEdit> edits);
+
+	runtimeclass SettingsPage : FramelessPage
+	{
+		SettingsPage();
+
+		void SetDiagnostics(String windowsVersion, String nativeArchitecture, String processArchitecture,
+			String taskbarType, String backend, UInt32 monitorCount, Boolean blurAccentState,
+			Boolean xamlTaskbarService, Boolean canPeek, Boolean canShowLine);
+		void SetAppearance(TranslucentTB.Xaml.Models.Primitives.TaskbarState state,
+			TranslucentTB.Xaml.Models.Primitives.TaskbarAppearance saved,
+			TranslucentTB.Xaml.Models.Primitives.TaskbarAppearance defaults);
+		void UpdateEditor(UInt32 ruleCount, Boolean canSave, Boolean hasBattery);
+		void FinishApply(Boolean saved);
+
+		event SettingsPreviewChangedDelegate PreviewChanged;
+		event SettingsApplyRequestedDelegate ApplyRequested;
+	}
+}

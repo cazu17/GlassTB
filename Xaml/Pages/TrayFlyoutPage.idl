@@ -29,6 +29,7 @@ namespace TranslucentTB.Xaml.Pages
 
 		event TaskbarSettingsChangedDelegate TaskbarSettingsChanged;
 		event ColorRequestedDelegate ColorRequested;
+		event EditSettingsRequestedDelegate OpenSettingsRequested;
 
 		event OpenLogFileRequestedDelegate OpenLogFileRequested;
 		event LogLevelChangedDelegate LogLevelChanged;

@@ -152,6 +152,11 @@ namespace winrt::TranslucentTB::Xaml::Pages::implementation
 		}
 	}
 
+	void TrayFlyoutPage::OpenSettingsClicked(const IInspectable &, const wux::RoutedEventArgs &)
+	{
+		m_OpenSettingsRequested();
+	}
+
 	void TrayFlyoutPage::ColorClicked(const IInspectable &sender, const wux::RoutedEventArgs &)
 	{
 		if (const auto item = sender.try_as<wuxc::MenuFlyoutItemBase>())

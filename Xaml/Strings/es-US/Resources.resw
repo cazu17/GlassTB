@@ -292,4 +292,271 @@ Los cambios se recargan automáticamente cuando guarda el archivo</value>
   <data name="WelcomePage_Message_Suffix.Text" xml:space="preserve">
     <value>si tiene algún problema o desea ver una característica agregada!</value>
   </data>
+  <data name="SettingsPage_Open.Text" xml:space="preserve">
+    <value>Abrir GlassTB</value>
+  </data>
+  <data name="SettingsPage_Open.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>Abrir GlassTB</value>
+  </data>
+  <data name="SettingsPage_Navigation.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>Secciones de configuración</value>
+  </data>
+  <data name="SettingsPage_HomeItem.Content" xml:space="preserve">
+    <value>Inicio</value>
+  </data>
+  <data name="SettingsPage_HomeItem.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>Inicio</value>
+  </data>
+  <data name="SettingsPage_AppearanceItem.Content" xml:space="preserve">
+    <value>Apariencia</value>
+  </data>
+  <data name="SettingsPage_AppearanceItem.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>Apariencia</value>
+  </data>
+  <data name="SettingsPage_HomeHeading.Text" xml:space="preserve">
+    <value>Inicio</value>
+  </data>
+  <data name="SettingsPage_AppearanceHeading.Text" xml:space="preserve">
+    <value>Apariencia</value>
+  </data>
+  <data name="SettingsPage_State.Header" xml:space="preserve">
+    <value>Estado de la barra de tareas</value>
+  </data>
+  <data name="SettingsPage_State.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>Estado de la barra de tareas</value>
+  </data>
+  <data name="SettingsPage_Desktop.Content" xml:space="preserve">
+    <value>Escritorio</value>
+  </data>
+  <data name="SettingsPage_Desktop.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>Escritorio</value>
+  </data>
+  <data name="SettingsPage_Visible.Content" xml:space="preserve">
+    <value>Ventana visible</value>
+  </data>
+  <data name="SettingsPage_Visible.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>Ventana visible</value>
+  </data>
+  <data name="SettingsPage_Maximized.Content" xml:space="preserve">
+    <value>Ventana maximizada</value>
+  </data>
+  <data name="SettingsPage_Maximized.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>Ventana maximizada</value>
+  </data>
+  <data name="SettingsPage_Start.Content" xml:space="preserve">
+    <value>Inicio abierto</value>
+  </data>
+  <data name="SettingsPage_Start.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>Inicio abierto</value>
+  </data>
+  <data name="SettingsPage_Search.Content" xml:space="preserve">
+    <value>Búsqueda abierta</value>
+  </data>
+  <data name="SettingsPage_Search.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>Búsqueda abierta</value>
+  </data>
+  <data name="SettingsPage_TaskView.Content" xml:space="preserve">
+    <value>Vista de tareas abierta</value>
+  </data>
+  <data name="SettingsPage_TaskView.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>Vista de tareas abierta</value>
+  </data>
+  <data name="SettingsPage_Battery.Content" xml:space="preserve">
+    <value>Ahorro de batería</value>
+  </data>
+  <data name="SettingsPage_Battery.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>Ahorro de batería</value>
+  </data>
+  <data name="SettingsPage_Normal.Content" xml:space="preserve">
+    <value>Normal</value>
+  </data>
+  <data name="SettingsPage_Normal.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>Normal</value>
+  </data>
+  <data name="SettingsPage_Opaque.Content" xml:space="preserve">
+    <value>Opaco</value>
+  </data>
+  <data name="SettingsPage_Opaque.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>Opaco</value>
+  </data>
+  <data name="SettingsPage_Clear.Content" xml:space="preserve">
+    <value>Transparente</value>
+  </data>
+  <data name="SettingsPage_Clear.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>Transparente</value>
+  </data>
+  <data name="SettingsPage_Blur.Content" xml:space="preserve">
+    <value>Desenfoque</value>
+  </data>
+  <data name="SettingsPage_Blur.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>Desenfoque</value>
+  </data>
+  <data name="SettingsPage_Acrylic.Content" xml:space="preserve">
+    <value>Acrílico</value>
+  </data>
+  <data name="SettingsPage_Acrylic.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>Acrílico</value>
+  </data>
+  <data name="SettingsPage_Enabled.Content" xml:space="preserve">
+    <value>Activar este estado</value>
+  </data>
+  <data name="SettingsPage_Enabled.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>Activar este estado</value>
+  </data>
+  <data name="SettingsPage_Peek.Content" xml:space="preserve">
+    <value>Mostrar botón Peek</value>
+  </data>
+  <data name="SettingsPage_Peek.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>Mostrar botón Peek</value>
+  </data>
+  <data name="SettingsPage_Line.Content" xml:space="preserve">
+    <value>Mostrar línea de la barra</value>
+  </data>
+  <data name="SettingsPage_Line.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>Mostrar línea de la barra</value>
+  </data>
+  <data name="SettingsPage_CopyButton.Content" xml:space="preserve">
+    <value>Copiar diagnóstico</value>
+  </data>
+  <data name="SettingsPage_CopyButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>Copiar diagnóstico</value>
+  </data>
+  <data name="SettingsPage_Apply.Content" xml:space="preserve">
+    <value>Aplicar</value>
+  </data>
+  <data name="SettingsPage_Apply.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>Aplicar</value>
+  </data>
+  <data name="SettingsPage_Cancel.Content" xml:space="preserve">
+    <value>Cancelar</value>
+  </data>
+  <data name="SettingsPage_Cancel.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>Cancelar</value>
+  </data>
+  <data name="SettingsPage_Reset.Content" xml:space="preserve">
+    <value>Restablecer</value>
+  </data>
+  <data name="SettingsPage_Reset.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>Restablecer</value>
+  </data>
+  <data name="SettingsPage_Material.Header" xml:space="preserve">
+    <value>Material</value>
+  </data>
+  <data name="SettingsPage_Material.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>Material</value>
+  </data>
+  <data name="SettingsPage_ColorLabel.Text" xml:space="preserve">
+    <value>Color y opacidad</value>
+  </data>
+  <data name="SettingsPage_Picker.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>Color y opacidad</value>
+  </data>
+  <data name="SettingsPage_Radius.Header" xml:space="preserve">
+    <value>Radio de desenfoque</value>
+  </data>
+  <data name="SettingsPage_Radius.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>Radio de desenfoque</value>
+  </data>
+  <data name="SettingsPage_BatteryHint.Text" xml:space="preserve">
+    <value>El ahorro de batería requiere un equipo con batería.</value>
+  </data>
+  <data name="SettingsPage_BlurHint.Text" xml:space="preserve">
+    <value>La barra detectada no admite el material Desenfoque.</value>
+  </data>
+  <data name="SettingsPage_ColorHint.Text" xml:space="preserve">
+    <value>Elige un material distinto de Normal para editar el color.</value>
+  </data>
+  <data name="SettingsPage_RadiusHint.Text" xml:space="preserve">
+    <value>El radio se puede modificar cuando el material Desenfoque usa el servicio XAML de la barra.</value>
+  </data>
+  <data name="SettingsPage_PeekHint.Text" xml:space="preserve">
+    <value>Peek requiere una barra clásica con botón Peek.</value>
+  </data>
+  <data name="SettingsPage_LineHint.Text" xml:space="preserve">
+    <value>Esta opción requiere una barra con un borde que se pueda controlar.</value>
+  </data>
+  <data name="SettingsPage_PreviewHint.Text" xml:space="preserve">
+    <value>Los cambios del estado seleccionado y activo se ven en la barra hasta que apliques o canceles.</value>
+  </data>
+  <data name="SettingsPage_SavingHint.Text" xml:space="preserve">
+    <value>El guardado está desactivado en el menú de la bandeja. Actívalo allí para aplicar los cambios.</value>
+  </data>
+  <data name="SettingsPage_ResetDialog.Title" xml:space="preserve">
+    <value>¿Restablecer las apariencias por defecto?</value>
+  </data>
+  <data name="SettingsPage_ResetDialog.Content" xml:space="preserve">
+    <value>Esto restablece los siete estados de apariencia en el borrador. Se conservan las reglas por ventana. Elige Aplicar para guardar.</value>
+  </data>
+  <data name="SettingsPage_ResetDialog.PrimaryButtonText" xml:space="preserve">
+    <value>Restablecer</value>
+  </data>
+  <data name="SettingsPage_ResetDialog.CloseButtonText" xml:space="preserve">
+    <value>Cancelar</value>
+  </data>
+  <data name="SettingsPage_Engine" xml:space="preserve">
+    <value>Motor</value>
+  </data>
+  <data name="SettingsPage_EngineActive" xml:space="preserve">
+    <value>Activo</value>
+  </data>
+  <data name="SettingsPage_EngineWaiting" xml:space="preserve">
+    <value>Sin barra detectada</value>
+  </data>
+  <data name="SettingsPage_Backend" xml:space="preserve">
+    <value>Backend</value>
+  </data>
+  <data name="SettingsPage_Windows" xml:space="preserve">
+    <value>Versión de Windows</value>
+  </data>
+  <data name="SettingsPage_NativeArchitecture" xml:space="preserve">
+    <value>Arquitectura nativa</value>
+  </data>
+  <data name="SettingsPage_ProcessArchitecture" xml:space="preserve">
+    <value>Arquitectura del proceso</value>
+  </data>
+  <data name="SettingsPage_TaskbarType" xml:space="preserve">
+    <value>Tipo de barra</value>
+  </data>
+  <data name="SettingsPage_AccentBlur" xml:space="preserve">
+    <value>Desenfoque AccentPolicy</value>
+  </data>
+  <data name="SettingsPage_XamlService" xml:space="preserve">
+    <value>Servicio XAML de la barra</value>
+  </data>
+  <data name="SettingsPage_MonitorCount" xml:space="preserve">
+    <value>Pantallas con barra detectada</value>
+  </data>
+  <data name="SettingsPage_Yes" xml:space="preserve">
+    <value>Sí</value>
+  </data>
+  <data name="SettingsPage_No" xml:space="preserve">
+    <value>No</value>
+  </data>
+  <data name="SettingsPage_Unknown" xml:space="preserve">
+    <value>Desconocida</value>
+  </data>
+  <data name="SettingsPage_Copied" xml:space="preserve">
+    <value>Diagnóstico copiado.</value>
+  </data>
+  <data name="SettingsPage_CopyFailed" xml:space="preserve">
+    <value>No se pudo copiar el diagnóstico.</value>
+  </data>
+  <data name="SettingsPage_Rules" xml:space="preserve">
+    <value>Reglas por ventana:</value>
+  </data>
+  <data name="SettingsPage_RulesReadOnly" xml:space="preserve">
+    <value>La edición se añadirá en Automatización.</value>
+  </data>
+  <data name="SettingsPage_Applied" xml:space="preserve">
+    <value>Apariencia guardada.</value>
+  </data>
+  <data name="SettingsPage_SaveFailed" xml:space="preserve">
+    <value>No se pudo guardar. Los cambios siguen en el borrador.</value>
+  </data>
+  <data name="SettingsPage_Cancelled" xml:space="preserve">
+    <value>Cambios descartados.</value>
+  </data>
+  <data name="SettingsPage_RestoredDraft" xml:space="preserve">
+    <value>Valores por defecto cargados. Elige Aplicar para guardar.</value>
+  </data>
 </root>

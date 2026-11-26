@@ -1,0 +1,88 @@
+<local:FramelessPage
+    x:Class="TranslucentTB.Xaml.Pages.SettingsPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:TranslucentTB.Xaml.Pages"
+    xmlns:muxc="using:Microsoft.UI.Xaml.Controls"
+    xmlns:controls="using:TranslucentTB.Xaml.Controls"
+    IsClosable="True" Width="860" Height="640">
+    <Grid Background="{ThemeResource LayerFillColorDefaultBrush}">
+        <muxc:NavigationView x:Name="Navigation" x:Uid="SettingsPage_Navigation" PaneDisplayMode="Left"
+                             OpenPaneLength="168" IsBackButtonVisible="Collapsed" IsPaneToggleButtonVisible="False"
+                             IsSettingsVisible="False" AlwaysShowHeader="False" SelectionChanged="NavigationChanged">
+            <muxc:NavigationView.MenuItems>
+                <muxc:NavigationViewItem x:Name="HomeItem" x:Uid="SettingsPage_HomeItem" Icon="Home" />
+                <muxc:NavigationViewItem x:Name="AppearanceItem" x:Uid="SettingsPage_AppearanceItem" Icon="View" />
+            </muxc:NavigationView.MenuItems>
+            <Grid>
+                <ScrollViewer x:Name="HomeSection" Padding="28,24" VerticalScrollBarVisibility="Auto">
+                    <StackPanel Spacing="16">
+                        <TextBlock x:Uid="SettingsPage_HomeHeading" Style="{ThemeResource TitleTextBlockStyle}" AutomationProperties.HeadingLevel="Level1" />
+                        <TextBlock x:Name="DiagnosticSummary" TextWrapping="Wrap" IsTextSelectionEnabled="True" />
+                        <Button x:Name="CopyButton" x:Uid="SettingsPage_CopyButton" Click="CopyClicked" IsEnabled="False" />
+                        <TextBlock x:Name="CopyStatus" TextWrapping="Wrap" AutomationProperties.LiveSetting="Polite" />
+                    </StackPanel>
+                </ScrollViewer>
+                <Grid x:Name="AppearanceSection" Visibility="Collapsed" Padding="28,24,28,16">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="*" />
+                        <RowDefinition Height="Auto" />
+                    </Grid.RowDefinitions>
+                    <ScrollViewer VerticalScrollBarVisibility="Auto">
+                        <UserControl x:Name="Editor" IsEnabled="False">
+                        <StackPanel Spacing="12">
+                            <TextBlock x:Uid="SettingsPage_AppearanceHeading" Style="{ThemeResource TitleTextBlockStyle}" AutomationProperties.HeadingLevel="Level1" />
+                            <ComboBox x:Name="State" x:Uid="SettingsPage_State" SelectionChanged="StateChanged" MinWidth="220">
+                                <ComboBoxItem x:Uid="SettingsPage_Desktop" />
+                                <ComboBoxItem x:Uid="SettingsPage_Visible" />
+                                <ComboBoxItem x:Uid="SettingsPage_Maximized" />
+                                <ComboBoxItem x:Uid="SettingsPage_Start" />
+                                <ComboBoxItem x:Uid="SettingsPage_Search" />
+                                <ComboBoxItem x:Uid="SettingsPage_TaskView" />
+                                <ComboBoxItem x:Uid="SettingsPage_Battery" />
+                            </ComboBox>
+                            <CheckBox x:Name="EnabledOption" x:Uid="SettingsPage_Enabled" Click="OptionsChanged" />
+                            <TextBlock x:Name="RuleSummary" TextWrapping="Wrap" />
+                            <TextBlock x:Name="BatteryHint" x:Uid="SettingsPage_BatteryHint" TextWrapping="Wrap" Visibility="Collapsed" />
+
+                            <ComboBox x:Name="Material" x:Uid="SettingsPage_Material" SelectionChanged="MaterialChanged" MinWidth="220">
+                                <ComboBoxItem x:Uid="SettingsPage_Normal" />
+                                <ComboBoxItem x:Uid="SettingsPage_Opaque" />
+                                <ComboBoxItem x:Uid="SettingsPage_Clear" />
+                                <ComboBoxItem x:Name="BlurItem" x:Uid="SettingsPage_Blur" />
+                                <ComboBoxItem x:Uid="SettingsPage_Acrylic" />
+                            </ComboBox>
+                            <TextBlock x:Name="BlurHint" x:Uid="SettingsPage_BlurHint" TextWrapping="Wrap" />
+                            <StackPanel x:Name="ColorSection" Spacing="4">
+                                <TextBlock x:Uid="SettingsPage_ColorLabel" />
+                                <TextBlock x:Name="ColorHint" x:Uid="SettingsPage_ColorHint" TextWrapping="Wrap" Visibility="Collapsed" />
+                                <controls:ColorPicker x:Name="Picker" x:Uid="SettingsPage_Picker" IsAlphaEnabled="True"
+                                                      ColorChanged="ColorChanged" HorizontalAlignment="Left" />
+                            </StackPanel>
+                            <Slider x:Name="Radius" x:Uid="SettingsPage_Radius" Minimum="0" Maximum="750"
+                                    StepFrequency="0.1" ValueChanged="RadiusChanged" MaxWidth="320" HorizontalAlignment="Stretch" />
+                            <TextBlock x:Name="RadiusValue" />
+                            <TextBlock x:Name="RadiusHint" x:Uid="SettingsPage_RadiusHint" TextWrapping="Wrap" />
+                            <CheckBox x:Name="Peek" x:Uid="SettingsPage_Peek" Click="OptionsChanged" />
+                            <TextBlock x:Name="PeekHint" x:Uid="SettingsPage_PeekHint" TextWrapping="Wrap" />
+                            <CheckBox x:Name="Line" x:Uid="SettingsPage_Line" Click="OptionsChanged" />
+                            <TextBlock x:Name="LineHint" x:Uid="SettingsPage_LineHint" TextWrapping="Wrap" />
+                            <TextBlock x:Name="PreviewHint" x:Uid="SettingsPage_PreviewHint" TextWrapping="Wrap" />
+                        </StackPanel>
+                        </UserControl>
+                    </ScrollViewer>
+                    <StackPanel Grid.Row="1" Spacing="8" Padding="0,12,0,0">
+                        <TextBlock x:Name="SavingHint" x:Uid="SettingsPage_SavingHint" Visibility="Collapsed" TextWrapping="Wrap" />
+                        <TextBlock x:Name="EditStatus" TextWrapping="Wrap" AutomationProperties.LiveSetting="Polite" />
+                        <StackPanel Orientation="Horizontal" Spacing="8">
+                            <Button x:Name="ApplyButton" x:Uid="SettingsPage_Apply" Click="ApplyClicked" Style="{ThemeResource AccentButtonStyle}" IsEnabled="False" />
+                            <Button x:Name="CancelButton" x:Uid="SettingsPage_Cancel" Click="CancelClicked" IsEnabled="False" />
+                            <Button x:Name="ResetButton" x:Uid="SettingsPage_Reset" Click="ResetClicked" IsEnabled="False" />
+                        </StackPanel>
+                    </StackPanel>
+                    <ContentDialog x:Name="ResetDialog" x:Uid="SettingsPage_ResetDialog" DefaultButton="Close" />
+                </Grid>
+            </Grid>
+        </muxc:NavigationView>
+    </Grid>
+</local:FramelessPage>

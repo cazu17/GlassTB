@@ -27,6 +27,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="settings\appearanceedit.cpp" />
     <ClCompile Include="compat\compatibility.cpp" />
     <ClCompile Include="..\TranslucentTB\compat\capabilities.cpp" />
     <ClCompile Include="..\TranslucentTB\compat\backend.cpp" />
