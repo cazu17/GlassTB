@@ -13,12 +13,12 @@
   <PropertyGroup Label="Globals">
     <ProjectGuid>{59F844AA-8D3C-431C-B8CC-57682915F551}</ProjectGuid>
     <ConfigurationType>Application</ConfigurationType>
+    <TargetName>GlassTB</TargetName>
     <GenerateManifest>true</GenerateManifest>
     <RootNamespace>TranslucentTB</RootNamespace>
   </PropertyGroup>
   <Import Project="..\Common\CppProject.props" />
   <PropertyGroup>
-    <TargetName>GlassTB</TargetName>
     <BeforeLinkTargets>
       $(BeforeLinkTargets);
       _UnpackagedWin32GenerateAdditionalWinmdManifests;
