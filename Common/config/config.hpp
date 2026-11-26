@@ -7,6 +7,8 @@
 #include <string_view>
 #include <optional>
 
+#include "adaptivecolorsettings.hpp"
+#include "hotkeysettings.hpp"
 #include "optionaltaskbarappearance.hpp"
 #include "rapidjsonhelper.hpp"
 #include "ruledtaskbarappearance.hpp"
@@ -57,6 +59,12 @@ public:
 	OptionalTaskbarAppearance TaskViewOpenedAppearance = { true, ACCENT_NORMAL, { 0, 0, 0, 0 }, false, true, 9.0f };
 	OptionalTaskbarAppearance BatterySaverAppearance = { false, ACCENT_ENABLE_GRADIENT, { 0, 0, 0, 0 }, true, false, 9.0f };
 
+	// Color taken from the desktop wallpaper (applied in memory, see docs/glasstb/color-adaptativo.md)
+	AdaptiveColorSettings AdaptiveColor;
+
+	// Global shortcuts (see docs/glasstb/atajos.md)
+	HotkeySettings Hotkeys;
+
 	// Advanced
 	WindowFilter IgnoredWindows;
 	std::optional<bool> HideTray;
@@ -83,6 +91,8 @@ public:
 		rjh::Serialize(writer, SearchOpenedAppearance, SEARCH_KEY);
 		rjh::Serialize(writer, TaskViewOpenedAppearance, TASKVIEW_KEY);
 		rjh::Serialize(writer, BatterySaverAppearance, BATTERYSAVER_KEY);
+		rjh::Serialize(writer, AdaptiveColor, ADAPTIVE_COLOR_KEY);
+		rjh::Serialize(writer, Hotkeys, HOTKEYS_KEY);
 		rjh::Serialize(writer, IgnoredWindows, IGNORED_WINDOWS_KEY);
 		rjh::Serialize(writer, HideTray, TRAY_KEY);
 		rjh::Serialize(writer, DisableSaving, SAVING_KEY);
@@ -146,6 +156,14 @@ public:
 			else if (key == BATTERYSAVER_KEY)
 			{
 				rjh::Deserialize(it->value, BatterySaverAppearance, key, unknownKeyCallback);
+			}
+			else if (key == HOTKEYS_KEY)
+			{
+				rjh::Deserialize(it->value, Hotkeys, key, unknownKeyCallback);
+			}
+			else if (key == ADAPTIVE_COLOR_KEY)
+			{
+				rjh::Deserialize(it->value, AdaptiveColor, key, unknownKeyCallback);
 			}
 			else if (key == IGNORED_WINDOWS_KEY)
 			{
@@ -218,6 +236,8 @@ private:
 	static constexpr std::wstring_view SEARCH_KEY = L"search_opened_appearance";
 	static constexpr std::wstring_view TASKVIEW_KEY = L"task_view_opened_appearance";
 	static constexpr std::wstring_view BATTERYSAVER_KEY = L"battery_saver_appearance";
+	static constexpr std::wstring_view ADAPTIVE_COLOR_KEY = L"adaptive_color";
+	static constexpr std::wstring_view HOTKEYS_KEY = L"hotkeys";
 	static constexpr std::wstring_view IGNORED_WINDOWS_KEY = L"ignored_windows";
 	static constexpr std::wstring_view TRAY_KEY = L"hide_tray";
 	static constexpr std::wstring_view SAVING_KEY = L"disable_saving";

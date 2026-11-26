@@ -9,6 +9,7 @@
 
 #include "appinfo.hpp"
 #include "application.hpp"
+#include "recovery/startupguard.hpp"
 #include "constants.hpp"
 #include "mainappwindow.hpp"
 #include "../ProgramLog/error/win32.hpp"
@@ -148,8 +149,19 @@ _Use_decl_annotations_ int WINAPI wWinMain(HINSTANCE hInstance, HINSTANCE, wchar
 			APP_NAME, MB_OK | MB_ICONWARNING | MB_SETFOREGROUND);
 	}
 
+	// Safe mode: --safe-mode, Shift held at startup, or repeated unclean exits.
+	StartupGuard guard;
+	if (guard.SafeMode())
+	{
+		MessageBoxW(nullptr,
+			(std::wstring(L"GlassTB se inició en modo seguro (") + guard.Reason() + L"). No se inyecta nada en Explorer ni se modifica la barra de tareas. "
+			L"Revisa la configuración o los registros y vuelve a abrir GlassTB normalmente.").c_str(),
+			APP_NAME, MB_OK | MB_ICONINFORMATION | MB_SETFOREGROUND);
+	}
+
 	// Run the main program loop. When this method exits, GlassTB itself is about to exit.
-	const auto ret = Application(hInstance, std::move(storageFolder)).Run();
+	const auto ret = Application(hInstance, std::move(storageFolder), guard.SafeMode()).Run();
+	guard.MarkCleanExit();
 
 	// why are we brutally terminating you might ask?
 	// Windows.UI.Xaml.dll likes to read null pointers if you exit the app too quickly after

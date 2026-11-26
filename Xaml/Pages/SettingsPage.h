@@ -26,10 +26,19 @@ namespace winrt::TranslucentTB::Xaml::Pages::implementation
 		void FinishApply(bool saved);
 		void SetProfiles(const wfc::IVectorView<ProfileInfo> &profiles, const hstring &active, bool canSave);
 		void FinishProfileAction(bool success, const hstring &messageKey, const hstring &detail);
+		void SetAutomation(const wfc::IVectorView<RuleInfo> &rules, const hstring &activeRule, const hstring &loadError, bool paused);
+		void FinishAutomationAction(bool success, const hstring &messageKey, const hstring &detail);
+		void SetAdaptiveColor(bool enabled, bool useSecondary, std::int32_t intensity, std::int32_t saturation, std::int32_t contrast, bool active, std::uint32_t color, const hstring &source, bool canSave);
 
 		DECL_EVENT(SettingsPreviewChangedDelegate, PreviewChanged, m_PreviewChanged);
 		DECL_EVENT(SettingsApplyRequestedDelegate, ApplyRequested, m_ApplyRequested);
 		DECL_EVENT(ProfileActionRequestedDelegate, ProfileActionRequested, m_ProfileActionRequested);
+		DECL_EVENT(AutomationActionRequestedDelegate, AutomationActionRequested, m_AutomationActionRequested);
+		DECL_EVENT(CreateRuleRequestedDelegate, CreateRuleRequested, m_CreateRuleRequested);
+		DECL_EVENT(AdaptiveColorChangedDelegate, AdaptiveColorChanged, m_AdaptiveColorChanged);
+		DECL_EVENT(HotkeysChangedDelegate, HotkeysChanged, m_HotkeysChanged);
+		void SetHotkeys(const wfc::IVectorView<hstring> &bindings, const hstring &messageKey, const hstring &detail);
+		void SaveHotkeysClicked(const IInspectable &sender, const wux::RoutedEventArgs &args);
 
 		void NavigationChanged(const muxc::NavigationView &sender, const muxc::NavigationViewSelectionChangedEventArgs &args);
 		void StateChanged(const IInspectable &sender, const wuxc::SelectionChangedEventArgs &args);
@@ -45,6 +54,18 @@ namespace winrt::TranslucentTB::Xaml::Pages::implementation
 		void ProfileButtonClicked(const IInspectable &sender, const wux::RoutedEventArgs &args);
 		fire_and_forget DeleteProfileClicked(const IInspectable &sender, const wux::RoutedEventArgs &args);
 		void NewProfileNameChanged(const IInspectable &sender, const wuxc::TextChangedEventArgs &args);
+		void PauseAutomationToggled(const IInspectable &sender, const wux::RoutedEventArgs &args);
+		void AutomationButtonClicked(const IInspectable &sender, const wux::RoutedEventArgs &args);
+		void RuleSelectionChanged(const IInspectable &sender, const wuxc::SelectionChangedEventArgs &args);
+		void RuleButtonClicked(const IInspectable &sender, const wux::RoutedEventArgs &args);
+		void RuleFormChanged(const IInspectable &sender, const wuxc::TextChangedEventArgs &args);
+		void ConditionKindChanged(const IInspectable &sender, const wuxc::SelectionChangedEventArgs &args);
+		void ActionKindChanged(const IInspectable &sender, const wuxc::SelectionChangedEventArgs &args);
+		void CreateRuleClicked(const IInspectable &sender, const wux::RoutedEventArgs &args);
+		void AdaptiveToggled(const IInspectable &sender, const wux::RoutedEventArgs &args);
+		void AdaptiveOptionClicked(const IInspectable &sender, const wux::RoutedEventArgs &args);
+		void AdaptiveSliderChanged(const IInspectable &sender, const wuxc::Primitives::RangeBaseValueChangedEventArgs &args);
+		void AdaptiveExcludeClicked(const IInspectable &sender, const wux::RoutedEventArgs &args);
 
 	private:
 		struct Appearance {
@@ -72,6 +93,16 @@ namespace winrt::TranslucentTB::Xaml::Pages::implementation
 		bool m_ProfileBusy = false;
 		bool m_CanSaveProfiles = false;
 		bool m_DeleteDialogOpen = false;
+		std::vector<RuleInfo> m_Rules;
+		bool m_RulesEditable = false;
+		bool m_AutomationBusy = false;
+		wux::DispatcherTimer m_AdaptiveTimer{ nullptr };
+		void SendAdaptive(bool excludeCurrent);
+
+		static hstring SelectedTag(const wuxc::ComboBox &box);
+		void RefreshRuleButtons();
+		void RefreshRuleForm();
+		void UpdateActionProfiles();
 
 		std::optional<ProfileInfo> SelectedProfile();
 		void RefreshProfileButtons();

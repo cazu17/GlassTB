@@ -66,6 +66,12 @@
     <ClCompile Include="managers\profilemanager.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="rules\ruleengine.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="recovery\startupguard.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
     <ClCompile Include="managers\startupmanager.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -147,6 +153,12 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="managers\profilemanager.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="rules\ruleengine.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="recovery\startupguard.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="managers\startupmanager.hpp">

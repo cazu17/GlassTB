@@ -18,6 +18,7 @@
 #include "mainappwindow.hpp"
 #include "managers/startupmanager.hpp"
 #include "managers/profilemanager.hpp"
+#include "rules/ruleengine.hpp"
 #include "taskbar/taskbarattributeworker.hpp"
 #include "uwp/dynamicdependency.hpp"
 #include "uwp/xamlthreadpool.hpp"
@@ -33,6 +34,7 @@ class Application final {
 
 	TaskbarAttributeWorker m_Worker;
 	StartupManager m_Startup;
+	RuleEngine m_RuleEngine;
 
 	// seemingly, dynamic deps are not transitive so add a dyn dep to the CRT that WinUI uses.
 	DynamicDependency m_UwpCRTDep, m_WinUIDep;
@@ -47,10 +49,10 @@ class Application final {
 	winrt::Windows::System::DispatcherQueue m_Dispatcher;
 
 	void CreateWelcomePage();
-	Application(HINSTANCE hInst, std::optional<std::filesystem::path> storageFolder, bool fileExists);
+	Application(HINSTANCE hInst, std::optional<std::filesystem::path> storageFolder, bool safeMode, bool fileExists);
 
 public:
-	Application(HINSTANCE hInst, std::optional<std::filesystem::path> storageFolder) : Application(hInst, std::move(storageFolder), false) { }
+	Application(HINSTANCE hInst, std::optional<std::filesystem::path> storageFolder, bool safeMode) : Application(hInst, std::move(storageFolder), safeMode, false) { }
 
 	static void OpenDonationPage();
 	static void OpenTipsPage();
@@ -58,6 +60,7 @@ public:
 
 	constexpr ConfigManager &GetConfigManager() noexcept { return m_Config; }
 	constexpr ProfileManager &GetProfileManager() noexcept { return m_Profiles; }
+	constexpr RuleEngine &GetRuleEngine() noexcept { return m_RuleEngine; }
 	constexpr StartupManager &GetStartupManager() noexcept { return m_Startup; }
 	constexpr TaskbarAttributeWorker &GetWorker() noexcept { return m_Worker; }
 

@@ -23,6 +23,30 @@ namespace TranslucentTB.Xaml.Pages
 	};
 
 	delegate void ProfileActionRequestedDelegate(String action, String name);
+
+	struct RuleInfo
+	{
+		String Name;
+		Boolean Enabled;
+		Int32 Priority;
+		String Summary;
+	};
+
+	struct NewRuleSpec
+	{
+		String Name;
+		Int32 Priority;
+		String Condition;
+		String ConditionValue;
+		Boolean Negate;
+		String Action;
+		String ActionValue;
+	};
+
+	delegate void AutomationActionRequestedDelegate(String action, Int32 index, Int32 value);
+	delegate void CreateRuleRequestedDelegate(NewRuleSpec spec);
+	delegate void HotkeysChangedDelegate(Windows.Foundation.Collections.IVectorView<String> bindings);
+	delegate void AdaptiveColorChangedDelegate(Boolean enabled, Boolean useSecondary, Int32 intensity, Int32 saturation, Int32 contrast, Boolean excludeCurrent);
 	delegate void SettingsPreviewChangedDelegate(TranslucentTB.Xaml.Models.Primitives.TaskbarAppearance appearance);
 	delegate void SettingsApplyRequestedDelegate(Windows.Foundation.Collections.IVectorView<SettingsEdit> edits);
 
@@ -40,9 +64,17 @@ namespace TranslucentTB.Xaml.Pages
 		void FinishApply(Boolean saved);
 		void SetProfiles(Windows.Foundation.Collections.IVectorView<ProfileInfo> profiles, String active, Boolean canSave);
 		void FinishProfileAction(Boolean success, String messageKey, String detail);
+		void SetAutomation(Windows.Foundation.Collections.IVectorView<RuleInfo> rules, String activeRule, String loadError, Boolean paused);
+		void FinishAutomationAction(Boolean success, String messageKey, String detail);
+		void SetAdaptiveColor(Boolean enabled, Boolean useSecondary, Int32 intensity, Int32 saturation, Int32 contrast, Boolean active, UInt32 color, String source, Boolean canSave);
 
 		event SettingsPreviewChangedDelegate PreviewChanged;
 		event SettingsApplyRequestedDelegate ApplyRequested;
 		event ProfileActionRequestedDelegate ProfileActionRequested;
+		event AutomationActionRequestedDelegate AutomationActionRequested;
+		event CreateRuleRequestedDelegate CreateRuleRequested;
+		event AdaptiveColorChangedDelegate AdaptiveColorChanged;
+		event HotkeysChangedDelegate HotkeysChanged;
+		void SetHotkeys(Windows.Foundation.Collections.IVectorView<String> bindings, String messageKey, String detail);
 	}
 }

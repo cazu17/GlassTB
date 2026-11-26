@@ -685,4 +685,358 @@ yapabilirsiniz. Değişiklikler dosya kaydedildiğinde otomatik olarak uygulanı
   <data name="TrayFlyoutPage_Profiles.Text" xml:space="preserve">
     <value>Profile</value>
   </data>
+  <data name="SettingsPage_AutomationItem.Content" xml:space="preserve">
+    <value>Automation</value>
+  </data>
+  <data name="SettingsPage_AutomationItem.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>Automation</value>
+  </data>
+  <data name="SettingsPage_AutomationHeading.Text" xml:space="preserve">
+    <value>Automation</value>
+  </data>
+  <data name="SettingsPage_AutomationIntro.Text" xml:space="preserve">
+    <value>Rules change the appearance based on what happens on the computer. The enabled rule with the highest priority that holds wins; it is applied in memory without modifying config.json.</value>
+  </data>
+  <data name="SettingsPage_PauseAutomation.Header" xml:space="preserve">
+    <value>Pause automation</value>
+  </data>
+  <data name="SettingsPage_PauseAutomation.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>Pause automation</value>
+  </data>
+  <data name="SettingsPage_EditRules.Content" xml:space="preserve">
+    <value>Edit rules.json</value>
+  </data>
+  <data name="SettingsPage_EditRules.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>Open rules.json in the editor</value>
+  </data>
+  <data name="SettingsPage_ReloadRules.Content" xml:space="preserve">
+    <value>Reload</value>
+  </data>
+  <data name="SettingsPage_ReloadRules.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>Reload rules</value>
+  </data>
+  <data name="SettingsPage_RulesList.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>Rule list</value>
+  </data>
+  <data name="SettingsPage_ToggleRule.Content" xml:space="preserve">
+    <value>Disable</value>
+  </data>
+  <data name="SettingsPage_ToggleRule.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>Enable or disable the selected rule</value>
+  </data>
+  <data name="SettingsPage_RaiseRule.Content" xml:space="preserve">
+    <value>Raise priority</value>
+  </data>
+  <data name="SettingsPage_RaiseRule.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>Raise priority of the selected rule</value>
+  </data>
+  <data name="SettingsPage_LowerRule.Content" xml:space="preserve">
+    <value>Lower priority</value>
+  </data>
+  <data name="SettingsPage_LowerRule.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>Lower priority of the selected rule</value>
+  </data>
+  <data name="SettingsPage_DeleteRule.Content" xml:space="preserve">
+    <value>Delete</value>
+  </data>
+  <data name="SettingsPage_DeleteRule.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>Delete the selected rule</value>
+  </data>
+  <data name="SettingsPage_NewRuleHeading.Text" xml:space="preserve">
+    <value>New rule</value>
+  </data>
+  <data name="SettingsPage_RuleName.Header" xml:space="preserve">
+    <value>Name</value>
+  </data>
+  <data name="SettingsPage_RuleName.PlaceholderText" xml:space="preserve">
+    <value>Games</value>
+  </data>
+  <data name="SettingsPage_RuleName.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>Rule name</value>
+  </data>
+  <data name="SettingsPage_RulePriority.Header" xml:space="preserve">
+    <value>Priority</value>
+  </data>
+  <data name="SettingsPage_RulePriority.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>Rule priority</value>
+  </data>
+  <data name="SettingsPage_ConditionKind.Header" xml:space="preserve">
+    <value>Condition</value>
+  </data>
+  <data name="SettingsPage_ConditionKind.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>Condition type</value>
+  </data>
+  <data name="SettingsPage_CondFullscreen.Content" xml:space="preserve">
+    <value>Full screen</value>
+  </data>
+  <data name="SettingsPage_CondForeground.Content" xml:space="preserve">
+    <value>Foreground app</value>
+  </data>
+  <data name="SettingsPage_CondRunning.Content" xml:space="preserve">
+    <value>App running</value>
+  </data>
+  <data name="SettingsPage_CondMaximized.Content" xml:space="preserve">
+    <value>Active window maximized</value>
+  </data>
+  <data name="SettingsPage_CondOnBattery.Content" xml:space="preserve">
+    <value>On battery</value>
+  </data>
+  <data name="SettingsPage_CondBatterySaver.Content" xml:space="preserve">
+    <value>Battery saver on</value>
+  </data>
+  <data name="SettingsPage_CondBatteryBelow.Content" xml:space="preserve">
+    <value>Battery below…</value>
+  </data>
+  <data name="SettingsPage_CondTimeRange.Content" xml:space="preserve">
+    <value>Time range</value>
+  </data>
+  <data name="SettingsPage_CondWeekdays.Content" xml:space="preserve">
+    <value>Weekdays</value>
+  </data>
+  <data name="SettingsPage_CondDarkTheme.Content" xml:space="preserve">
+    <value>Windows dark theme</value>
+  </data>
+  <data name="SettingsPage_CondMonitors.Content" xml:space="preserve">
+    <value>Number of displays (at least)</value>
+  </data>
+  <data name="SettingsPage_ConditionValue.Header" xml:space="preserve">
+    <value>Value</value>
+  </data>
+  <data name="SettingsPage_ConditionValue.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>Condition value</value>
+  </data>
+  <data name="SettingsPage_NegateCondition.Content" xml:space="preserve">
+    <value>Invert (holds when the condition does NOT happen)</value>
+  </data>
+  <data name="SettingsPage_ActionKind.Header" xml:space="preserve">
+    <value>Action</value>
+  </data>
+  <data name="SettingsPage_ActionKind.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>Action type</value>
+  </data>
+  <data name="SettingsPage_ActProfile.Content" xml:space="preserve">
+    <value>Activate profile</value>
+  </data>
+  <data name="SettingsPage_ActRestore.Content" xml:space="preserve">
+    <value>Restore Windows style (performance mode)</value>
+  </data>
+  <data name="SettingsPage_ActionProfile.Header" xml:space="preserve">
+    <value>Profile</value>
+  </data>
+  <data name="SettingsPage_ActionProfile.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>Profile to activate</value>
+  </data>
+  <data name="SettingsPage_AdvancedRulesHint.Text" xml:space="preserve">
+    <value>To combine conditions with AND/OR or change material, color or opacity, edit rules.json. Saving from here rewrites the file without comments.</value>
+  </data>
+  <data name="SettingsPage_CreateRule.Content" xml:space="preserve">
+    <value>Create rule</value>
+  </data>
+  <data name="SettingsPage_CreateRule.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>Create rule</value>
+  </data>
+  <data name="SettingsPage_RulePriorityShort" xml:space="preserve">
+    <value>priority</value>
+  </data>
+  <data name="SettingsPage_RuleDisabled" xml:space="preserve">
+    <value>disabled</value>
+  </data>
+  <data name="SettingsPage_RulesLoadError" xml:space="preserve">
+    <value>rules.json has an error (the last valid rules are kept):</value>
+  </data>
+  <data name="SettingsPage_AutomationPaused" xml:space="preserve">
+    <value>Automation paused.</value>
+  </data>
+  <data name="SettingsPage_RuleActive" xml:space="preserve">
+    <value>Active rule</value>
+  </data>
+  <data name="SettingsPage_NoRuleActive" xml:space="preserve">
+    <value>No active rule</value>
+  </data>
+  <data name="SettingsPage_DisableRule" xml:space="preserve">
+    <value>Disable</value>
+  </data>
+  <data name="SettingsPage_EnableRule" xml:space="preserve">
+    <value>Enable</value>
+  </data>
+  <data name="SettingsPage_Hint_foreground_app" xml:space="preserve">
+    <value>Comma-separated executables, e.g.: game.exe, cs2.exe</value>
+  </data>
+  <data name="SettingsPage_Hint_app_running" xml:space="preserve">
+    <value>Comma-separated executables, e.g.: obs64.exe</value>
+  </data>
+  <data name="SettingsPage_Hint_battery_below" xml:space="preserve">
+    <value>Percentage from 1 to 100, e.g.: 20</value>
+  </data>
+  <data name="SettingsPage_Hint_time_range" xml:space="preserve">
+    <value>Start-end as HH:MM, e.g.: 21:00-07:00</value>
+  </data>
+  <data name="SettingsPage_Hint_weekdays" xml:space="preserve">
+    <value>Comma-separated numbers, 0 = Sunday … 6 = Saturday. Example: 1,2,3,4,5</value>
+  </data>
+  <data name="SettingsPage_Hint_monitors_at_least" xml:space="preserve">
+    <value>Number from 1 to 16, e.g.: 2</value>
+  </data>
+  <data name="SettingsPage_AutomationWorking" xml:space="preserve">
+    <value>Working…</value>
+  </data>
+  <data name="SettingsPage_AutomationDone" xml:space="preserve">
+    <value>Done.</value>
+  </data>
+  <data name="SettingsPage_AutomationOpened" xml:space="preserve">
+    <value>rules.json opened; it reloads when saved.</value>
+  </data>
+  <data name="SettingsPage_AutomationReloaded" xml:space="preserve">
+    <value>Rules reloaded.</value>
+  </data>
+  <data name="SettingsPage_AutomationPausedNow" xml:space="preserve">
+    <value>Automation paused.</value>
+  </data>
+  <data name="SettingsPage_AutomationResumed" xml:space="preserve">
+    <value>Automation resumed.</value>
+  </data>
+  <data name="SettingsPage_AutomationEnabled" xml:space="preserve">
+    <value>Rule enabled:</value>
+  </data>
+  <data name="SettingsPage_AutomationDisabled" xml:space="preserve">
+    <value>Rule disabled:</value>
+  </data>
+  <data name="SettingsPage_AutomationPriorityChanged" xml:space="preserve">
+    <value>Priority changed:</value>
+  </data>
+  <data name="SettingsPage_AutomationDeleted" xml:space="preserve">
+    <value>Rule deleted:</value>
+  </data>
+  <data name="SettingsPage_AutomationSaveFailed" xml:space="preserve">
+    <value>Could not save rules.json:</value>
+  </data>
+  <data name="SettingsPage_AutomationFailed" xml:space="preserve">
+    <value>The action could not be completed.</value>
+  </data>
+  <data name="SettingsPage_AutomationInvalid" xml:space="preserve">
+    <value>The rule is not valid:</value>
+  </data>
+  <data name="SettingsPage_AutomationCreated" xml:space="preserve">
+    <value>Rule created:</value>
+  </data>
+  <data name="SettingsPage_AdaptiveItem.Content" xml:space="preserve">
+    <value>Adaptive color</value>
+  </data>
+  <data name="SettingsPage_AdaptiveItem.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>Adaptive color</value>
+  </data>
+  <data name="SettingsPage_AdaptiveHeading.Text" xml:space="preserve">
+    <value>Adaptive color</value>
+  </data>
+  <data name="SettingsPage_AdaptiveIntro.Text" xml:space="preserve">
+    <value>Takes the dominant color of the wallpaper and uses it as the taskbar tint in every state, adjusted to the light or dark theme. Materials do not change.</value>
+  </data>
+  <data name="SettingsPage_AdaptiveEnabled.Header" xml:space="preserve">
+    <value>Use wallpaper color</value>
+  </data>
+  <data name="SettingsPage_AdaptiveEnabled.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>Use wallpaper color</value>
+  </data>
+  <data name="SettingsPage_AdaptiveSecondary.Content" xml:space="preserve">
+    <value>Use the secondary color</value>
+  </data>
+  <data name="SettingsPage_AdaptiveIntensity.Header" xml:space="preserve">
+    <value>Intensity (tint opacity)</value>
+  </data>
+  <data name="SettingsPage_AdaptiveIntensity.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>Intensity</value>
+  </data>
+  <data name="SettingsPage_AdaptiveSaturation.Header" xml:space="preserve">
+    <value>Saturation (%)</value>
+  </data>
+  <data name="SettingsPage_AdaptiveSaturation.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>Saturation</value>
+  </data>
+  <data name="SettingsPage_AdaptiveContrast.Header" xml:space="preserve">
+    <value>Contrast with the theme (%)</value>
+  </data>
+  <data name="SettingsPage_AdaptiveContrast.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>Contrast</value>
+  </data>
+  <data name="SettingsPage_AdaptiveExclude.Content" xml:space="preserve">
+    <value>Exclude the current wallpaper</value>
+  </data>
+  <data name="SettingsPage_AdaptiveExclude.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>Exclude the current wallpaper</value>
+  </data>
+  <data name="SettingsPage_AdaptiveNotes.Text" xml:space="preserve">
+    <value>It is recalculated only when the wallpaper or theme changes (no screen captures or polling). Automation rules apply on top. The color change is immediate: animated transitions are not implemented to avoid CPU use.</value>
+  </data>
+  <data name="SettingsPage_AdaptiveActive" xml:space="preserve">
+    <value>Applied color:</value>
+  </data>
+  <data name="SettingsPage_AdaptiveUnavailable" xml:space="preserve">
+    <value>No color could be obtained from the current wallpaper:</value>
+  </data>
+  <data name="SettingsPage_AdaptiveOff" xml:space="preserve">
+    <value>Off.</value>
+  </data>
+  <data name="SettingsPage_AdaptiveCannotSave" xml:space="preserve">
+    <value>The configuration comes from a newer version and cannot be modified.</value>
+  </data>
+  <data name="TrayFlyoutPage_PauseEffects.Text" xml:space="preserve">
+    <value>Pause effects (Windows style)</value>
+  </data>
+  <data name="TrayFlyoutPage_PauseAutomation.Text" xml:space="preserve">
+    <value>Pause automation</value>
+  </data>
+  <data name="SettingsPage_HotkeysItem.Content" xml:space="preserve">
+    <value>Shortcuts</value>
+  </data>
+  <data name="SettingsPage_HotkeysItem.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>Shortcuts</value>
+  </data>
+  <data name="SettingsPage_HotkeysHeading.Text" xml:space="preserve">
+    <value>Global keyboard shortcuts</value>
+  </data>
+  <data name="SettingsPage_HotkeysIntro.Text" xml:space="preserve">
+    <value>Type combinations such as Ctrl+Alt+T or Win+Shift+F9 (at least one modifier). Leave empty to unassign. If another app already uses the shortcut, Windows refuses it and it is logged.</value>
+  </data>
+  <data name="SettingsPage_HotkeyOpenSettings.Header" xml:space="preserve">
+    <value>Open GlassTB</value>
+  </data>
+  <data name="SettingsPage_HotkeyOpenSettings.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>Shortcut to open GlassTB</value>
+  </data>
+  <data name="SettingsPage_HotkeyToggleEffects.Header" xml:space="preserve">
+    <value>Pause/resume effects (restore Windows)</value>
+  </data>
+  <data name="SettingsPage_HotkeyToggleEffects.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>Shortcut to pause effects</value>
+  </data>
+  <data name="SettingsPage_HotkeyNextProfile.Header" xml:space="preserve">
+    <value>Next profile</value>
+  </data>
+  <data name="SettingsPage_HotkeyNextProfile.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>Shortcut for the next profile</value>
+  </data>
+  <data name="SettingsPage_HotkeyToggleAutomation.Header" xml:space="preserve">
+    <value>Pause/resume automation</value>
+  </data>
+  <data name="SettingsPage_HotkeyToggleAutomation.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>Shortcut to pause automation</value>
+  </data>
+  <data name="SettingsPage_HotkeysLegacy.Text" xml:space="preserve">
+    <value>Ctrl+Alt+Shift+F1 still resets the dynamic state (inherited from TranslucentTB).</value>
+  </data>
+  <data name="SettingsPage_SaveHotkeys.Content" xml:space="preserve">
+    <value>Save shortcuts</value>
+  </data>
+  <data name="SettingsPage_SaveHotkeys.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>Save shortcuts</value>
+  </data>
+  <data name="SettingsPage_HotkeysInvalid" xml:space="preserve">
+    <value>Invalid shortcut:</value>
+  </data>
+  <data name="SettingsPage_HotkeysSaveFailed" xml:space="preserve">
+    <value>The configuration could not be saved.</value>
+  </data>
+  <data name="SettingsPage_HotkeysSaved" xml:space="preserve">
+    <value>Shortcuts saved.</value>
+  </data>
 </root>

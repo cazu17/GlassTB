@@ -41,6 +41,18 @@
     <ClCompile Include="config\rapidjsonhelper.cpp">
       <Filter>Config Tests</Filter>
     </ClCompile>
+    <ClCompile Include="rules\rules.cpp">
+      <Filter>Config Tests</Filter>
+    </ClCompile>
+    <ClCompile Include="color\palette.cpp">
+      <Filter>Config Tests</Filter>
+    </ClCompile>
+    <ClCompile Include="recovery\crashloop.cpp">
+      <Filter>Config Tests</Filter>
+    </ClCompile>
+    <ClCompile Include="input\hotkey.cpp">
+      <Filter>Config Tests</Filter>
+    </ClCompile>
     <ClCompile Include="version.cpp" />
   </ItemGroup>
   <ItemGroup>

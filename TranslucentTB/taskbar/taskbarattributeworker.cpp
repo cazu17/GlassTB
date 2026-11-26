@@ -410,12 +410,19 @@ LRESULT TaskbarAttributeWorker::MessageHandler(UINT uMsg, WPARAM wParam, LPARAM 
 
 TaskbarAppearance TaskbarAttributeWorker::GetConfig(taskbar_iterator taskbar) const
 {
+	if (m_EffectsSuspended)
+	{
+		// Safe mode or effects paused: keep the stock Windows look.
+		return { ACCENT_NORMAL, { 0, 0, 0, 0 }, true, true, 0.0f };
+	}
+
 	if (m_AppearancePreview)
 	{
 		return *m_AppearancePreview;
 	}
 
-	const auto& config = m_ConfigManager.GetConfig();
+	// An automation rule replaces the configuration in memory while it is active.
+	const auto& config = m_RuleOverride ? *m_RuleOverride : m_ConfigManager.GetConfig();
 
 	if (config.BatterySaverAppearance.Enabled && (m_PowerSaver || m_EnergySaver))
 	{
@@ -1123,7 +1130,7 @@ void TaskbarAttributeWorker::InsertTaskbar(HMONITOR mon, Window window)
 	m_NormalTaskbars.insert(window);
 	m_Taskbars.insert_or_assign(mon, MonitorInfo { taskbarInfo });
 
-	if (m_TaskbarType != TaskbarType::XAML)
+	if (m_TaskbarType != TaskbarType::XAML && !m_SafeMode)
 	{
 		if (wil::unique_hhook hook { m_InjectExplorerHook(window) })
 		{
@@ -1239,7 +1246,7 @@ TaskbarType TaskbarAttributeWorker::GetTaskbarType(Window taskbar)
 	}
 }
 
-TaskbarAttributeWorker::TaskbarAttributeWorker(ConfigManager &cfgManager, HINSTANCE hInstance, DynamicLoader &loader, const std::optional<std::filesystem::path> &storageFolder) :
+TaskbarAttributeWorker::TaskbarAttributeWorker(ConfigManager &cfgManager, HINSTANCE hInstance, DynamicLoader &loader, const std::optional<std::filesystem::path> &storageFolder, bool safeMode) :
 	MessageWindow(GTB_WORKERWINDOW, GTB_WORKERWINDOW, hInstance, WS_POPUP, WS_EX_NOREDIRECTIONBITMAP),
 	SetWindowCompositionAttribute(loader.SetWindowCompositionAttribute()),
 	ShouldSystemUseDarkMode(loader.ShouldSystemUseDarkMode()),
@@ -1282,6 +1289,8 @@ TaskbarAttributeWorker::TaskbarAttributeWorker(ConfigManager &cfgManager, HINSTA
 	m_TAPDll(storageFolder, cfgManager.GetConfig().CopyDlls.value_or(true), L"ExplorerTAP.dll"),
 	m_InjectExplorerTAP(m_TAPDll.GetProc<PFN_INJECT_EXPLORER_TAP>("InjectExplorerTAP")),
 	m_SystemInfo(compat::GetSystemInfo()),
+	m_SafeMode(safeMode),
+	m_EffectsSuspended(safeMode),
 	m_Capabilities(compat::ComputeCapabilities(m_SystemInfo, m_TaskbarType))
 {
 	const auto stateThunk = CreateThunk(&TaskbarAttributeWorker::OnWindowStateChange);
@@ -1431,6 +1440,18 @@ void TaskbarAttributeWorker::SetAppearancePreview(std::optional<TaskbarAppearanc
 	ConfigurationChanged();
 }
 
+void TaskbarAttributeWorker::SetEffectsSuspended(bool suspended)
+{
+	m_EffectsSuspended = suspended || m_SafeMode;
+	ConfigurationChanged();
+}
+
+void TaskbarAttributeWorker::SetRuleOverride(std::optional<Config> config)
+{
+	m_RuleOverride = std::move(config);
+	ConfigurationChanged();
+}
+
 void TaskbarAttributeWorker::SetDiagnosticsChanged(std::function<void()> callback)
 {
 	m_DiagnosticsChanged = std::move(callback);
@@ -1535,7 +1556,11 @@ void TaskbarAttributeWorker::ResetState(bool manual)
 						m_Capabilities.classicAccentPolicy, compat::ToString(backend)));
 				}
 
-				if (backend == compat::Backend::XamlTap)
+				if (backend == compat::Backend::XamlTap && m_SafeMode)
+				{
+					MessagePrint(spdlog::level::info, L"Safe mode: ExplorerTAP is not injected");
+				}
+				else if (backend == compat::Backend::XamlTap)
 				{
 					const HRESULT hr = m_InjectExplorerTAP(main_taskbar, IID_PPV_ARGS(m_TaskbarService.put()));
 					if (hr == HRESULT_FROM_WIN32(ERROR_PRODUCT_VERSION))

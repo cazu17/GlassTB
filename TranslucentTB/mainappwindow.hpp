@@ -1,6 +1,7 @@
 #pragma once
 #include "arch.h"
 #include "tray/traycontextmenu.hpp"
+#include <array>
 #include <cstddef>
 #include <optional>
 #include <string>
@@ -39,6 +40,7 @@ private:
 	page_t::ColorRequested_revoker m_ColorRequestedRevoker;
 	page_t::OpenSettingsRequested_revoker m_OpenSettingsRequestedRevoker;
 	page_t::ProfileSelected_revoker m_ProfileSelectedRevoker;
+	page_t::PauseToggled_revoker m_PauseToggledRevoker;
 
 	Window m_SettingsWindow{ nullptr };
 	winrt::weak_ref<settings_page_t> m_SettingsPage;
@@ -81,6 +83,21 @@ private:
 	void HandleProfileAction(const std::wstring &action, const std::wstring &name);
 	void PublishProfiles(std::optional<ProfileActionResult> result = {});
 	void PublishTrayProfiles();
+	void PublishPauseState();
+
+	static constexpr std::size_t USER_HOTKEY_BASE = 100;
+	std::array<std::wstring, HotkeySettings::Count> m_RegisteredHotkeys;
+	void RegisterUserHotkeys();
+	void OnUserHotkey(HotkeySettings::Action action);
+
+	using ActionResult = ProfileActionResult;
+	void HandleAutomationAction(const std::wstring &action, std::int32_t index, std::int32_t value);
+	void HandleCreateRule(const winrt::TranslucentTB::Xaml::Pages::NewRuleSpec &spec);
+	void PublishAutomation(std::optional<ActionResult> result = {});
+	void HandleAdaptiveColor(bool enabled, bool secondary, std::int32_t intensity, std::int32_t saturation, std::int32_t contrast, bool excludeCurrent);
+	void PublishAdaptiveColor();
+	void HandleHotkeys(const std::vector<std::wstring> &values);
+	void PublishHotkeys(std::wstring key, std::wstring detail);
 
 	void OpenLogFileRequested();
 	void LogLevelChanged(const txmp::LogLevel &level);

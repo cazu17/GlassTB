@@ -23,6 +23,7 @@ namespace TranslucentTB.Xaml.Pages
 	delegate void AboutRequestedDelegate();
 	delegate void ExitRequestedDelegate();
 	delegate void ProfileSelectedDelegate(String name);
+	delegate void PauseToggledDelegate(String what, Boolean paused);
 
 	runtimeclass TrayFlyoutPage : Windows.UI.Xaml.Controls.Page, Windows.UI.Xaml.Data.INotifyPropertyChanged
 	{
@@ -33,6 +34,8 @@ namespace TranslucentTB.Xaml.Pages
 		event EditSettingsRequestedDelegate OpenSettingsRequested;
 		event ProfileSelectedDelegate ProfileSelected;
 		void SetProfiles(Windows.Foundation.Collections.IVectorView<String> names, String active, Boolean canApply);
+		event PauseToggledDelegate PauseToggled;
+		void SetPauseState(Boolean effectsPaused, Boolean automationPaused, Boolean safeMode);
 
 		event OpenLogFileRequestedDelegate OpenLogFileRequested;
 		event LogLevelChangedDelegate LogLevelChanged;

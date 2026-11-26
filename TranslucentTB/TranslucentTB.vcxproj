@@ -73,7 +73,7 @@
       <PreprocessorDefinitions>_TRANSLUCENTTB_EXE;WINRT_NO_MODULE_LOCK;%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ClCompile>
     <Link>
-      <AdditionalDependencies>advapi32.lib;comctl32.lib;coremessaging.lib;delayimp.lib;dwmapi.lib;gdi32.lib;mincore.lib;ole32.lib;pathcch.lib;runtimeobject.lib;shcore.lib;shell32.lib;shlwapi.lib;user32.lib;onecore.lib</AdditionalDependencies>
+      <AdditionalDependencies>advapi32.lib;comctl32.lib;coremessaging.lib;delayimp.lib;dwmapi.lib;gdi32.lib;mincore.lib;ole32.lib;pathcch.lib;runtimeobject.lib;shcore.lib;shell32.lib;shlwapi.lib;user32.lib;windowscodecs.lib;onecore.lib</AdditionalDependencies>
       <DelayLoadDLLs>api-ms-win-appmodel-runtime-l1-1-5.dll</DelayLoadDLLs>
       <SubSystem>Windows</SubSystem>
     </Link>
@@ -87,6 +87,8 @@
     <ClCompile Include="localization.cpp" />
     <ClCompile Include="managers\configmanager.cpp" />
     <ClCompile Include="managers\profilemanager.cpp" />
+    <ClCompile Include="rules\ruleengine.cpp" />
+    <ClCompile Include="recovery\startupguard.cpp" />
     <ClCompile Include="folderwatcher.cpp" />
     <ClCompile Include="mainappwindow.cpp" />
     <ClCompile Include="settingswindow.cpp" />
@@ -115,6 +117,8 @@
     <ClInclude Include="localization.hpp" />
     <ClInclude Include="managers\configmanager.hpp" />
     <ClInclude Include="managers\profilemanager.hpp" />
+    <ClInclude Include="rules\ruleengine.hpp" />
+    <ClInclude Include="recovery\startupguard.hpp" />
     <ClInclude Include="folderwatcher.hpp" />
     <ClInclude Include="mainappwindow.hpp" />
     <ClInclude Include="managers\startupmanager.hpp" />

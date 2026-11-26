@@ -140,6 +140,7 @@ private:
 	// Color previews
 	std::array<std::optional<Util::Color>, 7> m_ColorPreviews;
 	std::optional<TaskbarAppearance> m_AppearancePreview;
+	std::optional<Config> m_RuleOverride;
 	std::function<void()> m_DiagnosticsChanged;
 
 	// Hook DLL
@@ -154,6 +155,8 @@ private:
 
 	// Other
 	const compat::SystemInfo m_SystemInfo;
+	const bool m_SafeMode;
+	bool m_EffectsSuspended;
 	compat::Capabilities m_Capabilities;
 
 	// Type aliases
@@ -266,7 +269,7 @@ private:
 	}
 
 public:
-	TaskbarAttributeWorker(ConfigManager &cfgManager, HINSTANCE hInstance, DynamicLoader &loader, const std::optional<std::filesystem::path> &storageFolder);
+	TaskbarAttributeWorker(ConfigManager &cfgManager, HINSTANCE hInstance, DynamicLoader &loader, const std::optional<std::filesystem::path> &storageFolder, bool safeMode = false);
 
 	inline void ConfigurationChanged()
 	{
@@ -286,6 +289,11 @@ public:
 	}
 
 	void SetAppearancePreview(std::optional<TaskbarAppearance> appearance);
+	void SetRuleOverride(std::optional<Config> config);
+	void SetEffectsSuspended(bool suspended);
+	bool EffectsSuspended() const noexcept { return m_EffectsSuspended; }
+	bool SafeMode() const noexcept { return m_SafeMode; }
+	bool HasRuleOverride() const noexcept { return m_RuleOverride.has_value(); }
 	void SetDiagnosticsChanged(std::function<void()> callback);
 	bool CanShowPeek() const;
 	bool CanShowTaskbarLine() const;

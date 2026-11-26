@@ -6,6 +6,7 @@
 #endif
 
 #include <algorithm>
+#include <cmath>
 #include <winrt/Windows.ApplicationModel.DataTransfer.h>
 #include "appinfo.hpp"
 #include "util/color.hpp"
@@ -36,6 +37,8 @@ namespace winrt::TranslucentTB::Xaml::Pages::implementation
 		Title(APP_NAME);
 		Navigation().SelectedItem(HomeItem());
 		State().SelectedIndex(0);
+		ConditionKind().SelectedIndex(0);
+		ActionKind().SelectedIndex(0);
 	}
 
 	hstring SettingsPage::Text(std::wstring_view key) const
@@ -133,9 +136,15 @@ namespace winrt::TranslucentTB::Xaml::Pages::implementation
 		const auto selected = args.SelectedItem();
 		const bool appearance = selected == AppearanceItem();
 		const bool profiles = selected == ProfilesItem();
-		HomeSection().Visibility(VisibleWhen(!appearance && !profiles));
+		const bool automation = selected == AutomationItem();
+		const bool adaptive = selected == AdaptiveItem();
+		const bool hotkeys = selected == HotkeysItem();
+		HomeSection().Visibility(VisibleWhen(!appearance && !profiles && !automation && !adaptive && !hotkeys));
+		HotkeysSection().Visibility(VisibleWhen(hotkeys));
+		AdaptiveSection().Visibility(VisibleWhen(adaptive));
 		AppearanceSection().Visibility(VisibleWhen(appearance));
 		ProfilesSection().Visibility(VisibleWhen(profiles));
+		AutomationSection().Visibility(VisibleWhen(automation));
 		UpdatePreview();
 	}
 
@@ -389,6 +398,7 @@ namespace winrt::TranslucentTB::Xaml::Pages::implementation
 		ActiveProfileText().Text(m_ActiveProfile.empty() ? Text(L"ProfileNoneActive") : winrt::format(L"{}: {}", Text(L"ProfileActiveLabel"), m_ActiveProfile));
 		SavingHintProfiles();
 		RefreshProfileButtons();
+		UpdateActionProfiles();
 	}
 
 	void SettingsPage::SavingHintProfiles()
@@ -497,5 +507,323 @@ namespace winrt::TranslucentTB::Xaml::Pages::implementation
 		{
 			RequestProfileAction(L"delete", selected->Name);
 		}
+	}
+
+	hstring SettingsPage::SelectedTag(const wuxc::ComboBox &box)
+	{
+		if (const auto item = box.SelectedItem().try_as<wux::FrameworkElement>())
+		{
+			if (const auto tag = item.Tag())
+			{
+				return unbox_value<hstring>(tag);
+			}
+		}
+		return { };
+	}
+
+	void SettingsPage::SetAutomation(const wfc::IVectorView<RuleInfo> &rules, const hstring &activeRule, const hstring &loadError, bool paused)
+	{
+		const int previous = RulesList().SelectedIndex();
+		m_Rules.assign(begin(rules), end(rules));
+		m_RulesEditable = loadError.empty();
+
+		m_Updating = true;
+		PauseAutomation().IsOn(paused);
+		const auto items = RulesList().Items();
+		items.Clear();
+		for (const auto &rule : m_Rules)
+		{
+			items.Append(box_value(winrt::format(L"{}  [{} {}{}]\n{}", rule.Name, Text(L"RulePriorityShort"), rule.Priority,
+				rule.Enabled ? L"" : std::wstring(L", ") + std::wstring(Text(L"RuleDisabled")), rule.Summary)));
+		}
+		if (previous >= 0 && static_cast<std::size_t>(previous) < m_Rules.size())
+		{
+			RulesList().SelectedIndex(previous);
+		}
+		m_Updating = false;
+
+		std::wstring status;
+		if (!loadError.empty())
+		{
+			status = winrt::format(L"{} {}", Text(L"RulesLoadError"), loadError);
+		}
+		else if (paused)
+		{
+			status = Text(L"AutomationPaused");
+		}
+		else if (!activeRule.empty())
+		{
+			status = winrt::format(L"{}: {}", Text(L"RuleActive"), activeRule);
+		}
+		else
+		{
+			status = winrt::format(L"{} ({})", Text(L"NoRuleActive"), m_Rules.size());
+		}
+		AutomationStatusText().Text(status);
+		RefreshRuleButtons();
+		RefreshRuleForm();
+	}
+
+	void SettingsPage::FinishAutomationAction(bool success, const hstring &messageKey, const hstring &detail)
+	{
+		m_AutomationBusy = false;
+		std::wstring message { Text(std::wstring(L"Automation") + std::wstring(messageKey)) };
+		if (!detail.empty())
+		{
+			message += L" ";
+			message += detail;
+		}
+		AutomationStatus().Text(message);
+		if (success && messageKey == L"Created")
+		{
+			RuleName().Text(L"");
+			ConditionValue().Text(L"");
+		}
+		RefreshRuleButtons();
+		RefreshRuleForm();
+	}
+
+	void SettingsPage::RefreshRuleButtons()
+	{
+		const int index = RulesList().SelectedIndex();
+		const bool selected = index >= 0 && static_cast<std::size_t>(index) < m_Rules.size();
+		const bool enabled = selected && m_RulesEditable && !m_AutomationBusy;
+		ToggleRuleButton().IsEnabled(enabled);
+		RaiseRuleButton().IsEnabled(enabled);
+		LowerRuleButton().IsEnabled(enabled);
+		DeleteRuleButton().IsEnabled(enabled);
+		if (selected)
+		{
+			ToggleRuleButton().Content(box_value(Text(m_Rules[static_cast<std::size_t>(index)].Enabled ? L"DisableRule" : L"EnableRule")));
+		}
+	}
+
+	void SettingsPage::RefreshRuleForm()
+	{
+		const auto condition = SelectedTag(ConditionKind());
+		const bool needsValue = condition == L"foreground_app" || condition == L"app_running" || condition == L"battery_below" ||
+			condition == L"time_range" || condition == L"weekdays" || condition == L"monitors_at_least";
+		ConditionValue().Visibility(VisibleWhen(needsValue));
+		ConditionHint().Text(needsValue ? Text(std::wstring(L"Hint_") + std::wstring(condition)) : hstring { });
+		ConditionHint().Visibility(VisibleWhen(needsValue));
+
+		const bool profileAction = SelectedTag(ActionKind()) == L"activate_profile";
+		ActionProfile().Visibility(VisibleWhen(profileAction));
+
+		const bool ready = m_RulesEditable && !m_AutomationBusy && !RuleName().Text().empty() &&
+			(!needsValue || !ConditionValue().Text().empty()) && (!profileAction || ActionProfile().SelectedItem());
+		CreateRuleButton().IsEnabled(ready);
+		EditRulesButton().IsEnabled(!m_AutomationBusy);
+		ReloadRulesButton().IsEnabled(!m_AutomationBusy);
+	}
+
+	void SettingsPage::UpdateActionProfiles()
+	{
+		const auto current = ActionProfile().SelectedItem();
+		const hstring previous = current ? unbox_value_or<hstring>(current, { }) : hstring { };
+		const auto items = ActionProfile().Items();
+		items.Clear();
+		int selected = m_Profiles.empty() ? -1 : 0;
+		for (std::size_t i = 0; i < m_Profiles.size(); ++i)
+		{
+			items.Append(box_value(m_Profiles[i].Name));
+			if (m_Profiles[i].Name == previous)
+			{
+				selected = static_cast<int>(i);
+			}
+		}
+		ActionProfile().SelectedIndex(selected);
+		RefreshRuleForm();
+	}
+
+	void SettingsPage::PauseAutomationToggled(const IInspectable &, const wux::RoutedEventArgs &)
+	{
+		if (!m_Updating)
+		{
+			m_AutomationBusy = true;
+			RefreshRuleButtons();
+			m_AutomationActionRequested(L"pause", -1, PauseAutomation().IsOn() ? 1 : 0);
+		}
+	}
+
+	void SettingsPage::AutomationButtonClicked(const IInspectable &sender, const wux::RoutedEventArgs &)
+	{
+		m_AutomationActionRequested(unbox_value<hstring>(sender.as<wux::FrameworkElement>().Tag()), -1, 0);
+	}
+
+	void SettingsPage::RuleSelectionChanged(const IInspectable &, const wuxc::SelectionChangedEventArgs &)
+	{
+		if (!m_Updating)
+		{
+			RefreshRuleButtons();
+		}
+	}
+
+	void SettingsPage::RuleButtonClicked(const IInspectable &sender, const wux::RoutedEventArgs &)
+	{
+		const int index = RulesList().SelectedIndex();
+		if (index < 0 || static_cast<std::size_t>(index) >= m_Rules.size())
+		{
+			return;
+		}
+
+		const auto tag = unbox_value<hstring>(sender.as<wux::FrameworkElement>().Tag());
+		m_AutomationBusy = true;
+		RefreshRuleButtons();
+		if (tag == L"raise")
+		{
+			m_AutomationActionRequested(L"priority", index, 10);
+		}
+		else if (tag == L"lower")
+		{
+			m_AutomationActionRequested(L"priority", index, -10);
+		}
+		else
+		{
+			m_AutomationActionRequested(tag, index, 0);
+		}
+	}
+
+	void SettingsPage::RuleFormChanged(const IInspectable &, const wuxc::TextChangedEventArgs &)
+	{
+		RefreshRuleForm();
+	}
+
+	void SettingsPage::ConditionKindChanged(const IInspectable &, const wuxc::SelectionChangedEventArgs &)
+	{
+		if (m_Resources)
+		{
+			RefreshRuleForm();
+		}
+	}
+
+	void SettingsPage::ActionKindChanged(const IInspectable &, const wuxc::SelectionChangedEventArgs &)
+	{
+		if (m_Resources)
+		{
+			RefreshRuleForm();
+		}
+	}
+
+	void SettingsPage::CreateRuleClicked(const IInspectable &, const wux::RoutedEventArgs &)
+	{
+		const auto priority = RulePriority().Value();
+		NewRuleSpec spec {
+			RuleName().Text(),
+			std::isnan(priority) ? 0 : static_cast<std::int32_t>(std::clamp(priority, -1000.0, 1000.0)),
+			SelectedTag(ConditionKind()),
+			ConditionValue().Text(),
+			unbox_value_or<bool>(NegateCondition().IsChecked(), false),
+			SelectedTag(ActionKind()),
+			ActionProfile().SelectedItem() ? unbox_value<hstring>(ActionProfile().SelectedItem()) : hstring { }
+		};
+
+		m_AutomationBusy = true;
+		RefreshRuleForm();
+		AutomationStatus().Text(Text(L"AutomationWorking"));
+		m_CreateRuleRequested(spec);
+	}
+
+	void SettingsPage::SetAdaptiveColor(bool enabled, bool useSecondary, std::int32_t intensity, std::int32_t saturation, std::int32_t contrast, bool active, std::uint32_t color, const hstring &source, bool canSave)
+	{
+		m_Updating = true;
+		AdaptiveEnabled().IsOn(enabled);
+		AdaptiveSecondary().IsChecked(useSecondary);
+		AdaptiveIntensity().Value(intensity);
+		AdaptiveSaturation().Value(saturation);
+		AdaptiveContrast().Value(contrast);
+		m_Updating = false;
+
+		for (const wux::Controls::Control control : { AdaptiveEnabled().as<wux::Controls::Control>(), AdaptiveSecondary().as<wux::Controls::Control>(),
+			AdaptiveIntensity().as<wux::Controls::Control>(), AdaptiveSaturation().as<wux::Controls::Control>(),
+			AdaptiveContrast().as<wux::Controls::Control>(), AdaptiveExclude().as<wux::Controls::Control>() })
+		{
+			control.IsEnabled(canSave);
+		}
+
+		if (active)
+		{
+			const auto c = Util::Color::FromRGBA(color);
+			AdaptiveSwatch().Background(wux::Media::SolidColorBrush(winrt::Windows::UI::Color { c.A, c.R, c.G, c.B }));
+			AdaptiveSwatch().Visibility(wux::Visibility::Visible);
+			AdaptiveStatus().Text(winrt::format(L"{} {} ({})", Text(L"AdaptiveActive"), c.ToString(), source));
+		}
+		else
+		{
+			AdaptiveSwatch().Visibility(wux::Visibility::Collapsed);
+			AdaptiveStatus().Text(!canSave ? Text(L"AdaptiveCannotSave") : enabled ? winrt::format(L"{} {}", Text(L"AdaptiveUnavailable"), source) : Text(L"AdaptiveOff"));
+		}
+	}
+
+	void SettingsPage::SendAdaptive(bool excludeCurrent)
+	{
+		m_AdaptiveColorChanged(AdaptiveEnabled().IsOn(), unbox_value_or<bool>(AdaptiveSecondary().IsChecked(), false),
+			static_cast<std::int32_t>(AdaptiveIntensity().Value()), static_cast<std::int32_t>(AdaptiveSaturation().Value()),
+			static_cast<std::int32_t>(AdaptiveContrast().Value()), excludeCurrent);
+	}
+
+	void SettingsPage::AdaptiveToggled(const IInspectable &, const wux::RoutedEventArgs &)
+	{
+		if (!m_Updating)
+		{
+			SendAdaptive(false);
+		}
+	}
+
+	void SettingsPage::AdaptiveOptionClicked(const IInspectable &, const wux::RoutedEventArgs &)
+	{
+		if (!m_Updating)
+		{
+			SendAdaptive(false);
+		}
+	}
+
+	void SettingsPage::AdaptiveSliderChanged(const IInspectable &, const wuxc::Primitives::RangeBaseValueChangedEventArgs &)
+	{
+		if (m_Updating)
+		{
+			return;
+		}
+
+		// Sliders fire continuously while dragging: send (and save) only after 400 ms of inactivity.
+		if (!m_AdaptiveTimer)
+		{
+			m_AdaptiveTimer = wux::DispatcherTimer();
+			m_AdaptiveTimer.Interval(std::chrono::milliseconds(400));
+			m_AdaptiveTimer.Tick([weak = get_weak()](const IInspectable &, const IInspectable &)
+			{
+				if (const auto self = weak.get())
+				{
+					self->m_AdaptiveTimer.Stop();
+					self->SendAdaptive(false);
+				}
+			});
+		}
+		m_AdaptiveTimer.Stop();
+		m_AdaptiveTimer.Start();
+	}
+
+	void SettingsPage::AdaptiveExcludeClicked(const IInspectable &, const wux::RoutedEventArgs &)
+	{
+		SendAdaptive(true);
+	}
+
+	void SettingsPage::SetHotkeys(const wfc::IVectorView<hstring> &bindings, const hstring &messageKey, const hstring &detail)
+	{
+		const std::array<wuxc::TextBox, 4> boxes { HotkeyOpenSettings(), HotkeyToggleEffects(), HotkeyNextProfile(), HotkeyToggleAutomation() };
+		for (std::uint32_t i = 0; i < boxes.size() && i < bindings.Size(); ++i)
+		{
+			boxes[i].Text(bindings.GetAt(i));
+		}
+		if (!messageKey.empty())
+		{
+			HotkeysStatus().Text(winrt::format(L"{} {}", Text(std::wstring(L"Hotkeys") + std::wstring(messageKey)), detail));
+		}
+	}
+
+	void SettingsPage::SaveHotkeysClicked(const IInspectable &, const wux::RoutedEventArgs &)
+	{
+		std::vector<hstring> bindings { HotkeyOpenSettings().Text(), HotkeyToggleEffects().Text(), HotkeyNextProfile().Text(), HotkeyToggleAutomation().Text() };
+		m_HotkeysChanged(single_threaded_vector(std::move(bindings)).GetView());
 	}
 }
