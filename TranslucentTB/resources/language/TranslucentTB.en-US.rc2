@@ -33,13 +33,13 @@ VS_VERSION_INFO VERSIONINFO
 		{
 			VALUE L"FileDescription", APP_NAME
 			VALUE L"FileVersion", APP_VERSION
-			VALUE L"InternalName", APP_NAME L".exe"
-			VALUE L"OriginalFilename", APP_NAME L".exe"
+			VALUE L"InternalName", APP_EXE_NAME
+			VALUE L"OriginalFilename", APP_EXE_NAME
 			VALUE L"ProductName", APP_NAME
 			VALUE L"ProductVersion", APP_VERSION
 			VALUE L"Comments", L"A lightweight utility that makes the Windows taskbar translucent/transparent."
 			VALUE L"CompanyName", APP_NAME L" Open Source Developers"
-			VALUE L"LegalCopyright", L"Copyright © " APP_COPYRIGHT_YEAR L" " APP_NAME L" Open Source Developers"
+			VALUE L"LegalCopyright", L"Copyright © " APP_COPYRIGHT_YEAR L" " L"TranslucentTB" L" Open Source Developers"
 		}
 	}
 	BLOCK L"VarFileInfo"

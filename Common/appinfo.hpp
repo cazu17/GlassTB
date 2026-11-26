@@ -2,14 +2,15 @@
 #include "util/string_macros.hpp"
 
 #if defined(BUILD_TYPE) && BUILD_TYPE == 0
-#define UTF8_APP_NAME "TranslucentTB"
+#define UTF8_APP_NAME "GlassTB"
 #elif defined(BUILD_TYPE) && BUILD_TYPE == 1
-#define UTF8_APP_NAME "TranslucentTB (Canary)"
+#define UTF8_APP_NAME "GlassTB (Canary)"
 #else
-#define UTF8_APP_NAME "TranslucentTB (Dev)"
+#define UTF8_APP_NAME "GlassTB (Dev)"
 #endif
 
 #define APP_NAME UTIL_WIDEN(UTF8_APP_NAME)
+#define APP_EXE_NAME L"GlassTB.exe"
 
 #define APP_COPYRIGHT_YEAR_NUM 2026
 #define APP_COPYRIGHT_YEAR UTIL_STRINGIFY(APP_COPYRIGHT_YEAR_NUM)

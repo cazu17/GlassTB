@@ -325,7 +325,7 @@ MainAppWindow::MainAppWindow(Application &app, bool hideIconOverride, bool hasPa
 	TrayContextMenu(TRAY_GUID, MAKEINTRESOURCE(IDI_TRAYWHITEICON), MAKEINTRESOURCE(IDI_TRAYBLACKICON), loader, hasPackageIdentity),
 	m_App(app),
 	m_HideIconOverride(hideIconOverride),
-	m_NewInstanceMessage(Window::RegisterMessage(WM_TTBNEWINSTANCESTARTED))
+	m_NewInstanceMessage(Window::RegisterMessage(WM_GTBNEWINSTANCESTARTED))
 {
 	// Register global hotkey for resetting dynamic state
 	const BOOL hotkeyRegistered = RegisterHotKey(
@@ -366,7 +366,7 @@ void MainAppWindow::RemoveHideTrayIconOverride()
 
 void MainAppWindow::PostNewInstanceNotification()
 {
-	if (const auto msg = Window::RegisterMessage(WM_TTBNEWINSTANCESTARTED))
+	if (const auto msg = Window::RegisterMessage(WM_GTBNEWINSTANCESTARTED))
 	{
 		if (const auto runningInstance = Window::Find(TRAY_WINDOW, APP_NAME))
 		{

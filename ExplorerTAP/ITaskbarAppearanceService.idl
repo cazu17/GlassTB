@@ -1,7 +1,7 @@
 import "unknwn.idl";
 import "TaskbarBrush.idl";
 
-[object, uuid(5bcf9150-c28a-4ef2-913c-4c3ea2f5ead0)]
+[object, uuid(c0cebe92-7d29-42a2-95b4-dfcc18f67edc)]
 interface ITaskbarAppearanceService : IUnknown
 {
 	HRESULT SetTaskbarAppearance([in] HWND taskbar, [in] enum TaskbarBrush brush, [in] UINT color);

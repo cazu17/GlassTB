@@ -107,7 +107,7 @@ void TaskViewVisibilityMonitor::ThreadMain() noexcept
 	const auto viewService = LoadViewService();
 	const auto token = RegisterSink();
 
-	unique_window_failfast window(CreateWindowEx(WS_EX_NOREDIRECTIONBITMAP, reinterpret_cast<LPCWSTR>(s_WindowClassAtom.get()), TTBHOOK_TASKVIEWMONITOR.c_str(), 0, 0, 0, 0, 0, HWND_MESSAGE, nullptr, wil::GetModuleInstanceHandle(), nullptr));
+	unique_window_failfast window(CreateWindowEx(WS_EX_NOREDIRECTIONBITMAP, reinterpret_cast<LPCWSTR>(s_WindowClassAtom.get()), GTBHOOK_TASKVIEWMONITOR.c_str(), 0, 0, 0, 0, 0, HWND_MESSAGE, nullptr, wil::GetModuleInstanceHandle(), nullptr));
 	FAIL_FAST_LAST_ERROR_IF_NULL(window);
 
 	BOOL ret;
@@ -188,13 +188,13 @@ void TaskViewVisibilityMonitor::Install() noexcept
 {
 	if (!s_TaskViewVisibilityChangeMessage)
 	{
-		s_TaskViewVisibilityChangeMessage = RegisterWindowMessage(WM_TTBHOOKTASKVIEWVISIBILITYCHANGE.c_str());
+		s_TaskViewVisibilityChangeMessage = RegisterWindowMessage(WM_GTBHOOKTASKVIEWVISIBILITYCHANGE.c_str());
 		FAIL_FAST_LAST_ERROR_IF(!s_TaskViewVisibilityChangeMessage);
 	}
 
 	if (!s_IsTaskViewOpenedMessage)
 	{
-		s_IsTaskViewOpenedMessage = RegisterWindowMessage(WM_TTBHOOKISTASKVIEWOPENED.c_str());
+		s_IsTaskViewOpenedMessage = RegisterWindowMessage(WM_GTBHOOKISTASKVIEWOPENED.c_str());
 		FAIL_FAST_LAST_ERROR_IF(!s_IsTaskViewOpenedMessage);
 	}
 
@@ -204,7 +204,7 @@ void TaskViewVisibilityMonitor::Install() noexcept
 			.cbSize = sizeof(wndClass),
 			.lpfnWndProc = WindowProc,
 			.hInstance = wil::GetModuleInstanceHandle(),
-			.lpszClassName = TTBHOOK_TASKVIEWMONITOR.c_str()
+			.lpszClassName = GTBHOOK_TASKVIEWMONITOR.c_str()
 		};
 
 		s_WindowClassAtom.reset(RegisterClassEx(&wndClass));

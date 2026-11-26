@@ -145,7 +145,7 @@
     <value>Tutup</value>
   </data>
   <data name="TrayFlyoutPage_About.Text" xml:space="preserve">
-    <value>Tentang TranslucentTB</value>
+    <value>Tentang GlassTB</value>
   </data>
   <data name="TrayFlyoutPage_AccentColor.Text" xml:space="preserve">
     <value>Warna Aksen</value>
@@ -256,7 +256,7 @@
     <value>Jendela terlihat</value>
   </data>
   <data name="WelcomePage.Title" xml:space="preserve">
-    <value>Selamat Datang di TranslucentTB!</value>
+    <value>Selamat Datang di GlassTB!</value>
   </data>
   <data name="WelcomePage_Action_Configure.Description" xml:space="preserve">
     <value>Anda bisa lakukan ini dengan klik "Lanjutan" &gt; "Ubah pengaturan" di menu konteks ikon baki
@@ -287,7 +287,7 @@ Perubahan dimuat ulang secara otomatis ketika Anda menyimpan berkas</value>
     <value>buka sebuah GitHub issue</value>
   </data>
   <data name="WelcomePage_Message_Prefix.Text" xml:space="preserve">
-    <value>Terima kasih telah mencoba TranslucentTB! Setelah Anda mengklik "Lanjut", Anda dapat mempersonalisasikan bagaimana taskbar terlihat sesuai keinginan Anda. Kami harap Anda menikmati nya, dan jangan ragu untuk</value>
+    <value>Terima kasih telah mencoba GlassTB! Setelah Anda mengklik "Lanjut", Anda dapat mempersonalisasikan bagaimana taskbar terlihat sesuai keinginan Anda. Kami harap Anda menikmati nya, dan jangan ragu untuk</value>
   </data>
   <data name="WelcomePage_Message_Suffix.Text" xml:space="preserve">
     <value>jika Anda mempunyai suatu masalah atau ingin melihat sebuah fitur ditambahkan!</value>

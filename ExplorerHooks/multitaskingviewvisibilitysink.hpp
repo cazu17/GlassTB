@@ -13,7 +13,7 @@ private:
 
 	void NotifyWorker(bool opened) const noexcept
 	{
-		if (const auto worker = FindWindow(TTB_WORKERWINDOW.c_str(), TTB_WORKERWINDOW.c_str()))
+		if (const auto worker = FindWindow(GTB_WORKERWINDOW.c_str(), GTB_WORKERWINDOW.c_str()))
 		{
 			PostMessage(worker, m_ChangeMessage, opened, 0);
 		}

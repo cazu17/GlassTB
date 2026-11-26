@@ -33,13 +33,13 @@ VS_VERSION_INFO VERSIONINFO
 		{
 			VALUE L"FileDescription", APP_NAME
 			VALUE L"FileVersion", APP_VERSION
-			VALUE L"InternalName", APP_NAME L".exe"
-			VALUE L"OriginalFilename", APP_NAME L".exe"
+			VALUE L"InternalName", APP_EXE_NAME
+			VALUE L"OriginalFilename", APP_EXE_NAME
 			VALUE L"ProductName", APP_NAME
 			VALUE L"ProductVersion", APP_VERSION
 			VALUE L"Comments", L"Sebuah utilitas ringan yang membuat taskbar Windows tembus pandang/transparan."
 			VALUE L"CompanyName", APP_NAME L" Pengembang Sumber Terbuka"
-			VALUE L"LegalCopyright", L"Hak Cipta © " APP_COPYRIGHT_YEAR L" " APP_NAME L" Pengembang Sumber Terbuka"
+			VALUE L"LegalCopyright", L"Hak Cipta © " APP_COPYRIGHT_YEAR L" " L"TranslucentTB" L" Pengembang Sumber Terbuka"
 		}
 	}
 	BLOCK L"VarFileInfo"

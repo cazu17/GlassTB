@@ -19,12 +19,12 @@ if ($Compress)
 	$platform_lower = $Platform.ToLower()
 	if ($NoConfig)
 	{
-		$filename = "TranslucentTB-portable-$platform_lower.zip"
+		$filename = "GlassTB-portable-$platform_lower.zip"
 	}
 	else
 	{
 		$configuration_lower = $Configuration.ToLower()
-		$filename = "TranslucentTB-portable-$platform_lower-$configuration_lower.zip"
+		$filename = "GlassTB-portable-$platform_lower-$configuration_lower.zip"
 	}
 
 	Compress-Archive -Path "$WorkDir\portable-$Platform-$Configuration\*" -DestinationPath "$OutputDir\$filename"

@@ -145,7 +145,7 @@
     <value>Закрити</value>
   </data>
   <data name="TrayFlyoutPage_About.Text" xml:space="preserve">
-    <value>Про TranslucentTB</value>
+    <value>Про GlassTB</value>
   </data>
   <data name="TrayFlyoutPage_AccentColor.Text" xml:space="preserve">
     <value>Акцентий колір</value>
@@ -256,7 +256,7 @@
     <value>Видиме вікно</value>
   </data>
   <data name="WelcomePage.Title" xml:space="preserve">
-    <value>Ласкаво просимо до TranslucentTB!</value>
+    <value>Ласкаво просимо до GlassTB!</value>
   </data>
   <data name="WelcomePage_Action_Configure.Description" xml:space="preserve">
     <value>и завжди можете зробити це, натиснувши "Додатково" &gt; "Редагувати налаштування" у контекстному меню іконки лотка
@@ -287,7 +287,7 @@
     <value>Відкрити проблему на GitHub</value>
   </data>
   <data name="WelcomePage_Message_Prefix.Text" xml:space="preserve">
-    <value>Дякуємо за спробу TranslucentTB! Після того, як ви натиснете "Продовжити", ви зможете налаштувати панель завдань на свій смак. Сподіваємося, вам сподобається</value>
+    <value>Дякуємо за спробу GlassTB! Після того, як ви натиснете "Продовжити", ви зможете налаштувати панель завдань на свій смак. Сподіваємося, вам сподобається</value>
   </data>
   <data name="WelcomePage_Message_Suffix.Text" xml:space="preserve">
     <value>Якщо у вас виникли проблеми або ви хочете додати новий функціонал!</value>

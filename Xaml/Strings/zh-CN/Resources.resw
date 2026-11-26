@@ -145,7 +145,7 @@
     <value>关闭</value>
   </data>
   <data name="TrayFlyoutPage_About.Text" xml:space="preserve">
-    <value>关于 TranslucentTB</value>
+    <value>关于 GlassTB</value>
   </data>
   <data name="TrayFlyoutPage_AccentColor.Text" xml:space="preserve">
     <value>主题色</value>
@@ -256,11 +256,11 @@
     <value>打开任何窗口时</value>
   </data>
   <data name="WelcomePage.Title" xml:space="preserve">
-    <value>欢迎使用 TranslucentTB！</value>
+    <value>欢迎使用 GlassTB！</value>
   </data>
   <data name="WelcomePage_Action_Configure.Description" xml:space="preserve">
     <value>你可以随时在托盘图标的菜单中点击 "高级" &gt; "编辑设置" 来打开配置文件
-保存文件后，TranslucentTB 将自动重载</value>
+保存文件后，GlassTB 将自动重载</value>
   </data>
   <data name="WelcomePage_Action_Configure.Name" xml:space="preserve">
     <value>编辑配置文件</value>
@@ -287,7 +287,7 @@
     <value>在 GitHub 上反馈问题 (issue)</value>
   </data>
   <data name="WelcomePage_Message_Prefix.Text" xml:space="preserve">
-    <value>感谢你使用 TranslucentTB！点击 "继续" 后，你可以根据喜好自定义任务栏的外观。如果你有任何问题，或是想要建议新功能，欢迎</value>
+    <value>感谢你使用 GlassTB！点击 "继续" 后，你可以根据喜好自定义任务栏的外观。如果你有任何问题，或是想要建议新功能，欢迎</value>
   </data>
   <data name="WelcomePage_Message_Suffix.Text" xml:space="preserve">
     <value>祝你使用愉快！</value>
