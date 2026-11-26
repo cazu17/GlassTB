@@ -685,4 +685,427 @@ Los cambios se recargan automáticamente cuando guarda el archivo</value>
   <data name="TrayFlyoutPage_Profiles.Text" xml:space="preserve">
     <value>Perfil</value>
   </data>
+  <data name="SettingsPage_AutomationItem.Content" xml:space="preserve">
+    <value>Automatización</value>
+  </data>
+  <data name="SettingsPage_AutomationItem.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>Automatización</value>
+  </data>
+  <data name="SettingsPage_AutomationHeading.Text" xml:space="preserve">
+    <value>Automatización</value>
+  </data>
+  <data name="SettingsPage_AutomationIntro.Text" xml:space="preserve">
+    <value>Las reglas cambian la apariencia según lo que ocurre en el equipo. Gana la regla habilitada de mayor prioridad que se cumpla; se aplica en memoria sin modificar config.json.</value>
+  </data>
+  <data name="SettingsPage_PauseAutomation.Header" xml:space="preserve">
+    <value>Pausar automatización</value>
+  </data>
+  <data name="SettingsPage_PauseAutomation.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>Pausar automatización</value>
+  </data>
+  <data name="SettingsPage_EditRules.Content" xml:space="preserve">
+    <value>Editar rules.json</value>
+  </data>
+  <data name="SettingsPage_EditRules.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>Abrir rules.json en el editor</value>
+  </data>
+  <data name="SettingsPage_ReloadRules.Content" xml:space="preserve">
+    <value>Recargar</value>
+  </data>
+  <data name="SettingsPage_ReloadRules.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>Recargar reglas</value>
+  </data>
+  <data name="SettingsPage_RulesList.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>Lista de reglas</value>
+  </data>
+  <data name="SettingsPage_ToggleRule.Content" xml:space="preserve">
+    <value>Deshabilitar</value>
+  </data>
+  <data name="SettingsPage_ToggleRule.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>Habilitar o deshabilitar la regla seleccionada</value>
+  </data>
+  <data name="SettingsPage_RaiseRule.Content" xml:space="preserve">
+    <value>Subir prioridad</value>
+  </data>
+  <data name="SettingsPage_RaiseRule.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>Subir prioridad de la regla seleccionada</value>
+  </data>
+  <data name="SettingsPage_LowerRule.Content" xml:space="preserve">
+    <value>Bajar prioridad</value>
+  </data>
+  <data name="SettingsPage_LowerRule.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>Bajar prioridad de la regla seleccionada</value>
+  </data>
+  <data name="SettingsPage_DeleteRule.Content" xml:space="preserve">
+    <value>Eliminar</value>
+  </data>
+  <data name="SettingsPage_DeleteRule.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>Eliminar la regla seleccionada</value>
+  </data>
+  <data name="SettingsPage_NewRuleHeading.Text" xml:space="preserve">
+    <value>Nueva regla</value>
+  </data>
+  <data name="SettingsPage_RuleName.Header" xml:space="preserve">
+    <value>Nombre</value>
+  </data>
+  <data name="SettingsPage_RuleName.PlaceholderText" xml:space="preserve">
+    <value>Juegos</value>
+  </data>
+  <data name="SettingsPage_RuleName.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>Nombre de la regla</value>
+  </data>
+  <data name="SettingsPage_RulePriority.Header" xml:space="preserve">
+    <value>Prioridad</value>
+  </data>
+  <data name="SettingsPage_RulePriority.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>Prioridad de la regla</value>
+  </data>
+  <data name="SettingsPage_ConditionKind.Header" xml:space="preserve">
+    <value>Condición</value>
+  </data>
+  <data name="SettingsPage_ConditionKind.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>Tipo de condición</value>
+  </data>
+  <data name="SettingsPage_CondFullscreen.Content" xml:space="preserve">
+    <value>Pantalla completa</value>
+  </data>
+  <data name="SettingsPage_CondForeground.Content" xml:space="preserve">
+    <value>Aplicación en primer plano</value>
+  </data>
+  <data name="SettingsPage_CondRunning.Content" xml:space="preserve">
+    <value>Aplicación ejecutándose</value>
+  </data>
+  <data name="SettingsPage_CondMaximized.Content" xml:space="preserve">
+    <value>Ventana activa maximizada</value>
+  </data>
+  <data name="SettingsPage_CondOnBattery.Content" xml:space="preserve">
+    <value>Funcionando con batería</value>
+  </data>
+  <data name="SettingsPage_CondBatterySaver.Content" xml:space="preserve">
+    <value>Ahorro de batería activo</value>
+  </data>
+  <data name="SettingsPage_CondBatteryBelow.Content" xml:space="preserve">
+    <value>Batería por debajo de…</value>
+  </data>
+  <data name="SettingsPage_CondTimeRange.Content" xml:space="preserve">
+    <value>Horario</value>
+  </data>
+  <data name="SettingsPage_CondWeekdays.Content" xml:space="preserve">
+    <value>Días de la semana</value>
+  </data>
+  <data name="SettingsPage_CondDarkTheme.Content" xml:space="preserve">
+    <value>Tema oscuro de Windows</value>
+  </data>
+  <data name="SettingsPage_CondMonitors.Content" xml:space="preserve">
+    <value>Número de pantallas (al menos)</value>
+  </data>
+  <data name="SettingsPage_ConditionValue.Header" xml:space="preserve">
+    <value>Valor</value>
+  </data>
+  <data name="SettingsPage_ConditionValue.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>Valor de la condición</value>
+  </data>
+  <data name="SettingsPage_NegateCondition.Content" xml:space="preserve">
+    <value>Invertir (se cumple cuando la condición NO ocurre)</value>
+  </data>
+  <data name="SettingsPage_ActionKind.Header" xml:space="preserve">
+    <value>Acción</value>
+  </data>
+  <data name="SettingsPage_ActionKind.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>Tipo de acción</value>
+  </data>
+  <data name="SettingsPage_ActProfile.Content" xml:space="preserve">
+    <value>Activar perfil</value>
+  </data>
+  <data name="SettingsPage_ActRestore.Content" xml:space="preserve">
+    <value>Restaurar estilo de Windows (modo rendimiento)</value>
+  </data>
+  <data name="SettingsPage_ActionProfile.Header" xml:space="preserve">
+    <value>Perfil</value>
+  </data>
+  <data name="SettingsPage_ActionProfile.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>Perfil a activar</value>
+  </data>
+  <data name="SettingsPage_AdvancedRulesHint.Text" xml:space="preserve">
+    <value>Para combinar condiciones con Y/O, cambiar material, color u opacidad, edita rules.json. Guardar desde aquí reescribe el archivo sin comentarios.</value>
+  </data>
+  <data name="SettingsPage_CreateRule.Content" xml:space="preserve">
+    <value>Crear regla</value>
+  </data>
+  <data name="SettingsPage_CreateRule.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>Crear regla</value>
+  </data>
+  <data name="SettingsPage_RulePriorityShort" xml:space="preserve">
+    <value>prioridad</value>
+  </data>
+  <data name="SettingsPage_RuleDisabled" xml:space="preserve">
+    <value>deshabilitada</value>
+  </data>
+  <data name="SettingsPage_RulesLoadError" xml:space="preserve">
+    <value>rules.json tiene un error (se mantienen las últimas reglas válidas):</value>
+  </data>
+  <data name="SettingsPage_AutomationPaused" xml:space="preserve">
+    <value>Automatización en pausa.</value>
+  </data>
+  <data name="SettingsPage_RuleActive" xml:space="preserve">
+    <value>Regla activa</value>
+  </data>
+  <data name="SettingsPage_NoRuleActive" xml:space="preserve">
+    <value>Ninguna regla activa</value>
+  </data>
+  <data name="SettingsPage_DisableRule" xml:space="preserve">
+    <value>Deshabilitar</value>
+  </data>
+  <data name="SettingsPage_EnableRule" xml:space="preserve">
+    <value>Habilitar</value>
+  </data>
+  <data name="SettingsPage_Hint_foreground_app" xml:space="preserve">
+    <value>Ejecutables separados por comas, por ejemplo: game.exe, cs2.exe</value>
+  </data>
+  <data name="SettingsPage_Hint_app_running" xml:space="preserve">
+    <value>Ejecutables separados por comas, por ejemplo: obs64.exe</value>
+  </data>
+  <data name="SettingsPage_Hint_battery_below" xml:space="preserve">
+    <value>Porcentaje entre 1 y 100, por ejemplo: 20</value>
+  </data>
+  <data name="SettingsPage_Hint_time_range" xml:space="preserve">
+    <value>Inicio-fin en formato HH:MM, por ejemplo: 21:00-07:00</value>
+  </data>
+  <data name="SettingsPage_Hint_weekdays" xml:space="preserve">
+    <value>Números separados por comas, 0 = domingo … 6 = sábado. Ejemplo: 1,2,3,4,5</value>
+  </data>
+  <data name="SettingsPage_Hint_monitors_at_least" xml:space="preserve">
+    <value>Número entre 1 y 16, por ejemplo: 2</value>
+  </data>
+  <data name="SettingsPage_AutomationWorking" xml:space="preserve">
+    <value>Procesando…</value>
+  </data>
+  <data name="SettingsPage_AutomationDone" xml:space="preserve">
+    <value>Hecho.</value>
+  </data>
+  <data name="SettingsPage_AutomationOpened" xml:space="preserve">
+    <value>rules.json abierto; se recargará al guardarlo.</value>
+  </data>
+  <data name="SettingsPage_AutomationReloaded" xml:space="preserve">
+    <value>Reglas recargadas.</value>
+  </data>
+  <data name="SettingsPage_AutomationPausedNow" xml:space="preserve">
+    <value>Automatización en pausa.</value>
+  </data>
+  <data name="SettingsPage_AutomationResumed" xml:space="preserve">
+    <value>Automatización reanudada.</value>
+  </data>
+  <data name="SettingsPage_AutomationEnabled" xml:space="preserve">
+    <value>Regla habilitada:</value>
+  </data>
+  <data name="SettingsPage_AutomationDisabled" xml:space="preserve">
+    <value>Regla deshabilitada:</value>
+  </data>
+  <data name="SettingsPage_AutomationPriorityChanged" xml:space="preserve">
+    <value>Prioridad cambiada:</value>
+  </data>
+  <data name="SettingsPage_AutomationDeleted" xml:space="preserve">
+    <value>Regla eliminada:</value>
+  </data>
+  <data name="SettingsPage_AutomationSaveFailed" xml:space="preserve">
+    <value>No se pudo guardar rules.json:</value>
+  </data>
+  <data name="SettingsPage_AutomationFailed" xml:space="preserve">
+    <value>No se pudo completar la acción.</value>
+  </data>
+  <data name="SettingsPage_AutomationInvalid" xml:space="preserve">
+    <value>La regla no es válida:</value>
+  </data>
+  <data name="SettingsPage_AutomationCreated" xml:space="preserve">
+    <value>Regla creada:</value>
+  </data>
+  <data name="SettingsPage_AdaptiveItem.Content" xml:space="preserve">
+    <value>Color adaptativo</value>
+  </data>
+  <data name="SettingsPage_AdaptiveItem.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>Color adaptativo</value>
+  </data>
+  <data name="SettingsPage_AdaptiveHeading.Text" xml:space="preserve">
+    <value>Color adaptativo</value>
+  </data>
+  <data name="SettingsPage_AdaptiveIntro.Text" xml:space="preserve">
+    <value>Toma el color dominante del fondo de pantalla y lo usa como tinte de la barra en todos los estados, ajustado al tema claro u oscuro. Los materiales no cambian.</value>
+  </data>
+  <data name="SettingsPage_AdaptiveEnabled.Header" xml:space="preserve">
+    <value>Usar color del fondo de pantalla</value>
+  </data>
+  <data name="SettingsPage_AdaptiveEnabled.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>Usar color del fondo de pantalla</value>
+  </data>
+  <data name="SettingsPage_AdaptiveSecondary.Content" xml:space="preserve">
+    <value>Usar el color secundario</value>
+  </data>
+  <data name="SettingsPage_AdaptiveIntensity.Header" xml:space="preserve">
+    <value>Intensidad (opacidad del tinte)</value>
+  </data>
+  <data name="SettingsPage_AdaptiveIntensity.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>Intensidad</value>
+  </data>
+  <data name="SettingsPage_AdaptiveSaturation.Header" xml:space="preserve">
+    <value>Saturación (%)</value>
+  </data>
+  <data name="SettingsPage_AdaptiveSaturation.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>Saturación</value>
+  </data>
+  <data name="SettingsPage_AdaptiveContrast.Header" xml:space="preserve">
+    <value>Contraste con el tema (%)</value>
+  </data>
+  <data name="SettingsPage_AdaptiveContrast.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>Contraste</value>
+  </data>
+  <data name="SettingsPage_AdaptiveExclude.Content" xml:space="preserve">
+    <value>Excluir el fondo actual</value>
+  </data>
+  <data name="SettingsPage_AdaptiveExclude.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>Excluir el fondo de pantalla actual</value>
+  </data>
+  <data name="SettingsPage_AdaptiveNotes.Text" xml:space="preserve">
+    <value>Se recalcula solo cuando cambia el fondo o el tema (sin capturas de pantalla ni sondeos). Las reglas de automatización se aplican encima. El cambio de color es inmediato: las transiciones animadas no están implementadas para no consumir CPU.</value>
+  </data>
+  <data name="SettingsPage_AdaptiveActive" xml:space="preserve">
+    <value>Color aplicado:</value>
+  </data>
+  <data name="SettingsPage_AdaptiveUnavailable" xml:space="preserve">
+    <value>No se pudo obtener un color del fondo actual:</value>
+  </data>
+  <data name="SettingsPage_AdaptiveOff" xml:space="preserve">
+    <value>Desactivado.</value>
+  </data>
+  <data name="SettingsPage_AdaptiveCannotSave" xml:space="preserve">
+    <value>La configuración es de una versión más nueva y no se puede modificar.</value>
+  </data>
+  <data name="TrayFlyoutPage_PauseEffects.Text" xml:space="preserve">
+    <value>Pausar efectos (estilo de Windows)</value>
+  </data>
+  <data name="TrayFlyoutPage_PauseAutomation.Text" xml:space="preserve">
+    <value>Pausar automatización</value>
+  </data>
+  <data name="SettingsPage_HotkeysItem.Content" xml:space="preserve">
+    <value>Atajos</value>
+  </data>
+  <data name="SettingsPage_HotkeysItem.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>Atajos</value>
+  </data>
+  <data name="SettingsPage_HotkeysHeading.Text" xml:space="preserve">
+    <value>Atajos de teclado globales</value>
+  </data>
+  <data name="SettingsPage_HotkeysIntro.Text" xml:space="preserve">
+    <value>Escribe combinaciones como Ctrl+Alt+T o Win+Shift+F9 (al menos un modificador). Déjalo vacío para no asignar. Si otra aplicación ya usa el atajo, Windows no lo permite y se anota en el registro.</value>
+  </data>
+  <data name="SettingsPage_HotkeyOpenSettings.Header" xml:space="preserve">
+    <value>Abrir GlassTB</value>
+  </data>
+  <data name="SettingsPage_HotkeyOpenSettings.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>Atajo para abrir GlassTB</value>
+  </data>
+  <data name="SettingsPage_HotkeyToggleEffects.Header" xml:space="preserve">
+    <value>Pausar/reanudar efectos (restaurar Windows)</value>
+  </data>
+  <data name="SettingsPage_HotkeyToggleEffects.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>Atajo para pausar efectos</value>
+  </data>
+  <data name="SettingsPage_HotkeyNextProfile.Header" xml:space="preserve">
+    <value>Siguiente perfil</value>
+  </data>
+  <data name="SettingsPage_HotkeyNextProfile.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>Atajo para el siguiente perfil</value>
+  </data>
+  <data name="SettingsPage_HotkeyToggleAutomation.Header" xml:space="preserve">
+    <value>Pausar/reanudar automatización</value>
+  </data>
+  <data name="SettingsPage_HotkeyToggleAutomation.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>Atajo para pausar la automatización</value>
+  </data>
+  <data name="SettingsPage_HotkeysLegacy.Text" xml:space="preserve">
+    <value>Ctrl+Alt+Shift+F1 sigue reiniciando el estado dinámico (atajo heredado de TranslucentTB).</value>
+  </data>
+  <data name="SettingsPage_SaveHotkeys.Content" xml:space="preserve">
+    <value>Guardar atajos</value>
+  </data>
+  <data name="SettingsPage_SaveHotkeys.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>Guardar atajos</value>
+  </data>
+  <data name="SettingsPage_HotkeysInvalid" xml:space="preserve">
+    <value>Atajo no válido:</value>
+  </data>
+  <data name="SettingsPage_HotkeysSaveFailed" xml:space="preserve">
+    <value>No se pudo guardar la configuración.</value>
+  </data>
+  <data name="SettingsPage_HotkeysSaved" xml:space="preserve">
+    <value>Atajos guardados.</value>
+  </data>
+  <data name="SettingsPage_PerformanceItem.Content" xml:space="preserve">
+    <value>Rendimiento</value>
+  </data>
+  <data name="SettingsPage_PerformanceItem.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>Rendimiento</value>
+  </data>
+  <data name="SettingsPage_PerformanceHeading.Text" xml:space="preserve">
+    <value>Rendimiento</value>
+  </data>
+  <data name="SettingsPage_PerformanceIntro.Text" xml:space="preserve">
+    <value>Medidas reales del proceso de GlassTB, tomadas cada 2 segundos solo mientras esta sección está abierta. El motor y esta ventana comparten proceso, por lo que la memoria incluye la interfaz abierta; con la ventana cerrada el consumo es menor.</value>
+  </data>
+  <data name="SettingsPage_MetricCpu" xml:space="preserve">
+    <value>CPU (promedio, todos los núcleos)</value>
+  </data>
+  <data name="SettingsPage_MetricPrivate" xml:space="preserve">
+    <value>Memoria privada</value>
+  </data>
+  <data name="SettingsPage_MetricWorkingSet" xml:space="preserve">
+    <value>Conjunto de trabajo</value>
+  </data>
+  <data name="SettingsPage_MetricHandles" xml:space="preserve">
+    <value>Handles</value>
+  </data>
+  <data name="SettingsPage_MetricThreads" xml:space="preserve">
+    <value>Hilos</value>
+  </data>
+  <data name="SettingsPage_MetricGui" xml:space="preserve">
+    <value>Objetos GDI / USER</value>
+  </data>
+  <data name="SettingsPage_MetricRefreshes" xml:space="preserve">
+    <value>Actualizaciones de la barra desde el inicio</value>
+  </data>
+  <data name="SettingsPage_MetricEvaluations" xml:space="preserve">
+    <value>Evaluaciones de reglas desde el inicio</value>
+  </data>
+  <data name="SettingsPage_MetricEffects" xml:space="preserve">
+    <value>Efectos</value>
+  </data>
+  <data name="SettingsPage_MetricActive" xml:space="preserve">
+    <value>activos</value>
+  </data>
+  <data name="SettingsPage_MetricPaused" xml:space="preserve">
+    <value>en pausa</value>
+  </data>
+  <data name="SettingsPage_MetricSafeMode" xml:space="preserve">
+    <value>modo seguro</value>
+  </data>
+  <data name="SettingsPage_DisplaysItem.Content" xml:space="preserve">
+    <value>Pantallas</value>
+  </data>
+  <data name="SettingsPage_DisplaysItem.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>Pantallas</value>
+  </data>
+  <data name="SettingsPage_DisplaysHeading.Text" xml:space="preserve">
+    <value>Pantallas</value>
+  </data>
+  <data name="SettingsPage_DisplaysIntro.Text" xml:space="preserve">
+    <value>Asigna un perfil distinto a la barra de cada pantalla. "Global" usa la apariencia general. El color adaptativo y las reglas se aplican encima. Los nombres \\.\DISPLAYn los asigna Windows y pueden cambiar si se reconectan las pantallas en otro orden.</value>
+  </data>
+  <data name="SettingsPage_DisplayGlobal" xml:space="preserve">
+    <value>Global (apariencia general)</value>
+  </data>
+  <data name="SettingsPage_DisplaysNone" xml:space="preserve">
+    <value>No se detectaron pantallas.</value>
+  </data>
+  <data name="SettingsPage_DisplaysCannotSave" xml:space="preserve">
+    <value>El guardado está desactivado o la configuración es de una versión más nueva.</value>
+  </data>
 </root>

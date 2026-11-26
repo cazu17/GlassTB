@@ -34,6 +34,10 @@
     <ClCompile Include="config\backups.cpp" />
     <ClCompile Include="config\profile.cpp" />
     <ClCompile Include="config\rapidjsonhelper.cpp" />
+    <ClCompile Include="rules\rules.cpp" />
+    <ClCompile Include="color\palette.cpp" />
+    <ClCompile Include="recovery\crashloop.cpp" />
+    <ClCompile Include="input\hotkey.cpp" />
     <ClCompile Include="util\color.cpp" />
     <ClCompile Include="util\numbers.cpp" />
     <ClCompile Include="util\strings.cpp" />

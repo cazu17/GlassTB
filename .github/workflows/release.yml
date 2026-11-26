@@ -1,0 +1,103 @@
+name: Release
+
+# Builds portable ZIPs for x64 and ARM64 when a version tag (v*) is pushed and
+# attaches them, with SHA-256 checksums, to a draft GitHub release.
+# The binaries are not code-signed: see docs/glasstb/distribucion.md.
+on:
+  push:
+    tags: ['v*']
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  build:
+    name: ${{ matrix.platform }}
+    runs-on: windows-2025-vs2026
+    strategy:
+      fail-fast: true
+      matrix:
+        platform: [x64, ARM64]
+    env:
+      VCPKG_DEFAULT_BINARY_CACHE: ${{ github.workspace }}\.vcpkg-cache
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - uses: microsoft/setup-msbuild@v2
+        with:
+          msbuild-architecture: x64
+
+      - name: Prepare vcpkg binary cache dir
+        shell: pwsh
+        run: New-Item -ItemType Directory -Force -Path $env:VCPKG_DEFAULT_BINARY_CACHE | Out-Null
+
+      - name: Cache vcpkg binaries
+        uses: actions/cache@v4
+        with:
+          path: ${{ github.workspace }}\.vcpkg-cache
+          key: vcpkg-${{ matrix.platform }}-${{ hashFiles('**/vcpkg.json', 'Common/vcpkg-configuration.json', 'vcpkg/ports/**') }}
+          restore-keys: vcpkg-${{ matrix.platform }}-
+
+      - name: Integrate vcpkg
+        shell: pwsh
+        run: '& "$env:VCPKG_INSTALLATION_ROOT\vcpkg.exe" integrate install'
+
+      - name: Restore NuGet packages
+        run: msbuild TranslucentTB.slnx -t:Restore -p:RestorePackagesConfig=true -p:Configuration=Release -p:Platform=${{ matrix.platform }}
+
+      - name: Build solution (Release, unsigned)
+        run: msbuild TranslucentTB.slnx -p:Configuration=Release -p:Platform=${{ matrix.platform }} -p:BuildType=Release -p:SkipSigning=True -p:AppxPackageSigningEnabled=false
+
+      - name: Run unit tests
+        if: matrix.platform == 'x64'
+        shell: pwsh
+        run: |
+          $exe = Get-ChildItem -Recurse -Filter Tests.exe | Where-Object FullName -like "*x64*Release*" | Select-Object -First 1
+          & $exe.FullName
+          if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
+
+      - name: Create portable ZIP
+        shell: pwsh
+        run: |
+          ./.azp/scripts/create-portable.ps1 -Platform ${{ matrix.platform }} -Configuration Release -WorkDir "$env:RUNNER_TEMP" -OutputDir "$env:RUNNER_TEMP\dist" -NoConfig -Compress
+          Copy-Item LICENSE.md, NOTICE.md -Destination "$env:RUNNER_TEMP\dist"
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: dist-${{ matrix.platform }}
+          path: ${{ runner.temp }}\dist\GlassTB-portable-*.zip
+
+  release:
+    needs: build
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/download-artifact@v4
+        with:
+          path: dist
+          merge-multiple: true
+
+      - name: Checksums
+        run: |
+          cd dist
+          sha256sum GlassTB-portable-*.zip > SHA256SUMS.txt
+          cat SHA256SUMS.txt
+
+      - name: Draft release
+        if: startsWith(github.ref, 'refs/tags/')
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          gh release create "${GITHUB_REF_NAME}" dist/* --repo "${GITHUB_REPOSITORY}" --draft \
+            --title "GlassTB ${GITHUB_REF_NAME}" \
+            --notes "Binarios portables sin firma digital. Verifica la integridad con SHA256SUMS.txt antes de ejecutar. Ver CHANGELOG.md."
+
+      - uses: actions/upload-artifact@v4
+        if: ${{ !startsWith(github.ref, 'refs/tags/') }}
+        with:
+          name: release-preview
+          path: dist

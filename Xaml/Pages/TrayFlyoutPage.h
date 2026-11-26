@@ -29,6 +29,9 @@ namespace winrt::TranslucentTB::Xaml::Pages::implementation
 		DECL_EVENT(ProfileSelectedDelegate, ProfileSelected, m_ProfileSelected);
 		void SetProfiles(const wfc::IVectorView<hstring> &names, const hstring &active, bool canApply);
 		void ProfileClicked(const IInspectable &sender, const wux::RoutedEventArgs &args);
+		DECL_EVENT(PauseToggledDelegate, PauseToggled, m_PauseToggled);
+		void SetPauseState(bool effectsPaused, bool automationPaused, bool safeMode);
+		void PauseClicked(const IInspectable &sender, const wux::RoutedEventArgs &args);
 		void OpenSettingsClicked(const IInspectable &, const wux::RoutedEventArgs &);
 
 		DECL_EVENT(OpenLogFileRequestedDelegate, OpenLogFileRequested, m_OpenLogFileRequestedDelegate);

@@ -14,6 +14,11 @@
                 <muxc:NavigationViewItem x:Name="HomeItem" x:Uid="SettingsPage_HomeItem" Icon="Home" />
                 <muxc:NavigationViewItem x:Name="AppearanceItem" x:Uid="SettingsPage_AppearanceItem" Icon="View" />
                 <muxc:NavigationViewItem x:Name="ProfilesItem" x:Uid="SettingsPage_ProfilesItem" Icon="Contact" />
+                <muxc:NavigationViewItem x:Name="DisplaysItem" x:Uid="SettingsPage_DisplaysItem" Icon="Switch" />
+                <muxc:NavigationViewItem x:Name="AdaptiveItem" x:Uid="SettingsPage_AdaptiveItem" Icon="Pictures" />
+                <muxc:NavigationViewItem x:Name="AutomationItem" x:Uid="SettingsPage_AutomationItem" Icon="Repair" />
+                <muxc:NavigationViewItem x:Name="HotkeysItem" x:Uid="SettingsPage_HotkeysItem" Icon="Keyboard" />
+                <muxc:NavigationViewItem x:Name="PerformanceItem" x:Uid="SettingsPage_PerformanceItem" Icon="Clock" />
             </muxc:NavigationView.MenuItems>
             <Grid>
                 <ScrollViewer x:Name="HomeSection" Padding="28,24" VerticalScrollBarVisibility="Auto">
@@ -106,6 +111,100 @@
                     </StackPanel>
                 </ScrollViewer>
                 <ContentDialog x:Name="DeleteProfileDialog" x:Uid="SettingsPage_DeleteProfileDialog" DefaultButton="Close" />
+                <ScrollViewer x:Name="AdaptiveSection" Visibility="Collapsed" Padding="28,24" VerticalScrollBarVisibility="Auto">
+                    <StackPanel Spacing="12">
+                        <TextBlock x:Uid="SettingsPage_AdaptiveHeading" Style="{ThemeResource TitleTextBlockStyle}" AutomationProperties.HeadingLevel="Level1" />
+                        <TextBlock x:Uid="SettingsPage_AdaptiveIntro" TextWrapping="Wrap" />
+                        <ToggleSwitch x:Name="AdaptiveEnabled" x:Uid="SettingsPage_AdaptiveEnabled" Toggled="AdaptiveToggled" />
+                        <StackPanel Orientation="Horizontal" Spacing="12">
+                            <Border x:Name="AdaptiveSwatch" Width="48" Height="24" CornerRadius="4" BorderThickness="1"
+                                    BorderBrush="{ThemeResource CardStrokeColorDefaultBrush}" />
+                            <TextBlock x:Name="AdaptiveStatus" TextWrapping="Wrap" VerticalAlignment="Center" />
+                        </StackPanel>
+                        <CheckBox x:Name="AdaptiveSecondary" x:Uid="SettingsPage_AdaptiveSecondary" Click="AdaptiveOptionClicked" />
+                        <Slider x:Name="AdaptiveIntensity" x:Uid="SettingsPage_AdaptiveIntensity" Minimum="0" Maximum="255" StepFrequency="1" MaxWidth="320" HorizontalAlignment="Left" MinWidth="280" ValueChanged="AdaptiveSliderChanged" />
+                        <Slider x:Name="AdaptiveSaturation" x:Uid="SettingsPage_AdaptiveSaturation" Minimum="0" Maximum="200" StepFrequency="5" MaxWidth="320" HorizontalAlignment="Left" MinWidth="280" ValueChanged="AdaptiveSliderChanged" />
+                        <Slider x:Name="AdaptiveContrast" x:Uid="SettingsPage_AdaptiveContrast" Minimum="0" Maximum="100" StepFrequency="5" MaxWidth="320" HorizontalAlignment="Left" MinWidth="280" ValueChanged="AdaptiveSliderChanged" />
+                        <Button x:Name="AdaptiveExclude" x:Uid="SettingsPage_AdaptiveExclude" Click="AdaptiveExcludeClicked" />
+                        <TextBlock x:Uid="SettingsPage_AdaptiveNotes" TextWrapping="Wrap" />
+                    </StackPanel>
+                </ScrollViewer>
+                <ScrollViewer x:Name="DisplaysSection" Visibility="Collapsed" Padding="28,24" VerticalScrollBarVisibility="Auto">
+                    <StackPanel Spacing="12">
+                        <TextBlock x:Uid="SettingsPage_DisplaysHeading" Style="{ThemeResource TitleTextBlockStyle}" AutomationProperties.HeadingLevel="Level1" />
+                        <TextBlock x:Uid="SettingsPage_DisplaysIntro" TextWrapping="Wrap" />
+                        <StackPanel x:Name="DisplaysPanel" Spacing="16" />
+                        <TextBlock x:Name="DisplaysStatus" TextWrapping="Wrap" AutomationProperties.LiveSetting="Polite" />
+                    </StackPanel>
+                </ScrollViewer>
+                <ScrollViewer x:Name="PerformanceSection" Visibility="Collapsed" Padding="28,24" VerticalScrollBarVisibility="Auto">
+                    <StackPanel Spacing="12">
+                        <TextBlock x:Uid="SettingsPage_PerformanceHeading" Style="{ThemeResource TitleTextBlockStyle}" AutomationProperties.HeadingLevel="Level1" />
+                        <TextBlock x:Uid="SettingsPage_PerformanceIntro" TextWrapping="Wrap" />
+                        <TextBlock x:Name="MetricsText" TextWrapping="Wrap" IsTextSelectionEnabled="True" FontFamily="Consolas" />
+                    </StackPanel>
+                </ScrollViewer>
+                <ScrollViewer x:Name="HotkeysSection" Visibility="Collapsed" Padding="28,24" VerticalScrollBarVisibility="Auto">
+                    <StackPanel Spacing="12">
+                        <TextBlock x:Uid="SettingsPage_HotkeysHeading" Style="{ThemeResource TitleTextBlockStyle}" AutomationProperties.HeadingLevel="Level1" />
+                        <TextBlock x:Uid="SettingsPage_HotkeysIntro" TextWrapping="Wrap" />
+                        <TextBox x:Name="HotkeyOpenSettings" x:Uid="SettingsPage_HotkeyOpenSettings" MinWidth="280" HorizontalAlignment="Left" />
+                        <TextBox x:Name="HotkeyToggleEffects" x:Uid="SettingsPage_HotkeyToggleEffects" MinWidth="280" HorizontalAlignment="Left" />
+                        <TextBox x:Name="HotkeyNextProfile" x:Uid="SettingsPage_HotkeyNextProfile" MinWidth="280" HorizontalAlignment="Left" />
+                        <TextBox x:Name="HotkeyToggleAutomation" x:Uid="SettingsPage_HotkeyToggleAutomation" MinWidth="280" HorizontalAlignment="Left" />
+                        <TextBlock x:Uid="SettingsPage_HotkeysLegacy" TextWrapping="Wrap" />
+                        <Button x:Name="SaveHotkeys" x:Uid="SettingsPage_SaveHotkeys" Click="SaveHotkeysClicked" Style="{ThemeResource AccentButtonStyle}" />
+                        <TextBlock x:Name="HotkeysStatus" TextWrapping="Wrap" AutomationProperties.LiveSetting="Polite" />
+                    </StackPanel>
+                </ScrollViewer>
+                <ScrollViewer x:Name="AutomationSection" Visibility="Collapsed" Padding="28,24" VerticalScrollBarVisibility="Auto">
+                    <StackPanel Spacing="12">
+                        <TextBlock x:Uid="SettingsPage_AutomationHeading" Style="{ThemeResource TitleTextBlockStyle}" AutomationProperties.HeadingLevel="Level1" />
+                        <TextBlock x:Uid="SettingsPage_AutomationIntro" TextWrapping="Wrap" />
+                        <TextBlock x:Name="AutomationStatusText" TextWrapping="Wrap" />
+                        <ToggleSwitch x:Name="PauseAutomation" x:Uid="SettingsPage_PauseAutomation" Toggled="PauseAutomationToggled" />
+                        <StackPanel Orientation="Horizontal" Spacing="8">
+                            <Button x:Name="EditRulesButton" x:Uid="SettingsPage_EditRules" Tag="edit" Click="AutomationButtonClicked" />
+                            <Button x:Name="ReloadRulesButton" x:Uid="SettingsPage_ReloadRules" Tag="reload" Click="AutomationButtonClicked" />
+                        </StackPanel>
+                        <ListView x:Name="RulesList" x:Uid="SettingsPage_RulesList" SelectionMode="Single" SelectionChanged="RuleSelectionChanged"
+                                  MaxHeight="240" BorderThickness="1" BorderBrush="{ThemeResource CardStrokeColorDefaultBrush}" />
+                        <StackPanel Orientation="Horizontal" Spacing="8">
+                            <Button x:Name="ToggleRuleButton" x:Uid="SettingsPage_ToggleRule" Tag="toggle" Click="RuleButtonClicked" IsEnabled="False" />
+                            <Button x:Name="RaiseRuleButton" x:Uid="SettingsPage_RaiseRule" Tag="raise" Click="RuleButtonClicked" IsEnabled="False" />
+                            <Button x:Name="LowerRuleButton" x:Uid="SettingsPage_LowerRule" Tag="lower" Click="RuleButtonClicked" IsEnabled="False" />
+                            <Button x:Name="DeleteRuleButton" x:Uid="SettingsPage_DeleteRule" Tag="delete" Click="RuleButtonClicked" IsEnabled="False" />
+                        </StackPanel>
+                        <TextBlock x:Uid="SettingsPage_NewRuleHeading" Style="{ThemeResource SubtitleTextBlockStyle}" AutomationProperties.HeadingLevel="Level2" />
+                        <TextBox x:Name="RuleName" x:Uid="SettingsPage_RuleName" MaxLength="100" MaxWidth="420" HorizontalAlignment="Left" MinWidth="320" TextChanged="RuleFormChanged" />
+                        <muxc:NumberBox x:Name="RulePriority" x:Uid="SettingsPage_RulePriority" Value="10" Minimum="-1000" Maximum="1000"
+                                        SpinButtonPlacementMode="Inline" HorizontalAlignment="Left" MinWidth="200" />
+                        <ComboBox x:Name="ConditionKind" x:Uid="SettingsPage_ConditionKind" SelectionChanged="ConditionKindChanged" MinWidth="320">
+                            <ComboBoxItem Tag="fullscreen" x:Uid="SettingsPage_CondFullscreen" />
+                            <ComboBoxItem Tag="foreground_app" x:Uid="SettingsPage_CondForeground" />
+                            <ComboBoxItem Tag="app_running" x:Uid="SettingsPage_CondRunning" />
+                            <ComboBoxItem Tag="foreground_maximized" x:Uid="SettingsPage_CondMaximized" />
+                            <ComboBoxItem Tag="on_battery" x:Uid="SettingsPage_CondOnBattery" />
+                            <ComboBoxItem Tag="battery_saver" x:Uid="SettingsPage_CondBatterySaver" />
+                            <ComboBoxItem Tag="battery_below" x:Uid="SettingsPage_CondBatteryBelow" />
+                            <ComboBoxItem Tag="time_range" x:Uid="SettingsPage_CondTimeRange" />
+                            <ComboBoxItem Tag="weekdays" x:Uid="SettingsPage_CondWeekdays" />
+                            <ComboBoxItem Tag="dark_theme" x:Uid="SettingsPage_CondDarkTheme" />
+                            <ComboBoxItem Tag="monitors_at_least" x:Uid="SettingsPage_CondMonitors" />
+                        </ComboBox>
+                        <TextBox x:Name="ConditionValue" x:Uid="SettingsPage_ConditionValue" MaxWidth="420" MinWidth="320" HorizontalAlignment="Left" TextChanged="RuleFormChanged" />
+                        <TextBlock x:Name="ConditionHint" TextWrapping="Wrap" />
+                        <CheckBox x:Name="NegateCondition" x:Uid="SettingsPage_NegateCondition" />
+                        <ComboBox x:Name="ActionKind" x:Uid="SettingsPage_ActionKind" SelectionChanged="ActionKindChanged" MinWidth="320">
+                            <ComboBoxItem Tag="activate_profile" x:Uid="SettingsPage_ActProfile" />
+                            <ComboBoxItem Tag="restore_windows" x:Uid="SettingsPage_ActRestore" />
+                        </ComboBox>
+                        <ComboBox x:Name="ActionProfile" x:Uid="SettingsPage_ActionProfile" MinWidth="320" />
+                        <TextBlock x:Uid="SettingsPage_AdvancedRulesHint" TextWrapping="Wrap" />
+                        <Button x:Name="CreateRuleButton" x:Uid="SettingsPage_CreateRule" Click="CreateRuleClicked" Style="{ThemeResource AccentButtonStyle}" IsEnabled="False" />
+                        <TextBlock x:Name="AutomationStatus" TextWrapping="Wrap" AutomationProperties.LiveSetting="Polite" />
+                    </StackPanel>
+                </ScrollViewer>
             </Grid>
         </muxc:NavigationView>
     </Grid>

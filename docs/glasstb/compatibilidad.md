@@ -34,3 +34,25 @@ Los estados describen pruebas con una barra de tareas de Windows real. La compil
 | Explorer aún no clasificado, Unknown | | | | | ✓ |
 
 Para inspeccionar el diagnóstico, establece `"verbosity": "info"` en la configuración y vuelve a abrir GlassTB. Busca `Taskbar compatibility:` en el log al arrancar y tras reiniciar `explorer.exe`. La línea muestra versión, arquitecturas nativa y del proceso, tipo de barra, capacidades y backend. Compara escritorio, ventana maximizada y disponibilidad del desenfoque con la Fase 2A, usando la misma configuración.
+
+## Matriz de funcionalidades
+
+Estados: **Probado** (verificado en Windows real) · **Parcial** · **Experimental** · **No compatible** · **No verificado**.
+Ninguna funcionalidad se ha probado todavía en Windows real: CI solo compila (x64/ARM64) y ejecuta pruebas unitarias.
+
+| Funcionalidad | Windows 10 (Classic) | Windows 11 22000/22621 (Mixed) | Windows 11 22621+/24H2 (XAML) |
+| --- | --- | --- | --- |
+| Materiales Normal / Opaco / Transparente / Acrílico | No verificado | No verificado | No verificado |
+| Desenfoque (Blur) | No verificado | No compatible antes de 22000.282 | No verificado |
+| Radio de desenfoque | No compatible | No compatible | No verificado |
+| Línea de la barra / botón Peek | No verificado (Peek) | No verificado (línea) | No verificado (línea) |
+| Ventana de configuración y bandeja | No verificado | No verificado | No verificado |
+| Perfiles e importación/exportación | No verificado | No verificado | No verificado |
+| Automatización (rules.json) | No verificado | No verificado | No verificado |
+| Color adaptativo | No verificado | No verificado | No verificado |
+| Modo seguro y detección de bucles | No verificado | No verificado | No verificado |
+| Migración desde TranslucentTB | No verificado | No verificado | No verificado |
+| Perfil independiente por pantalla | No verificado | No verificado | No verificado |
+| Degradados, neón, Liquid Glass, barra flotante/segmentada | No compatible (no implementado: requiere modificar el árbol XAML de Explorer; ver `riesgos.md`) | No compatible | No compatible |
+| Atajos globales configurables | No verificado | No verificado | No verificado |
+| Métricas de rendimiento (sección Rendimiento) | No verificado | No verificado | No verificado |

@@ -175,6 +175,19 @@ namespace winrt::TranslucentTB::Xaml::Pages::implementation
 		ProfilesMenu().IsEnabled(names.Size() != 0);
 	}
 
+	void TrayFlyoutPage::SetPauseState(bool effectsPaused, bool automationPaused, bool safeMode)
+	{
+		PauseEffectsItem().IsChecked(effectsPaused);
+		PauseEffectsItem().IsEnabled(!safeMode);
+		PauseAutomationItem().IsChecked(automationPaused);
+	}
+
+	void TrayFlyoutPage::PauseClicked(const IInspectable &sender, const wux::RoutedEventArgs &)
+	{
+		const auto item = sender.as<wuxc::ToggleMenuFlyoutItem>();
+		m_PauseToggled(unbox_value<hstring>(item.Tag()), item.IsChecked());
+	}
+
 	void TrayFlyoutPage::ProfileClicked(const IInspectable &sender, const wux::RoutedEventArgs &)
 	{
 		m_ProfileSelected(unbox_value<hstring>(sender.as<wux::FrameworkElement>().Tag()));

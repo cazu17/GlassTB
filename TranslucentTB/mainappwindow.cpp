@@ -1,4 +1,5 @@
 #include "mainappwindow.hpp"
+#include "input/hotkey.hpp"
 #include <member_thunk/member_thunk.hpp>
 
 #include "application.hpp"
@@ -16,6 +17,10 @@ LRESULT MainAppWindow::MessageHandler(UINT uMsg, WPARAM wParam, LPARAM lParam)
 		if (wParam == RESET_STATE_GLOBAL_HOTKEY_ID)
 		{
 			ResetDynamicStateRequested();
+		}
+		else if (wParam >= USER_HOTKEY_BASE && wParam < USER_HOTKEY_BASE + HotkeySettings::Count)
+		{
+			OnUserHotkey(static_cast<HotkeySettings::Action>(wParam - USER_HOTKEY_BASE));
 		}
 		return 0;
 
@@ -96,6 +101,18 @@ void MainAppWindow::RegisterMenuHandlers()
 	m_TaskbarSettingsChangedRevoker = menu.TaskbarSettingsChanged(winrt::auto_revoke, { this, &MainAppWindow::TaskbarSettingsChanged });
 	m_ColorRequestedRevoker = menu.ColorRequested(winrt::auto_revoke, { this, &MainAppWindow::ColorRequested });
 	m_OpenSettingsRequestedRevoker = menu.OpenSettingsRequested(winrt::auto_revoke, { this, &MainAppWindow::OpenSettings });
+	m_PauseToggledRevoker = menu.PauseToggled(winrt::auto_revoke, [this](const winrt::hstring &what, bool paused)
+	{
+		if (what == L"effects")
+		{
+			m_App.GetWorker().SetEffectsSuspended(paused);
+		}
+		else if (what == L"automation")
+		{
+			m_App.GetRuleEngine().SetPaused(paused);
+		}
+		PublishPauseState();
+	});
 	m_ProfileSelectedRevoker = menu.ProfileSelected(winrt::auto_revoke, [this](const winrt::hstring &name)
 	{
 		HandleProfileAction(L"activate", std::wstring(name));
@@ -353,6 +370,7 @@ MainAppWindow::MainAppWindow(Application &app, bool hideIconOverride, bool hasPa
 
 	RegisterMenuHandlers();
 	m_App.GetWorker().SetDiagnosticsChanged([this] { PublishDiagnostics(); });
+	m_App.GetRuleEngine().SetStatusChanged([this] { PublishAutomation(); PublishAdaptiveColor(); });
 
 	ConfigurationChanged();
 }
@@ -360,8 +378,13 @@ MainAppWindow::MainAppWindow(Application &app, bool hideIconOverride, bool hasPa
 MainAppWindow::~MainAppWindow()
 {
 	m_App.GetWorker().SetDiagnosticsChanged({});
+	m_App.GetRuleEngine().SetStatusChanged({});
 	// Unregister the global hotkey
 	UnregisterHotKey(handle(), RESET_STATE_GLOBAL_HOTKEY_ID);
+	for (std::size_t i = 0; i < HotkeySettings::Count; ++i)
+	{
+		UnregisterHotKey(handle(), static_cast<int>(USER_HOTKEY_BASE + i));
+	}
 }
 
 void MainAppWindow::ConfigurationChanged()
@@ -372,6 +395,8 @@ void MainAppWindow::ConfigurationChanged()
 	SetXamlContextMenuOverride(config.UseXamlContextMenu);
 	PublishSettings();
 	PublishTrayProfiles();
+	PublishPauseState();
+	RegisterUserHotkeys();
 }
 
 void MainAppWindow::RemoveHideTrayIconOverride()
@@ -389,5 +414,80 @@ void MainAppWindow::PostNewInstanceNotification()
 			AllowSetForegroundWindow(runningInstance.process_id());
 			runningInstance.post_message(*msg);
 		}
+	}
+}
+
+void MainAppWindow::PublishPauseState()
+{
+	auto &worker = m_App.GetWorker();
+	page().SetPauseState(worker.EffectsSuspended(), m_App.GetRuleEngine().GetStatus().paused, worker.SafeMode());
+}
+
+void MainAppWindow::RegisterUserHotkeys()
+{
+	const auto &bindings = m_App.GetConfigManager().GetConfig().Hotkeys.Bindings;
+	if (bindings == m_RegisteredHotkeys)
+	{
+		return;
+	}
+
+	for (std::size_t i = 0; i < HotkeySettings::Count; ++i)
+	{
+		const int id = static_cast<int>(USER_HOTKEY_BASE + i);
+		UnregisterHotKey(handle(), id);
+		if (bindings[i].empty())
+		{
+			continue;
+		}
+
+		if (const auto key = hotkey::Parse(bindings[i]))
+		{
+			if (!RegisterHotKey(handle(), id, key->modifiers | MOD_NOREPEAT, key->vk))
+			{
+				// Usually another application already owns the shortcut.
+				LastErrorHandle(spdlog::level::warn, std::format(L"Failed to register shortcut {} for {}", bindings[i], HotkeySettings::KEYS[i]));
+			}
+		}
+	}
+	m_RegisteredHotkeys = bindings;
+}
+
+void MainAppWindow::OnUserHotkey(HotkeySettings::Action action)
+{
+	switch (action)
+	{
+	case HotkeySettings::OpenSettings:
+		OpenSettings();
+		break;
+	case HotkeySettings::ToggleEffects:
+		m_App.GetWorker().SetEffectsSuspended(!m_App.GetWorker().EffectsSuspended());
+		PublishPauseState();
+		break;
+	case HotkeySettings::ToggleAutomation:
+		m_App.GetRuleEngine().SetPaused(!m_App.GetRuleEngine().GetStatus().paused);
+		PublishPauseState();
+		break;
+	case HotkeySettings::NextProfile:
+	{
+		const auto list = m_App.GetProfileManager().List();
+		if (list.empty())
+		{
+			break;
+		}
+		const auto &active = m_App.GetConfigManager().GetConfig().ActiveProfile;
+		std::size_t next = 0;
+		for (std::size_t i = 0; i < list.size(); ++i)
+		{
+			if (list[i].profile.Name == active)
+			{
+				next = (i + 1) % list.size();
+				break;
+			}
+		}
+		HandleProfileAction(L"activate", list[next].profile.Name);
+		break;
+	}
+	default:
+		break;
 	}
 }

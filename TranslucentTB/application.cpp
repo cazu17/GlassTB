@@ -14,6 +14,7 @@ void Application::ConfigurationChanged(void *context)
 {
 	const auto that = static_cast<Application *>(context);
 	that->m_Worker.ConfigurationChanged();
+	that->m_RuleEngine.BaseConfigurationChanged();
 	that->m_AppWindow.ConfigurationChanged();
 }
 
@@ -70,10 +71,11 @@ void Application::CreateWelcomePage()
 		});
 }
 
-Application::Application(HINSTANCE hInst, std::optional<std::filesystem::path> storageFolder, bool fileExists) :
+Application::Application(HINSTANCE hInst, std::optional<std::filesystem::path> storageFolder, bool safeMode, bool fileExists) :
 	m_Config(storageFolder, fileExists, ConfigurationChanged, this),
 	m_Profiles(m_Config.GetDataFolder() / L"profiles"),
-	m_Worker(m_Config, hInst, m_Loader, storageFolder),
+	m_Worker(m_Config, hInst, m_Loader, storageFolder, safeMode),
+	m_RuleEngine(hInst, m_Config, m_Profiles, m_Worker),
 	m_UwpCRTDep(
 		hInst,
 		L"Microsoft.VCLibs.140.00_8wekyb3d8bbwe",

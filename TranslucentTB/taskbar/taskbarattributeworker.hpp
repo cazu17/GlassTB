@@ -4,6 +4,7 @@
 #include <chrono>
 #include <functional>
 #include <member_thunk/page.hpp>
+#include <map>
 #include <optional>
 #include <ShObjIdl.h>
 #include <string_view>
@@ -140,6 +141,9 @@ private:
 	// Color previews
 	std::array<std::optional<Util::Color>, 7> m_ColorPreviews;
 	std::optional<TaskbarAppearance> m_AppearancePreview;
+	std::optional<Config> m_RuleOverride;
+	std::map<std::wstring, Config, std::less<>> m_MonitorOverrides;
+	std::uint64_t m_RefreshCount = 0;
 	std::function<void()> m_DiagnosticsChanged;
 
 	// Hook DLL
@@ -154,6 +158,8 @@ private:
 
 	// Other
 	const compat::SystemInfo m_SystemInfo;
+	const bool m_SafeMode;
+	bool m_EffectsSuspended;
 	compat::Capabilities m_Capabilities;
 
 	// Type aliases
@@ -266,7 +272,7 @@ private:
 	}
 
 public:
-	TaskbarAttributeWorker(ConfigManager &cfgManager, HINSTANCE hInstance, DynamicLoader &loader, const std::optional<std::filesystem::path> &storageFolder);
+	TaskbarAttributeWorker(ConfigManager &cfgManager, HINSTANCE hInstance, DynamicLoader &loader, const std::optional<std::filesystem::path> &storageFolder, bool safeMode = false);
 
 	inline void ConfigurationChanged()
 	{
@@ -286,6 +292,12 @@ public:
 	}
 
 	void SetAppearancePreview(std::optional<TaskbarAppearance> appearance);
+	void SetRuleOverride(std::optional<Config> config, std::map<std::wstring, Config, std::less<>> perMonitor = { });
+	void SetEffectsSuspended(bool suspended);
+	bool EffectsSuspended() const noexcept { return m_EffectsSuspended; }
+	bool SafeMode() const noexcept { return m_SafeMode; }
+	std::uint64_t RefreshCount() const noexcept { return m_RefreshCount; }
+	bool HasRuleOverride() const noexcept { return m_RuleOverride.has_value(); }
 	void SetDiagnosticsChanged(std::function<void()> callback);
 	bool CanShowPeek() const;
 	bool CanShowTaskbarLine() const;
