@@ -4,11 +4,13 @@
 #include <cstddef>
 #include <spdlog/common.h>
 #include <tuple>
+#include <vector>
 #include <windef.h>
 #include "winrt.hpp"
 #include "undefgetcurrenttime.h"
 #include <winrt/TranslucentTB.Xaml.Models.Primitives.h>
 #include <winrt/TranslucentTB.Xaml.Pages.h>
+#include <winrt/Windows.System.h>
 #include "redefgetcurrenttime.h"
 
 #include "config/config.hpp"
@@ -22,6 +24,8 @@ class Application;
 class MainAppWindow final : public TrayContextMenu<winrt::TranslucentTB::Xaml::Pages::TrayFlyoutPage> {
 private:
 	using page_t = winrt::TranslucentTB::Xaml::Pages::TrayFlyoutPage;
+	using settings_page_t = winrt::TranslucentTB::Xaml::Pages::SettingsPage;
+	using settings_edit_t = winrt::TranslucentTB::Xaml::Pages::SettingsEdit;
 
 	Application &m_App;
 	bool m_HideIconOverride;
@@ -31,6 +35,12 @@ private:
 
 	page_t::TaskbarSettingsChanged_revoker m_TaskbarSettingsChangedRevoker;
 	page_t::ColorRequested_revoker m_ColorRequestedRevoker;
+	page_t::OpenSettingsRequested_revoker m_OpenSettingsRequestedRevoker;
+
+	Window m_SettingsWindow{ nullptr };
+	winrt::weak_ref<settings_page_t> m_SettingsPage;
+	winrt::Windows::System::DispatcherQueue m_SettingsDispatcher{ nullptr };
+	bool m_SettingsOpening = false;
 
 	page_t::OpenLogFileRequested_revoker m_OpenLogFileRequestedRevoker;
 	page_t::LogLevelChanged_revoker m_LogLevelChangedRevoker;
@@ -55,13 +65,17 @@ private:
 
 	void TaskbarSettingsChanged(const txmp::TaskbarState &state, const txmp::TaskbarAppearance &appearance);
 	void ColorRequested(const txmp::TaskbarState &state);
+	void OpenSettings();
+	void ApplySettings(const std::vector<settings_edit_t> &edits);
+	void PublishSettings(std::optional<bool> applyResult = {});
+	void PublishDiagnostics();
 
 	void OpenLogFileRequested();
 	void LogLevelChanged(const txmp::LogLevel &level);
 	void DumpDynamicStateRequested();
 	void EditSettingsRequested();
 	void ResetSettingsRequested();
-	void DisableSavingSettingsChanged(bool disabled) noexcept;
+	void DisableSavingSettingsChanged(bool disabled);
 	void ResetDynamicStateRequested();
 	static void CompactThunkHeapRequested();
 

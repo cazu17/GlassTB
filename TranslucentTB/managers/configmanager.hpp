@@ -49,7 +49,7 @@ public:
 	void UpdateVerbosity();
 	void EditConfigFile();
 	void DeleteConfigFile();
-	void SaveConfig() const;
+	bool SaveConfig() const;
 
 	constexpr Config &GetConfig() noexcept
 	{

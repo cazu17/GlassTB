@@ -309,11 +309,11 @@ void ConfigManager::DeleteConfigFile()
 	StdErrorCodeVerify(errc, spdlog::level::warn, L"Failed to delete config file");
 }
 
-void ConfigManager::SaveConfig() const
+bool ConfigManager::SaveConfig() const
 {
 	if (m_Config.DisableSaving)
 	{
-		return;
+		return false;
 	}
 
 	std::filesystem::path tempFile = m_ConfigPath;
@@ -321,29 +321,37 @@ void ConfigManager::SaveConfig() const
 
 	wil::unique_file file;
 	const errno_t err = _wfopen_s(file.put(), tempFile.c_str(), L"wbS");
-	if (err == 0)
+	if (err != 0)
 	{
-		SaveToFile(file.get());
+		ErrnoTHandle(err, spdlog::level::err, L"Failed to save configuration!");
+		return false;
+	}
 
-		file.reset();
-		if (!ReplaceFile(m_ConfigPath.c_str(), tempFile.c_str(), nullptr, REPLACEFILE_WRITE_THROUGH | REPLACEFILE_IGNORE_MERGE_ERRORS | REPLACEFILE_IGNORE_ACL_ERRORS, nullptr, nullptr))
-		{
-			// If the target file doesn't exist (e.g. brand new installation of TranslucentTB), ReplaceFile fails.
-			if (const auto lastErr = GetLastError(); lastErr == ERROR_FILE_NOT_FOUND)
-			{
-				if (!MoveFileEx(tempFile.c_str(), m_ConfigPath.c_str(), MOVEFILE_WRITE_THROUGH))
-				{
-					LastErrorHandle(spdlog::level::err, L"Failed to move temporary configuration file");
-				}
-			}
-			else
-			{
-				HresultHandle(HRESULT_FROM_WIN32(lastErr), spdlog::level::err, L"Failed to replace configuration file");
-			}
-		}
+	SaveToFile(file.get());
+	const bool writeFailed = ferror(file.get()) != 0;
+	if (fclose(file.release()) != 0 || writeFailed)
+	{
+		MessagePrint(spdlog::level::err, L"Failed to write temporary configuration file");
+		return false;
+	}
+
+	if (ReplaceFile(m_ConfigPath.c_str(), tempFile.c_str(), nullptr, REPLACEFILE_WRITE_THROUGH | REPLACEFILE_IGNORE_MERGE_ERRORS | REPLACEFILE_IGNORE_ACL_ERRORS, nullptr, nullptr))
+	{
+		return true;
+	}
+
+	// A new installation may not have created the destination yet.
+	if (const auto lastErr = GetLastError(); lastErr != ERROR_FILE_NOT_FOUND)
+	{
+		HresultHandle(HRESULT_FROM_WIN32(lastErr), spdlog::level::err, L"Failed to replace configuration file");
+	}
+	else if (MoveFileEx(tempFile.c_str(), m_ConfigPath.c_str(), MOVEFILE_WRITE_THROUGH))
+	{
+		return true;
 	}
 	else
 	{
-		ErrnoTHandle(err, spdlog::level::err, L"Failed to save configuration!");
+		LastErrorHandle(spdlog::level::err, L"Failed to move temporary configuration file");
 	}
+	return false;
 }

@@ -95,6 +95,7 @@ void MainAppWindow::RegisterMenuHandlers()
 	const auto &menu = page();
 	m_TaskbarSettingsChangedRevoker = menu.TaskbarSettingsChanged(winrt::auto_revoke, { this, &MainAppWindow::TaskbarSettingsChanged });
 	m_ColorRequestedRevoker = menu.ColorRequested(winrt::auto_revoke, { this, &MainAppWindow::ColorRequested });
+	m_OpenSettingsRequestedRevoker = menu.OpenSettingsRequested(winrt::auto_revoke, { this, &MainAppWindow::OpenSettings });
 
 	m_OpenLogFileRequestedRevoker = menu.OpenLogFileRequested(winrt::auto_revoke, { this, &MainAppWindow::OpenLogFileRequested });
 	m_LogLevelChangedRevoker = menu.LogLevelChanged(winrt::auto_revoke, { this, &MainAppWindow::LogLevelChanged });
@@ -118,6 +119,7 @@ void MainAppWindow::TaskbarSettingsChanged(const txmp::TaskbarState &state, cons
 
 	// restore color because the context menu doesn't transmit that info
 	appearance.Color(config.Color);
+	appearance.BlurRadius(config.BlurRadius);
 
 	if (const auto optAppearance = appearance.try_as<txmp::OptionalTaskbarAppearance>())
 	{
@@ -134,6 +136,7 @@ void MainAppWindow::TaskbarSettingsChanged(const txmp::TaskbarState &state, cons
 	}
 
 	m_App.GetWorker().ConfigurationChanged();
+	PublishSettings();
 }
 
 void MainAppWindow::ColorRequested(const txmp::TaskbarState &state)
@@ -169,6 +172,7 @@ void MainAppWindow::ColorRequested(const txmp::TaskbarState &state)
 					m_App.DispatchToMainThread([this, state, color, &appearance, &pickerHost]() mutable
 					{
 						appearance.Color = color;
+					PublishSettings();
 						m_App.GetWorker().RemoveColorPreview(state); // remove color preview implicitly refreshes config
 
 						std::scoped_lock guard(m_PickerMutex);
@@ -230,9 +234,10 @@ void MainAppWindow::ResetSettingsRequested()
 	ConfigurationChanged();
 }
 
-void MainAppWindow::DisableSavingSettingsChanged(bool disabled) noexcept
+void MainAppWindow::DisableSavingSettingsChanged(bool disabled)
 {
 	m_App.GetConfigManager().GetConfig().DisableSaving = disabled;
+	PublishSettings();
 }
 
 void MainAppWindow::ResetDynamicStateRequested()
@@ -340,12 +345,14 @@ MainAppWindow::MainAppWindow(Application &app, bool hideIconOverride, bool hasPa
 	}
 
 	RegisterMenuHandlers();
+	m_App.GetWorker().SetDiagnosticsChanged([this] { PublishDiagnostics(); });
 
 	ConfigurationChanged();
 }
 
 MainAppWindow::~MainAppWindow()
 {
+	m_App.GetWorker().SetDiagnosticsChanged({});
 	// Unregister the global hotkey
 	UnregisterHotKey(handle(), RESET_STATE_GLOBAL_HOTKEY_ID);
 }
@@ -356,6 +363,7 @@ void MainAppWindow::ConfigurationChanged()
 
 	UpdateTrayVisibility(!config.HideTray.value_or(false));
 	SetXamlContextMenuOverride(config.UseXamlContextMenu);
+	PublishSettings();
 }
 
 void MainAppWindow::RemoveHideTrayIconOverride()

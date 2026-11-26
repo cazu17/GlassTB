@@ -2,6 +2,7 @@
 #include "arch.h"
 #include <array>
 #include <chrono>
+#include <functional>
 #include <member_thunk/page.hpp>
 #include <optional>
 #include <ShObjIdl.h>
@@ -138,6 +139,8 @@ private:
 
 	// Color previews
 	std::array<std::optional<Util::Color>, 7> m_ColorPreviews;
+	std::optional<TaskbarAppearance> m_AppearancePreview;
+	std::function<void()> m_DiagnosticsChanged;
 
 	// Hook DLL
 	LoadableDll m_HookDll;
@@ -281,6 +284,15 @@ public:
 		m_ColorPreviews.at(static_cast<std::size_t>(state)).reset();
 		ConfigurationChanged();
 	}
+
+	void SetAppearancePreview(std::optional<TaskbarAppearance> appearance);
+	void SetDiagnosticsChanged(std::function<void()> callback);
+	bool CanShowPeek() const;
+	bool CanShowTaskbarLine() const;
+
+	const compat::SystemInfo &GetSystemInfo() const noexcept { return m_SystemInfo; }
+	const compat::Capabilities &GetCapabilities() const noexcept { return m_Capabilities; }
+	std::size_t GetTaskbarMonitorCount() const noexcept { return m_Taskbars.size(); }
 
 	void DumpState();
 	void ResetState(bool manual = false);

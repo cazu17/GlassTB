@@ -1,4 +1,5 @@
 #include "taskbarattributeworker.hpp"
+#include <algorithm>
 #include <format>
 #include <functional>
 #include <member_thunk/member_thunk.hpp>
@@ -409,6 +410,11 @@ LRESULT TaskbarAttributeWorker::MessageHandler(UINT uMsg, WPARAM wParam, LPARAM 
 
 TaskbarAppearance TaskbarAttributeWorker::GetConfig(taskbar_iterator taskbar) const
 {
+	if (m_AppearancePreview)
+	{
+		return *m_AppearancePreview;
+	}
+
 	const auto& config = m_ConfigManager.GetConfig();
 
 	if (config.BatterySaverAppearance.Enabled && (m_PowerSaver || m_EnergySaver))
@@ -1419,11 +1425,47 @@ void TaskbarAttributeWorker::DumpState()
 	MessagePrint(spdlog::level::off, L"===== End TaskbarAttributeWorker state dump =====");
 }
 
+void TaskbarAttributeWorker::SetAppearancePreview(std::optional<TaskbarAppearance> appearance)
+{
+	m_AppearancePreview = std::move(appearance);
+	ConfigurationChanged();
+}
+
+void TaskbarAttributeWorker::SetDiagnosticsChanged(std::function<void()> callback)
+{
+	m_DiagnosticsChanged = std::move(callback);
+}
+
+bool TaskbarAttributeWorker::CanShowPeek() const
+{
+	return !m_TaskbarService && std::ranges::any_of(m_Taskbars, [](const auto &entry)
+	{
+		return static_cast<bool>(entry.second.Taskbar.PeekWindow);
+	});
+}
+
+bool TaskbarAttributeWorker::CanShowTaskbarLine() const
+{
+	return m_TaskbarService || std::ranges::any_of(m_Taskbars, [](const auto &entry)
+	{
+		const auto &taskbar = entry.second.Taskbar;
+		return taskbar.WorkerWWindow || taskbar.InnerXamlContent;
+	});
+}
+
 void TaskbarAttributeWorker::ResetState(bool manual)
 {
 	if (!m_ResettingState)
 	{
 		MessagePrint(spdlog::level::debug, L"Resetting worker state");
+
+		const auto signalDiagnostics = wil::scope_exit([this]
+		{
+			if (m_DiagnosticsChanged)
+			{
+				m_DiagnosticsChanged();
+			}
+		});
 
 		m_ResettingState = true;
 		m_ResetStateReentered = false;
