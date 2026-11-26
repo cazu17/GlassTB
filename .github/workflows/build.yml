@@ -1,0 +1,87 @@
+name: Build
+
+on:
+  push:
+    branches: ['**']
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: build-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  build:
+    name: ${{ matrix.platform }} ${{ matrix.configuration }}
+    # The projects use the v145 toolset (Visual Studio 2026).
+    runs-on: windows-2025-vs2026
+    strategy:
+      fail-fast: false
+      matrix:
+        platform: [x64, ARM64]
+        configuration: [Release]
+    env:
+      VCPKG_DEFAULT_BINARY_CACHE: ${{ github.workspace }}\.vcpkg-cache
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Show toolchain
+        shell: pwsh
+        run: |
+          & "${env:ProgramFiles(x86)}\Microsoft Visual Studio\Installer\vswhere.exe" -latest -products * -format text | Select-String 'displayName|installationVersion'
+          Write-Output "VCPKG_INSTALLATION_ROOT=$env:VCPKG_INSTALLATION_ROOT"
+
+      - uses: microsoft/setup-msbuild@v2
+        with:
+          msbuild-architecture: x64
+
+      - name: Prepare vcpkg binary cache dir
+        shell: pwsh
+        run: New-Item -ItemType Directory -Force -Path $env:VCPKG_DEFAULT_BINARY_CACHE | Out-Null
+
+      - name: Cache vcpkg binaries
+        uses: actions/cache@v4
+        with:
+          path: ${{ github.workspace }}\.vcpkg-cache
+          key: vcpkg-${{ matrix.platform }}-${{ hashFiles('**/vcpkg.json', 'Common/vcpkg-configuration.json', 'vcpkg/ports/**') }}
+          restore-keys: vcpkg-${{ matrix.platform }}-
+
+      - name: Integrate vcpkg
+        shell: pwsh
+        run: '& "$env:VCPKG_INSTALLATION_ROOT\vcpkg.exe" integrate install'
+
+      - name: Restore NuGet packages
+        run: msbuild TranslucentTB.slnx -t:Restore -p:RestorePackagesConfig=true -p:Configuration=${{ matrix.configuration }} -p:Platform=${{ matrix.platform }}
+
+      - name: Build solution (unsigned)
+        run: msbuild TranslucentTB.slnx -m -p:Configuration=${{ matrix.configuration }} -p:Platform=${{ matrix.platform }} -p:BuildType=Canary -p:SkipSigning=True -p:AppxPackageSigningEnabled=false
+
+      - name: Run unit tests
+        if: matrix.platform == 'x64'
+        shell: pwsh
+        run: |
+          $exe = Get-ChildItem -Recurse -Filter Tests.exe | Where-Object FullName -like "*${{ matrix.platform }}*${{ matrix.configuration }}*" | Select-Object -First 1
+          if (-not $exe) { throw 'Tests.exe not found' }
+          & $exe.FullName --gtest_output="xml:test-results.xml"
+          if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
+
+      - name: Create portable build
+        shell: pwsh
+        run: ./.azp/scripts/create-portable.ps1 -Platform ${{ matrix.platform }} -Configuration ${{ matrix.configuration }} -WorkDir "$env:RUNNER_TEMP" -OutputDir "$env:RUNNER_TEMP\portable"
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: portable-${{ matrix.platform }}-${{ matrix.configuration }}
+          path: ${{ runner.temp }}\portable
+
+      - uses: actions/upload-artifact@v4
+        if: always() && matrix.platform == 'x64'
+        with:
+          name: test-results-${{ matrix.platform }}
+          path: test-results.xml
+          if-no-files-found: ignore
