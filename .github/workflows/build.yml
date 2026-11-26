@@ -58,8 +58,12 @@ jobs:
       - name: Restore NuGet packages
         run: msbuild TranslucentTB.slnx -t:Restore -p:RestorePackagesConfig=true -p:Configuration=${{ matrix.configuration }} -p:Platform=${{ matrix.platform }}
 
+      # No -m: building projects in parallel makes AppPackage.wapproj query
+      # GetResolvedWinMD on TranslucentTB.vcxproj while it is still building,
+      # which MSBuild reports as MSB4006 (circular dependency in CppWinRT targets).
+      # Upstream's Azure pipeline (VSBuild) also builds without /m.
       - name: Build solution (unsigned)
-        run: msbuild TranslucentTB.slnx -m -p:Configuration=${{ matrix.configuration }} -p:Platform=${{ matrix.platform }} -p:BuildType=Canary -p:SkipSigning=True -p:AppxPackageSigningEnabled=false
+        run: msbuild TranslucentTB.slnx -p:Configuration=${{ matrix.configuration }} -p:Platform=${{ matrix.platform }} -p:BuildType=Canary -p:SkipSigning=True -p:AppxPackageSigningEnabled=false
 
       - name: Run unit tests
         if: matrix.platform == 'x64'
