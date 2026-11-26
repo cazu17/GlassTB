@@ -74,4 +74,9 @@ public:
 	{
 		return m_Config;
 	}
+
+	constexpr const Config &GetConfig() const noexcept
+	{
+		return m_Config;
+	}
 };
