@@ -5,6 +5,8 @@
 #include <optional>
 #include <stdexcept>
 #include <rapidjson/document.h>
+// rapidjson/error/en.h uses RAPIDJSON_ERROR_STRING=UTIL_WIDEN (see CppProject.props).
+#include "../util/string_macros.hpp"
 #include <rapidjson/error/en.h>
 #include <rapidjson/prettywriter.h>
 #include <rapidjson/stringbuffer.h>

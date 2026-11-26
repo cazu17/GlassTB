@@ -2,6 +2,8 @@
 #include "arch.h"
 #include "tray/traycontextmenu.hpp"
 #include <cstddef>
+#include <optional>
+#include <string>
 #include <spdlog/common.h>
 #include <tuple>
 #include <vector>
@@ -36,6 +38,7 @@ private:
 	page_t::TaskbarSettingsChanged_revoker m_TaskbarSettingsChangedRevoker;
 	page_t::ColorRequested_revoker m_ColorRequestedRevoker;
 	page_t::OpenSettingsRequested_revoker m_OpenSettingsRequestedRevoker;
+	page_t::ProfileSelected_revoker m_ProfileSelectedRevoker;
 
 	Window m_SettingsWindow{ nullptr };
 	winrt::weak_ref<settings_page_t> m_SettingsPage;
@@ -69,6 +72,15 @@ private:
 	void ApplySettings(const std::vector<settings_edit_t> &edits);
 	void PublishSettings(std::optional<bool> applyResult = {});
 	void PublishDiagnostics();
+
+	struct ProfileActionResult {
+		bool success;
+		std::wstring key;
+		std::wstring detail;
+	};
+	void HandleProfileAction(const std::wstring &action, const std::wstring &name);
+	void PublishProfiles(std::optional<ProfileActionResult> result = {});
+	void PublishTrayProfiles();
 
 	void OpenLogFileRequested();
 	void LogLevelChanged(const txmp::LogLevel &level);

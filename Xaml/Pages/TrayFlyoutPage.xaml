@@ -17,6 +17,7 @@
     <Page.ContextFlyout>
         <MenuFlyout x:Name="ContextMenu" ShouldConstrainToRootBounds="False">
             <MenuFlyoutItem x:Uid="SettingsPage_Open" Click="OpenSettingsClicked" />
+            <MenuFlyoutSubItem x:Name="ProfilesMenu" x:Uid="TrayFlyoutPage_Profiles" Style="{StaticResource MergeIconsMenuFlyoutSubItem}" />
             <MenuFlyoutSeparator />
             <MenuFlyoutSubItem x:Uid="TrayFlyoutPage_Desktop" Style="{StaticResource MergeIconsMenuFlyoutSubItem}">
                 <MenuFlyoutSubItem.Tag>

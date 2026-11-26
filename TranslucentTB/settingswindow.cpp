@@ -6,6 +6,14 @@
 #include "application.hpp"
 #include "compat/backend.hpp"
 #include "settings/appearanceedit.hpp"
+#include <filesystem>
+#include <optional>
+#include <ShObjIdl.h>
+#include <wil/com.h>
+#include <wil/resource.h>
+#include <wil/result.h>
+
+#include "../ProgramLog/error/win32.hpp"
 
 namespace {
 	constexpr std::array States{
@@ -81,6 +89,17 @@ void MainAppWindow::OpenSettings()
 				});
 			});
 
+			content.ProfileActionRequested([this](const winrt::hstring &action, const winrt::hstring &name)
+			{
+				m_App.DispatchToMainThread([this, action = std::wstring(action), name = std::wstring(name)]
+				{
+					if (m_SettingsWindow)
+					{
+						HandleProfileAction(action, name);
+					}
+				});
+			});
+
 			content.ApplyRequested([this](const winrt::Windows::Foundation::Collections::IVectorView<settings_edit_t> &edits)
 			{
 				std::vector<settings_edit_t> snapshot;
@@ -107,6 +126,7 @@ void MainAppWindow::OpenSettings()
 				m_SettingsOpening = false;
 				PublishSettings();
 				PublishDiagnostics();
+				PublishProfiles();
 			});
 		});
 }
@@ -135,10 +155,12 @@ void MainAppWindow::ApplySettings(const std::vector<settings_edit_t> &edits)
 		}
 	}
 
+	config.ActiveProfile.clear();
 	const bool saved = manager.SaveConfig();
 	if (saved)
 	{
 		m_App.GetWorker().SetAppearancePreview(std::nullopt);
+		PublishProfiles();
 	}
 	else
 	{
@@ -211,6 +233,213 @@ void MainAppWindow::PublishDiagnostics()
 			const auto version = v ? std::format(L"{}.{}.{}.{}", v->major, v->minor, v->build, v->revision) : std::wstring{};
 			settingsPage.SetDiagnostics(version, system.nativeArchitecture, system.processArchitecture, compat::ToString(type),
 				compat::ToString(backend), count, capabilities.blurAccentState, capabilities.xamlTaskbarService, canPeek, canShowLine);
+		}
+	});
+}
+
+namespace {
+	// Shows a modal Open/Save dialog for JSON files owned by the settings window.
+	std::optional<std::filesystem::path> PickJsonFile(HWND owner, bool save, std::wstring_view suggestedName)
+	{
+		try
+		{
+			const auto dialog = save
+				? wil::CoCreateInstance<IFileDialog>(CLSID_FileSaveDialog)
+				: wil::CoCreateInstance<IFileDialog>(CLSID_FileOpenDialog);
+
+			static constexpr COMDLG_FILTERSPEC filters[] = { { L"JSON", L"*.json" } };
+			THROW_IF_FAILED(dialog->SetFileTypes(static_cast<UINT>(std::size(filters)), filters));
+			THROW_IF_FAILED(dialog->SetDefaultExtension(L"json"));
+
+			FILEOPENDIALOGOPTIONS options = 0;
+			THROW_IF_FAILED(dialog->GetOptions(&options));
+			THROW_IF_FAILED(dialog->SetOptions(options | FOS_FORCEFILESYSTEM | (save ? FOS_OVERWRITEPROMPT : FOS_FILEMUSTEXIST)));
+			if (save && !suggestedName.empty())
+			{
+				THROW_IF_FAILED(dialog->SetFileName(std::wstring(suggestedName).c_str()));
+			}
+
+			const HRESULT shown = dialog->Show(owner);
+			if (shown == HRESULT_FROM_WIN32(ERROR_CANCELLED))
+			{
+				return std::nullopt;
+			}
+			THROW_IF_FAILED(shown);
+
+			wil::com_ptr<IShellItem> item;
+			THROW_IF_FAILED(dialog->GetResult(item.put()));
+			wil::unique_cotaskmem_string path;
+			THROW_IF_FAILED(item->GetDisplayName(SIGDN_FILESYSPATH, path.put()));
+			return std::filesystem::path(path.get());
+		}
+		catch (const wil::ResultException &ex)
+		{
+			HresultHandle(ex.GetErrorCode(), spdlog::level::warn, L"File dialog failed");
+			return std::nullopt;
+		}
+	}
+}
+
+void MainAppWindow::HandleProfileAction(const std::wstring &action, const std::wstring &name)
+{
+	auto &profiles = m_App.GetProfileManager();
+	auto &manager = m_App.GetConfigManager();
+	auto &config = manager.GetConfig();
+
+	bool success = false;
+	std::wstring key = L"Failed";
+	std::wstring detail;
+
+	if (action == L"activate")
+	{
+		if (const auto entry = profiles.Find(name))
+		{
+			const auto original = config;
+			entry->profile.ApplyTo(config);
+			if (manager.SaveConfig())
+			{
+				success = true;
+				key = L"Activated";
+				detail = entry->profile.Name;
+				m_App.GetWorker().ConfigurationChanged();
+			}
+			else
+			{
+				config = original;
+				key = L"SaveFailed";
+			}
+		}
+		else
+		{
+			key = L"NotFound";
+		}
+	}
+	else if (action == L"save")
+	{
+		if (!Profile::IsValidName(name))
+		{
+			key = L"InvalidName";
+		}
+		else if (profiles.Save(Profile::FromConfig(config, name), detail))
+		{
+			success = true;
+			key = L"Saved";
+			detail = name;
+		}
+	}
+	else if (action == L"duplicate")
+	{
+		if (const auto entry = profiles.Find(name))
+		{
+			auto copy = entry->profile;
+			copy.Name = profiles.UniqueName(entry->profile.Name);
+			if (profiles.Save(copy, detail))
+			{
+				success = true;
+				key = L"Duplicated";
+				detail = copy.Name;
+			}
+		}
+		else
+		{
+			key = L"NotFound";
+		}
+	}
+	else if (action == L"delete")
+	{
+		if (profiles.Delete(name, detail))
+		{
+			success = true;
+			key = L"Deleted";
+			detail = name;
+			if (config.ActiveProfile == name)
+			{
+				config.ActiveProfile.clear();
+				manager.SaveConfig();
+			}
+		}
+	}
+	else if (action == L"import")
+	{
+		if (const auto file = PickJsonFile(m_SettingsWindow, false, { }))
+		{
+			if (const auto imported = profiles.Import(*file, detail))
+			{
+				success = true;
+				key = L"Imported";
+				detail = imported->Name;
+			}
+		}
+		else
+		{
+			key = L"Cancelled";
+		}
+	}
+	else if (action == L"export")
+	{
+		if (const auto file = PickJsonFile(m_SettingsWindow, true, Profile::FileStem(name) + L".json"))
+		{
+			if (profiles.Export(name, *file, detail))
+			{
+				success = true;
+				key = L"Exported";
+				detail = file->native();
+			}
+		}
+		else
+		{
+			key = L"Cancelled";
+		}
+	}
+
+	if (!success && key == L"Failed" && !detail.empty())
+	{
+		MessagePrint(spdlog::level::warn, std::format(L"Profile action {} failed: {}", action, detail));
+	}
+
+	PublishSettings();
+	PublishTrayProfiles();
+	PublishProfiles(ProfileActionResult { success, std::move(key), std::move(detail) });
+}
+
+void MainAppWindow::PublishTrayProfiles()
+{
+	std::vector<winrt::hstring> names;
+	for (const auto &entry : m_App.GetProfileManager().List())
+	{
+		names.emplace_back(entry.profile.Name);
+	}
+
+	const auto &manager = m_App.GetConfigManager();
+	const auto &config = manager.GetConfig();
+	page().SetProfiles(winrt::single_threaded_vector(std::move(names)).GetView(), winrt::hstring(config.ActiveProfile),
+		!config.DisableSaving && !manager.IsReadOnlyNewerSchema());
+}
+
+void MainAppWindow::PublishProfiles(std::optional<ProfileActionResult> result)
+{
+	if (!m_SettingsDispatcher)
+	{
+		return;
+	}
+
+	std::vector<winrt::TranslucentTB::Xaml::Pages::ProfileInfo> infos;
+	for (const auto &entry : m_App.GetProfileManager().List())
+	{
+		infos.push_back({ winrt::hstring(entry.profile.Name), entry.builtIn });
+	}
+
+	const auto &config = m_App.GetConfigManager().GetConfig();
+	m_SettingsDispatcher.TryEnqueue([weak = m_SettingsPage, infos = std::move(infos), active = winrt::hstring(config.ActiveProfile),
+		canSave = !config.DisableSaving && !m_App.GetConfigManager().IsReadOnlyNewerSchema(), result = std::move(result)]() mutable
+	{
+		if (const auto settingsPage = weak.get())
+		{
+			settingsPage.SetProfiles(winrt::single_threaded_vector(std::move(infos)).GetView(), active, canSave);
+			if (result)
+			{
+				settingsPage.FinishProfileAction(result->success, winrt::hstring(result->key), winrt::hstring(result->detail));
+			}
 		}
 	});
 }

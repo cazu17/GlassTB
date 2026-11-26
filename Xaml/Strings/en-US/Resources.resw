@@ -568,4 +568,130 @@ Changes are automatically reloaded when you save the file</value>
   <data name="SettingsPage_RestoredDraft" xml:space="preserve">
     <value>Defaults loaded. Select Apply to save.</value>
   </data>
+  <data name="SettingsPage_ProfilesItem.Content" xml:space="preserve">
+    <value>Profiles</value>
+  </data>
+  <data name="SettingsPage_ProfilesItem.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>Profiles</value>
+  </data>
+  <data name="SettingsPage_ProfilesHeading.Text" xml:space="preserve">
+    <value>Profiles</value>
+  </data>
+  <data name="SettingsPage_ProfileList.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>Profile list</value>
+  </data>
+  <data name="SettingsPage_ActivateProfile.Content" xml:space="preserve">
+    <value>Activate</value>
+  </data>
+  <data name="SettingsPage_ActivateProfile.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>Activate the selected profile</value>
+  </data>
+  <data name="SettingsPage_DuplicateProfile.Content" xml:space="preserve">
+    <value>Duplicate</value>
+  </data>
+  <data name="SettingsPage_DuplicateProfile.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>Duplicate the selected profile</value>
+  </data>
+  <data name="SettingsPage_ExportProfile.Content" xml:space="preserve">
+    <value>Export…</value>
+  </data>
+  <data name="SettingsPage_ExportProfile.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>Export the selected profile to a file</value>
+  </data>
+  <data name="SettingsPage_DeleteProfile.Content" xml:space="preserve">
+    <value>Delete</value>
+  </data>
+  <data name="SettingsPage_DeleteProfile.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>Delete the selected profile</value>
+  </data>
+  <data name="SettingsPage_SaveProfileLabel.Text" xml:space="preserve">
+    <value>Save the current appearance as a new profile or replace one of yours with the same name.</value>
+  </data>
+  <data name="SettingsPage_NewProfileName.Header" xml:space="preserve">
+    <value>Profile name</value>
+  </data>
+  <data name="SettingsPage_NewProfileName.PlaceholderText" xml:space="preserve">
+    <value>My profile</value>
+  </data>
+  <data name="SettingsPage_NewProfileName.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>Profile name</value>
+  </data>
+  <data name="SettingsPage_SaveProfile.Content" xml:space="preserve">
+    <value>Save as profile</value>
+  </data>
+  <data name="SettingsPage_SaveProfile.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>Save the current appearance as a profile</value>
+  </data>
+  <data name="SettingsPage_ImportProfile.Content" xml:space="preserve">
+    <value>Import profile…</value>
+  </data>
+  <data name="SettingsPage_ImportProfile.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>Import a profile from a JSON file</value>
+  </data>
+  <data name="SettingsPage_DeleteProfileDialog.Title" xml:space="preserve">
+    <value>Delete profile?</value>
+  </data>
+  <data name="SettingsPage_DeleteProfileDialog.PrimaryButtonText" xml:space="preserve">
+    <value>Delete</value>
+  </data>
+  <data name="SettingsPage_DeleteProfileDialog.CloseButtonText" xml:space="preserve">
+    <value>Cancel</value>
+  </data>
+  <data name="SettingsPage_DeleteProfileQuestion" xml:space="preserve">
+    <value>The profile file will be deleted:</value>
+  </data>
+  <data name="SettingsPage_ProfileBuiltIn" xml:space="preserve">
+    <value>built-in</value>
+  </data>
+  <data name="SettingsPage_ProfileActive" xml:space="preserve">
+    <value>active</value>
+  </data>
+  <data name="SettingsPage_ProfileNoneActive" xml:space="preserve">
+    <value>No active profile: the current appearance was edited manually.</value>
+  </data>
+  <data name="SettingsPage_ProfileActiveLabel" xml:space="preserve">
+    <value>Active profile</value>
+  </data>
+  <data name="SettingsPage_ProfilesSavingDisabled" xml:space="preserve">
+    <value>Saving is disabled or the configuration comes from a newer version: profiles cannot be applied or saved.</value>
+  </data>
+  <data name="SettingsPage_ProfileWorking" xml:space="preserve">
+    <value>Working…</value>
+  </data>
+  <data name="SettingsPage_ProfileFailed" xml:space="preserve">
+    <value>The action could not be completed.</value>
+  </data>
+  <data name="SettingsPage_ProfileActivated" xml:space="preserve">
+    <value>Profile applied:</value>
+  </data>
+  <data name="SettingsPage_ProfileSaveFailed" xml:space="preserve">
+    <value>The configuration could not be saved; the previous appearance was kept.</value>
+  </data>
+  <data name="SettingsPage_ProfileNotFound" xml:space="preserve">
+    <value>The profile no longer exists.</value>
+  </data>
+  <data name="SettingsPage_ProfileInvalidName" xml:space="preserve">
+    <value>Invalid name. Use up to 64 characters without &lt; &gt; : " / \ | ? * or leading/trailing spaces.</value>
+  </data>
+  <data name="SettingsPage_ProfileSaved" xml:space="preserve">
+    <value>Profile saved:</value>
+  </data>
+  <data name="SettingsPage_ProfileDuplicated" xml:space="preserve">
+    <value>Profile duplicated as:</value>
+  </data>
+  <data name="SettingsPage_ProfileDeleted" xml:space="preserve">
+    <value>Profile deleted:</value>
+  </data>
+  <data name="SettingsPage_ProfileImported" xml:space="preserve">
+    <value>Profile imported:</value>
+  </data>
+  <data name="SettingsPage_ProfileCancelled" xml:space="preserve">
+    <value>Operation cancelled.</value>
+  </data>
+  <data name="SettingsPage_ProfileExported" xml:space="preserve">
+    <value>Profile exported to</value>
+  </data>
+  <data name="TrayFlyoutPage_Profiles.Text" xml:space="preserve">
+    <value>Profile</value>
+  </data>
 </root>

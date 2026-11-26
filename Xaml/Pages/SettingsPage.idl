@@ -16,6 +16,13 @@ namespace TranslucentTB.Xaml.Pages
 		Boolean Enabled;
 	};
 
+	struct ProfileInfo
+	{
+		String Name;
+		Boolean BuiltIn;
+	};
+
+	delegate void ProfileActionRequestedDelegate(String action, String name);
 	delegate void SettingsPreviewChangedDelegate(TranslucentTB.Xaml.Models.Primitives.TaskbarAppearance appearance);
 	delegate void SettingsApplyRequestedDelegate(Windows.Foundation.Collections.IVectorView<SettingsEdit> edits);
 
@@ -31,8 +38,11 @@ namespace TranslucentTB.Xaml.Pages
 			TranslucentTB.Xaml.Models.Primitives.TaskbarAppearance defaults);
 		void UpdateEditor(UInt32 ruleCount, Boolean canSave, Boolean hasBattery);
 		void FinishApply(Boolean saved);
+		void SetProfiles(Windows.Foundation.Collections.IVectorView<ProfileInfo> profiles, String active, Boolean canSave);
+		void FinishProfileAction(Boolean success, String messageKey, String detail);
 
 		event SettingsPreviewChangedDelegate PreviewChanged;
 		event SettingsApplyRequestedDelegate ApplyRequested;
+		event ProfileActionRequestedDelegate ProfileActionRequested;
 	}
 }

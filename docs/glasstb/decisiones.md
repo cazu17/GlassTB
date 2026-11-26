@@ -44,3 +44,17 @@
 **Recomendación.** Seguir con WinUI 2.8 para las siguientes secciones mientras cumpla sus requisitos. Evaluar WinUI 3 en una prueba separada que mida memoria y arranque y verifique Windows 10 y 11, MSIX y portable antes de una migración.
 
 [Implementación de Windows App SDK](https://learn.microsoft.com/en-us/windows/apps/package-and-deploy/deploy-overview)
+
+## ADR-005. Datos en %LOCALAPPDATA%\GlassTB y perfiles como archivos
+
+**Decisión.** Mover `settings.json` a `%LOCALAPPDATA%\GlassTB\config.json`, versionar el esquema y guardar los perfiles
+como archivos JSON independientes en `profiles\`. La migración copia (no mueve) la configuración heredada o la de
+TranslucentTB de Microsoft Store.
+
+**Motivo.** Una carpeta propia permite copias de seguridad, perfiles e importación sin mezclar datos con el ejecutable
+portable ni con la carpeta de TranslucentTB. Copiar en lugar de mover permite volver a la versión anterior.
+
+**Consecuencias.** La versión portable deja de guardar su configuración junto al ejecutable. Los archivos de esquema
+más nuevo nunca se sobrescriben. Los perfiles no incluyen reglas por ventana; esas pertenecen a la fase de automatización.
+La línea `// See https://TranslucentTB.github.io/config` y la clave `$schema` de TranslucentTB ya no se escriben
+(la clave `$schema` se sigue aceptando al leer).

@@ -22,6 +22,7 @@ namespace TranslucentTB.Xaml.Pages
 	delegate void TipsAndTricksRequestedDelegate();
 	delegate void AboutRequestedDelegate();
 	delegate void ExitRequestedDelegate();
+	delegate void ProfileSelectedDelegate(String name);
 
 	runtimeclass TrayFlyoutPage : Windows.UI.Xaml.Controls.Page, Windows.UI.Xaml.Data.INotifyPropertyChanged
 	{
@@ -30,6 +31,8 @@ namespace TranslucentTB.Xaml.Pages
 		event TaskbarSettingsChangedDelegate TaskbarSettingsChanged;
 		event ColorRequestedDelegate ColorRequested;
 		event EditSettingsRequestedDelegate OpenSettingsRequested;
+		event ProfileSelectedDelegate ProfileSelected;
+		void SetProfiles(Windows.Foundation.Collections.IVectorView<String> names, String active, Boolean canApply);
 
 		event OpenLogFileRequestedDelegate OpenLogFileRequested;
 		event LogLevelChangedDelegate LogLevelChanged;

@@ -13,6 +13,7 @@
             <muxc:NavigationView.MenuItems>
                 <muxc:NavigationViewItem x:Name="HomeItem" x:Uid="SettingsPage_HomeItem" Icon="Home" />
                 <muxc:NavigationViewItem x:Name="AppearanceItem" x:Uid="SettingsPage_AppearanceItem" Icon="View" />
+                <muxc:NavigationViewItem x:Name="ProfilesItem" x:Uid="SettingsPage_ProfilesItem" Icon="Contact" />
             </muxc:NavigationView.MenuItems>
             <Grid>
                 <ScrollViewer x:Name="HomeSection" Padding="28,24" VerticalScrollBarVisibility="Auto">
@@ -82,6 +83,29 @@
                     </StackPanel>
                     <ContentDialog x:Name="ResetDialog" x:Uid="SettingsPage_ResetDialog" DefaultButton="Close" />
                 </Grid>
+                <ScrollViewer x:Name="ProfilesSection" Visibility="Collapsed" Padding="28,24" VerticalScrollBarVisibility="Auto">
+                    <StackPanel Spacing="12">
+                        <TextBlock x:Uid="SettingsPage_ProfilesHeading" Style="{ThemeResource TitleTextBlockStyle}" AutomationProperties.HeadingLevel="Level1" />
+                        <TextBlock x:Name="ActiveProfileText" TextWrapping="Wrap" />
+                        <ListView x:Name="ProfileList" x:Uid="SettingsPage_ProfileList" SelectionMode="Single"
+                                  SelectionChanged="ProfileSelectionChanged" MaxHeight="280" HorizontalAlignment="Stretch"
+                                  BorderThickness="1" BorderBrush="{ThemeResource CardStrokeColorDefaultBrush}" />
+                        <StackPanel Orientation="Horizontal" Spacing="8">
+                            <Button x:Name="ActivateProfileButton" x:Uid="SettingsPage_ActivateProfile" Tag="activate" Click="ProfileButtonClicked" Style="{ThemeResource AccentButtonStyle}" IsEnabled="False" />
+                            <Button x:Name="DuplicateProfileButton" x:Uid="SettingsPage_DuplicateProfile" Tag="duplicate" Click="ProfileButtonClicked" IsEnabled="False" />
+                            <Button x:Name="ExportProfileButton" x:Uid="SettingsPage_ExportProfile" Tag="export" Click="ProfileButtonClicked" IsEnabled="False" />
+                            <Button x:Name="DeleteProfileButton" x:Uid="SettingsPage_DeleteProfile" Click="DeleteProfileClicked" IsEnabled="False" />
+                        </StackPanel>
+                        <TextBlock x:Uid="SettingsPage_SaveProfileLabel" TextWrapping="Wrap" />
+                        <StackPanel Orientation="Horizontal" Spacing="8">
+                            <TextBox x:Name="NewProfileName" x:Uid="SettingsPage_NewProfileName" MinWidth="260" MaxLength="64" TextChanged="NewProfileNameChanged" />
+                            <Button x:Name="SaveProfileButton" x:Uid="SettingsPage_SaveProfile" Tag="save" Click="ProfileButtonClicked" IsEnabled="False" VerticalAlignment="Bottom" />
+                        </StackPanel>
+                        <Button x:Name="ImportProfileButton" x:Uid="SettingsPage_ImportProfile" Tag="import" Click="ProfileButtonClicked" IsEnabled="False" />
+                        <TextBlock x:Name="ProfileStatus" TextWrapping="Wrap" AutomationProperties.LiveSetting="Polite" />
+                    </StackPanel>
+                </ScrollViewer>
+                <ContentDialog x:Name="DeleteProfileDialog" x:Uid="SettingsPage_DeleteProfileDialog" DefaultButton="Close" />
             </Grid>
         </muxc:NavigationView>
     </Grid>

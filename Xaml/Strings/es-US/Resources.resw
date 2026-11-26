@@ -559,4 +559,130 @@ Los cambios se recargan automáticamente cuando guarda el archivo</value>
   <data name="SettingsPage_RestoredDraft" xml:space="preserve">
     <value>Valores por defecto cargados. Elige Aplicar para guardar.</value>
   </data>
+  <data name="SettingsPage_ProfilesItem.Content" xml:space="preserve">
+    <value>Perfiles</value>
+  </data>
+  <data name="SettingsPage_ProfilesItem.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>Perfiles</value>
+  </data>
+  <data name="SettingsPage_ProfilesHeading.Text" xml:space="preserve">
+    <value>Perfiles</value>
+  </data>
+  <data name="SettingsPage_ProfileList.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>Lista de perfiles</value>
+  </data>
+  <data name="SettingsPage_ActivateProfile.Content" xml:space="preserve">
+    <value>Activar</value>
+  </data>
+  <data name="SettingsPage_ActivateProfile.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>Activar el perfil seleccionado</value>
+  </data>
+  <data name="SettingsPage_DuplicateProfile.Content" xml:space="preserve">
+    <value>Duplicar</value>
+  </data>
+  <data name="SettingsPage_DuplicateProfile.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>Duplicar el perfil seleccionado</value>
+  </data>
+  <data name="SettingsPage_ExportProfile.Content" xml:space="preserve">
+    <value>Exportar…</value>
+  </data>
+  <data name="SettingsPage_ExportProfile.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>Exportar el perfil seleccionado a un archivo</value>
+  </data>
+  <data name="SettingsPage_DeleteProfile.Content" xml:space="preserve">
+    <value>Eliminar</value>
+  </data>
+  <data name="SettingsPage_DeleteProfile.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>Eliminar el perfil seleccionado</value>
+  </data>
+  <data name="SettingsPage_SaveProfileLabel.Text" xml:space="preserve">
+    <value>Guarda la apariencia actual como un perfil nuevo o reemplaza uno tuyo con el mismo nombre.</value>
+  </data>
+  <data name="SettingsPage_NewProfileName.Header" xml:space="preserve">
+    <value>Nombre del perfil</value>
+  </data>
+  <data name="SettingsPage_NewProfileName.PlaceholderText" xml:space="preserve">
+    <value>Mi perfil</value>
+  </data>
+  <data name="SettingsPage_NewProfileName.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>Nombre del perfil</value>
+  </data>
+  <data name="SettingsPage_SaveProfile.Content" xml:space="preserve">
+    <value>Guardar como perfil</value>
+  </data>
+  <data name="SettingsPage_SaveProfile.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>Guardar la apariencia actual como perfil</value>
+  </data>
+  <data name="SettingsPage_ImportProfile.Content" xml:space="preserve">
+    <value>Importar perfil…</value>
+  </data>
+  <data name="SettingsPage_ImportProfile.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>Importar un perfil desde un archivo JSON</value>
+  </data>
+  <data name="SettingsPage_DeleteProfileDialog.Title" xml:space="preserve">
+    <value>¿Eliminar el perfil?</value>
+  </data>
+  <data name="SettingsPage_DeleteProfileDialog.PrimaryButtonText" xml:space="preserve">
+    <value>Eliminar</value>
+  </data>
+  <data name="SettingsPage_DeleteProfileDialog.CloseButtonText" xml:space="preserve">
+    <value>Cancelar</value>
+  </data>
+  <data name="SettingsPage_DeleteProfileQuestion" xml:space="preserve">
+    <value>Se eliminará el archivo del perfil:</value>
+  </data>
+  <data name="SettingsPage_ProfileBuiltIn" xml:space="preserve">
+    <value>predefinido</value>
+  </data>
+  <data name="SettingsPage_ProfileActive" xml:space="preserve">
+    <value>activo</value>
+  </data>
+  <data name="SettingsPage_ProfileNoneActive" xml:space="preserve">
+    <value>Ningún perfil activo: la apariencia actual se editó manualmente.</value>
+  </data>
+  <data name="SettingsPage_ProfileActiveLabel" xml:space="preserve">
+    <value>Perfil activo</value>
+  </data>
+  <data name="SettingsPage_ProfilesSavingDisabled" xml:space="preserve">
+    <value>El guardado está desactivado o la configuración es de una versión más nueva: no se pueden aplicar ni guardar perfiles.</value>
+  </data>
+  <data name="SettingsPage_ProfileWorking" xml:space="preserve">
+    <value>Procesando…</value>
+  </data>
+  <data name="SettingsPage_ProfileFailed" xml:space="preserve">
+    <value>No se pudo completar la acción.</value>
+  </data>
+  <data name="SettingsPage_ProfileActivated" xml:space="preserve">
+    <value>Perfil aplicado:</value>
+  </data>
+  <data name="SettingsPage_ProfileSaveFailed" xml:space="preserve">
+    <value>No se pudo guardar la configuración; se mantuvo la apariencia anterior.</value>
+  </data>
+  <data name="SettingsPage_ProfileNotFound" xml:space="preserve">
+    <value>El perfil ya no existe.</value>
+  </data>
+  <data name="SettingsPage_ProfileInvalidName" xml:space="preserve">
+    <value>Nombre no válido. Usa hasta 64 caracteres sin &lt; &gt; : " / \ | ? * ni espacios al inicio o final.</value>
+  </data>
+  <data name="SettingsPage_ProfileSaved" xml:space="preserve">
+    <value>Perfil guardado:</value>
+  </data>
+  <data name="SettingsPage_ProfileDuplicated" xml:space="preserve">
+    <value>Perfil duplicado como:</value>
+  </data>
+  <data name="SettingsPage_ProfileDeleted" xml:space="preserve">
+    <value>Perfil eliminado:</value>
+  </data>
+  <data name="SettingsPage_ProfileImported" xml:space="preserve">
+    <value>Perfil importado:</value>
+  </data>
+  <data name="SettingsPage_ProfileCancelled" xml:space="preserve">
+    <value>Operación cancelada.</value>
+  </data>
+  <data name="SettingsPage_ProfileExported" xml:space="preserve">
+    <value>Perfil exportado a</value>
+  </data>
+  <data name="TrayFlyoutPage_Profiles.Text" xml:space="preserve">
+    <value>Perfil</value>
+  </data>
 </root>
